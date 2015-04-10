@@ -1,0 +1,9 @@
+require! ['mongoose']
+
+module.exports = mongoose.model 'Submition', {
+    name: String,
+    teacherName: String,
+    startDate: String,
+    deadLine: String,
+    studentName: String
+}

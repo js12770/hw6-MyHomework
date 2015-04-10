@@ -1,0 +1,55 @@
+doctype html
+html
+  head
+    link(type="text/css", rel="stylesheet", href="/dist/semantic.css")
+    link(rel='stylesheet', href='/stylesheets/style.css')
+    link(rel='stylesheet', href='/stylesheets/bootstrap.min.css')
+    title Homework
+  body
+    .container
+      .ui.pointing.menu
+        a.active.item
+          i.home.icon
+          | Homework
+        .right.menu
+          .item
+            .ui.transparent.icon.input
+              input(type="text", placeholder="Search...")
+              i.search.link.icon
+          a(href='/signout', class = 'ui item') Logout
+
+      table.ui.table
+        thead
+          tr
+            th Name
+            th Teacher
+            th Start-date
+            th Deadline
+            th Detail-links
+        tbody
+          tr
+            td John Lilki
+            td Jill Lewis
+            td September 14, 2013
+            td September 14, 2013
+            td
+              a(href='/')
+                button.ui.button detail
+          tr
+            td Jamie Harington
+            td Jill Lewis
+            td September 14, 2013
+            td September 14, 2013
+            td
+              a(href='/')
+                button.ui.button detail
+          tr
+            td Jill Lewis
+            td Jill Lewis
+            td September 14, 2013
+            td September 14, 2013
+            td
+              a(href='/')
+                button.ui.button detail
+      a(href='/create')
+                button.ui.button create a Homework

@@ -1,0 +1,27 @@
+doctype html
+html
+  head
+    link(type="text/css", rel="stylesheet", href="dist/semantic.css")
+    link(rel="stylesheet", type="text/css", href="stylesheets/bootstrap.min.css")
+    link(rel="stylesheet", type="text/css", href="stylesheets/style.css")
+    title Create a homework
+  body
+    .container
+      .ui.grid
+        .column
+          .ui.fluid.form.segment
+            h3.ui.header Create a homework
+            .one.fields
+              .field
+                label Name
+                input(type="text", placeholder="", name='name')
+              .field
+                label StartDate
+                input(type="text", placeholder="", name='startDate')
+              .field
+                label Deadline
+                input(type="text", placeholder="", name='deadLine')
+            .field
+              label Description
+              textarea(placeholder="Description", type="text")
+            button(class = 'ui blue submit button', type='submit') CREATE A HOMEWORK
