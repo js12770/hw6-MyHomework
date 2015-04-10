@@ -1,0 +1,41 @@
+extends layout
+
+block content
+	div.container
+		div.row 
+			div.col-sm-6.col-md-4.col-md-offset-4
+				#user
+					h1.text-center.login-title 欢迎，#{user.firstName}老师
+						a(href='/signout', class='text-center new-account') Sign Out
+					h3.text-center 作业列表
+		table.table.table-hover
+			thead
+				tr
+					th 名称
+					th 截止时间
+					th 布置老师
+			tbody
+				tr
+					th 
+						a(href='/assignment', class='assginment') ExpressJS的Web 2.0应用
+					th 2015.07.08
+					th 王青
+				tr
+					th ExpressJS的Web 2.0应用
+					th 2015.07.08	
+					th 王青
+				tr
+					th ExpressJS的Web 2.0应用
+					th 2015.07.08	
+					th 王青
+				tr
+					th ExpressJS的Web 2.0应用
+					th 2015.07.08	
+					th 王青
+				tr
+					th ExpressJS的Web 2.0应用
+					th 2015.07.08
+					th 王青
+		a(href='/create')
+			button.btn.btn-success(type="button") 布置新作业
+		

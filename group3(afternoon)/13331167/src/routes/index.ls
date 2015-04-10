@@ -16,9 +16,20 @@ module.exports = (passport)->
     success-redirect: '/home', failure-redirect: '/signup', failure-flash: true
   }
 
-  router.get '/home', is-authenticated, (req, res)!-> res.render 'home', user: req.user
+  router.get '/home', is-authenticated, (req, res)!->
+    console.log req.user.role+'aaaaaaaaaaaaa'
+    if req.user.role is 'student'
+      console.log 'aaa'
+      res.render 'student', user: req.user
+    if req.user.role is 'teacher'
+      res.render 'teacher', user: req.user
 
   router.get '/signout', (req, res)!-> 
     req.logout!
     res.redirect '/'
 
+  router.get '/create', (req, res)!-> 
+    res.render 'create', user: req.user
+
+  router.get '/assignment', (req, res)!->
+    res.render 'assignment', user: req.user
