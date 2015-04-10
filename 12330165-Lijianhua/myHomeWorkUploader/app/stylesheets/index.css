@@ -1,0 +1,51 @@
+.navigation
+{
+    float:left;
+    width: 20%;
+    height: 100%;
+    border: 2px solid #00B7FF;
+    padding-top: 30px;
+    padding-right: 30px;
+}
+
+.navigation li
+{
+    list-style: none;
+    text-align: center;
+    font-size: 30px;
+    margin: 40px 0;
+    border: 5px solid #afd9ee;
+    border-radius: 20%;
+    cursor: pointer;
+}
+
+#main-container
+{
+    width: 100%;
+    height: 600px;
+}
+
+#right-container
+{
+    width:80%;
+    height: 100%;
+}
+
+#logoutArea
+{
+    float:right;
+    margin-right: 50px;
+}
+
+#logoutArea li
+{
+    margin-top: 30px;
+    height: 20px;
+    line-height: 20px;
+    font-size : 15px;
+}
+
+#logoutArea input
+{
+    border-radius: 20%;
+}
