@@ -1,0 +1,23 @@
+extends layout
+
+block content
+	h1.text-center.login-title All   Homeworks:
+		each item in collection
+			if item.student == user.username || user.status == 'T'
+				div.center
+					div.signup-wall
+						ul.user-details
+							li Homework Title  :  #{item.title}
+							li By  :  #{item.student}
+							if item.grade != ""
+								li Grade  :  #{item.grade}
+							li Answer  :
+						span #{item.answer}
+					if user.status == 'S'
+						a(href='/update/#{item.title}')
+							button(class = "submit") Update
+					if user.status == 'T'
+						a(href='/grade/#{item.title}')
+							button(class = "submit") Grade
+	a(href='/home', class='text-center new-account') Back
+					
