@@ -1,0 +1,132 @@
+extends layout
+
+block content
+	nav.navbar.navbar-default
+		.container-fluid
+			.navbar-header
+				button.navbar-toggle.collapsed(type="button", data-toggle="collapse", data-target="#bs-example-navbar-collapse-1")
+					span.sr-only Toggle navigation
+					span.icon-bar
+					span.icon-bar
+					span.icon-bar
+				a.navbar-brand(href="/") MyHomework
+			#bs-example-navbar-collapse-1.collapse.navbar-collapse
+				ul.nav.navbar-nav
+					li
+						a(href="/allhomework") All->
+					li.active
+						a(href="#")
+							| #{assignment.title}
+							span.sr-only (current)
+				ul.nav.navbar-nav.navbar-right
+					li
+						a#getid(href="#", temp="#{assignment._id}") wellcome,
+					li.dropdown
+						a.dropdown-toggle(href="#", data-toggle="dropdown", role="button", aria-expanded="false")
+							| #{user.firstName}
+							span.caret
+						ul.dropdown-menu(role="menu")
+							li
+								a(href="/home") My Info
+							li
+								a(href="/signout") Log Out
+
+	div.container.center-block.templatemo-form-list-container
+		div.col-md-12
+			.panel.panel-info
+				.panel-heading
+					if user.identity == 'teacher' && assignment.author == user.username
+						button#changetitle.navbar-right.btn.btn-default(type="button", data-toggle="modal", data-target="#exampleModal") Edit
+					h1#title.panel-title.resetsize
+						| #{assignment.title}
+					a.anchorjs-link(href="#panel-title")
+						span.anchorjs-icon
+
+				.panel-body
+					p.premessage last edited by @#{assignment.author}.
+					if user.identity == 'teacher' && assignment.author == user.username
+						button#changebrief.navbar-right.btn.btn-default(type="button", data-toggle="modal", data-target="#exampleModal") Edit
+					h2 简介
+					p#briefIntroduction #{assignment.briefIntroduction}
+					br
+					if user.identity == 'teacher' && assignment.author == user.username
+						button#changedetails.navbar-right.btn.btn-default(type="button", data-toggle="modal", data-target="#exampleModal") Edit
+					h2 详情
+					p#details #{assignment.details}
+					br
+					.alert.alert-danger(role="alert")
+						strong(style="line-height: 2.2;") Deadline:
+						strong#deadline(style="line-height: 2.2;") #{assignment.deadline}
+						if user.identity == 'teacher' && assignment.author == user.username
+							button.btn.btn-default.navbar-right(type="button", data-toggle="modal", data-target=".bs-example-modal-sm") Edit
+			.panel.panel-default
+				if user.identity == 'student'
+					.panel-heading.addlinehei 你提交的作业
+						strong#moremessage
+						a#thebutton1.btn.btn-default.navbar-right(href="/uploadhomework?id=#{assignment._id}", role="button") Upload
+					table.table
+						thead
+							tr
+								th #
+								th File Name
+								th score
+						if homeworks
+							tbody
+								tr
+									th(scope="row") 1
+									td
+										a(href="/article?id=#{homeworks._id}") #{homeworks.title}
+									if homeworks.score
+										td #{homeworks.score}
+									else
+										td none
+
+				if user.identity == 'teacher' && homeworks
+					.panel-heading 已提交的作业
+					table.table
+						thead
+							tr
+								th #
+								th File Name
+								th Author
+								th score
+						tbody
+							-	for(var i = 0; i < homeworks.length; i++) {
+								tr
+									th(scope="row") #{i+1}
+									td 
+										a(href="/article?id=#{homeworks[i]._id}") #{homeworks[i].title}
+									td #{homeworks[i].author}
+									if homeworks[i].score
+										td #{homeworks[i].score}
+									else
+										td none
+							-	}
+
+	.modal.fade.bs-example-modal-sm(tabindex="-1", role="dialog", aria-labelledby="mySmallModalLabel", aria-hidden="true")
+		.modal-dialog.modal-sm
+			.modal-content
+				.modal-header
+					button.close(type="button", data-dismiss="modal", aria-label="Close")
+						span(aria-hidden="true") &#215;
+					h4.modal-title Change Deadline
+				.modal-body
+					input#datetimepicker(type="text", placeholder="#{assignment.deadline}")
+				.modal-footer
+					button#changedeadline.btn.btn-primary(type="button", data-dismiss="modal") Change
+	#exampleModal.modal.fade(tabindex="-1", role="dialog", aria-labelledby="exampleModalLabel", aria-hidden="true")
+		.modal-dialog
+			.modal-content
+				.modal-header
+					button.close(type="button", data-dismiss="modal", aria-label="Close")
+						span(aria-hidden="true") &#215;
+					h4#exampleModalLabel.modal-title Edit
+				.modal-body
+					form
+						.form-group
+							label.control-label(for="message-text") New content:
+							textarea#message-text.form-control
+				.modal-footer
+					button.btn.btn-default(type="button", data-dismiss="modal") Close
+					button#dochange.btn.btn-primary(temp="", type="button", data-dismiss="modal") Change
+
