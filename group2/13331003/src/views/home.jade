@@ -1,0 +1,64 @@
+extends layout
+
+block content
+	div.container
+		div.row
+			div.col-sm-6.col-md-4.col-md-offset-4
+				#user
+					h1.text-center.login-title Welcome #{user.usertype}——#{user.firstName}. 
+						div.signup-wall
+							if user.usertype == 'student'
+								p COURSE1: COURSE1
+								p Teacher: Teacher1
+								p Your Homework lasted submited at 
+								p 12:20 4/6/2015.
+								p Sumbit your Homework
+								form(action='/submit', method='POST')
+									textarea(name='homework', rows='4', cols='30')
+									button(class='btn btn-lg btn-primary btn-block', type='submit') Submit
+
+
+
+								p COURSE2: COURSE2
+								p Teacher: Teacher2
+								p Your Homework lasted submited at 
+								p 12:20 4/6/2015.
+								p Sumbit your Homework
+								form(action='/submit', method='POST')
+									textarea(name='homework', rows='4', cols='30')
+									button(class='btn btn-lg btn-primary btn-block', type='submit') Submit
+
+								p COURSE3: COURSE3
+								p Teacher: Teacher3
+								p Your Homework lasted submited at 
+								p 12:20 4/6/2015.
+								p Sumbit your Homework
+								form(action='/submit', method='POST')
+									textarea(name='homework', rows='4', cols='30')
+									button(class='btn btn-lg btn-primary btn-block', type='submit') Submit
+
+							if user.usertype == 'teacher'
+								p COURSE1: COURSE1
+
+								p Publish your class.
+								form(action='/submit', method='POST')
+									input(type='text', name='deadline' class='form-control', placeholder='Deadline',required, autofocus)
+									input(type='text', name='content' class='form-control', placeholder='content',required, autofocus)
+									button(class='btn btn-lg btn-primary btn-block', type='submit') Publish
+
+								p COURSE2: COURSE2
+
+								p Publish your class.
+								form(action='/submit', method='POST')
+									input(type='text', name='deadline' class='form-control', placeholder='Deadline',required, autofocus)
+									input(type='text', name='content' class='form-control', placeholder='content',required, autofocus)
+									button(class='btn btn-lg btn-primary btn-block', type='submit') Publish
+
+
+
+
+
+
+
+
+						a(href='/signout', class='text-center new-account') Sign Out
