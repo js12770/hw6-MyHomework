@@ -1,0 +1,12 @@
+extends layout
+
+block content
+	h1.text-center.login-title #{user.firstName} All Homework:
+		each item in collection
+			div.signup-wall
+				ul.user-details
+					li Homework Title  :  #{item.title}
+					li Student :  #{item.student}
+				span #{item.content}
+	a(href='/home', class='text-center new-account') Back
+					

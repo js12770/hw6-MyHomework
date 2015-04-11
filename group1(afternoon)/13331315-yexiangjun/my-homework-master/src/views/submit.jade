@@ -1,0 +1,10 @@
+extends layout
+
+block content
+	if user.identity == 'S'
+		h1.text-center.login-title Welcome #{user.firstName}. Submit your homework here:
+	else
+		h1.text-center.login-title Welcome #{user.firstName}. Submit your change here:
+	form(class='form-signin', action='/submit/#{problem.title}', method='POST')
+		textarea(rows = "10", cols = "35", name = "content",required)
+		button(class='btn btn-lg btn-primary btn-block', type='submit') Submit
