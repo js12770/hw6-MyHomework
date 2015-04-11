@@ -1,0 +1,15 @@
+extends layout
+
+block content
+  div.container
+    div.row
+      div.col-sm-6.col-md-4.col-md-offset-4
+        h1.text-center.login-title Publish Homework
+          div.signup-wall
+           form(class='form-signin', action='/republish', method='POST')
+              input(type="hidden", name="homework_id",value="#{homework_id}" )
+              input(type='text', name='homework_title', class='form-control', value = "#{homework.title}", placeholder='Homework Title',required, readonly)
+              input(type='date', name='homework_deadline', class='form-control',  value = "#{homework.deadline}", placeholder='Deadline',required)
+              textarea(rows="12", cols="113", name="homework_demand", placeholder='Homework demand', class='form-control') #{homework.demand}
+              button(class='btn btn-lg btn-primary btn-block', type='submit') Republish
+            a(href='/home', class='text-center new-account') Back

@@ -1,0 +1,29 @@
+extends layout
+
+block content
+	div.container
+		div.row
+			div.col-sm-6.col-md-4.col-md-offset-4
+					h1.text-center.login-title All homeworks:
+						each homework in homeworks
+							div.signup-wall
+								if user.character == "student"
+									form(class='form-signin', action='/hand_in_page', method='POST')
+										input(type='text', name='homework_title', value = "#{homework.title}",class='form-control',required, autofocus,readonly)
+										input(type='text', name='homework_master' value = "#{homework.master}", class='form-control' readonly)
+										textarea(rows="2", name="homework_deadline", placeholder='Homework demand', class='form-control' readonly) #{homework.deadline}
+										textarea(rows="12", name="homework_demand", placeholder='Homework demand', class='form-control' readonly) #{homework.demand}
+										input(type="hidden", name="homework_id", value="#{homework._id}")
+										button(class='btn btn-lg btn-primary btn-block', type='submit') Hand in answer
+								else
+									form(class='form-signin', action='/modify_page', method='POST')
+										input(type='text', name='homework_title', value = "#{homework.title}",class='form-control',required, autofocus,readonly)
+										input(type='text', name='homework_master' value = "#{homework.master}", class='form-control' readonly)
+										textarea(rows="2", name="homework_deadline", placeholder='Homework demand', class='form-control' readonly) #{homework.deadline}
+										textarea(rows="12", name="homework_demand", placeholder='Homework demand', class='form-control' readonly) #{homework.demand}
+										input(type="hidden", name="homework_id", value="#{homework._id}")
+										button(class='btn btn-lg btn-primary btn-block', type='submit') Modify homework demand
+								a(href='/watch_answers?homework_id=#{homework._id}', class='text-center new-account') Watch answer
+	if user.character == "teacher"
+		a(href='/publish_page', class='text-center new-account') Publish Homework
+	a(href='/signout', class='text-center new-account') Sign Out

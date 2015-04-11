@@ -1,0 +1,12 @@
+extends layout
+
+block content
+  h1.text-center.login-title All Answers:
+    each answer in answers
+        div.signup-wall
+            label Homework Title
+            input(type="text", name="homework_title", value="#{answer.homework_title}" readonly)
+            label Homework By
+            input(type="text", name="master", value=" #{answer.master}" readonly)
+            textarea(rows="12", cols="113", name="answer_content", placeholder='Your Answer', class='form-control') #{answer.content}
+  a(href='/home', class='text-center new-account') Back
