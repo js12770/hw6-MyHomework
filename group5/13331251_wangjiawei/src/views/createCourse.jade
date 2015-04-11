@@ -1,0 +1,7 @@
+extend layout
+
+block content
+	div.container
+		form(action="./create", method="POST")
+			input(type="text", name="name", placeholder="Name of the course")
+			button.btn(type="submit") Create

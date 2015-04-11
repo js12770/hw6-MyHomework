@@ -1,0 +1,15 @@
+extends base
+
+block content
+    .nav-bar-left
+        ul.list-group.changeborder
+          a(href="#")
+            li.list-group-item
+          a(href="/publish")
+            li.list-group-item 发布作业
+          a(href="/showhw")
+            li.list-group-item 所有作业(未截止)
+          a(href="/correcthw")
+            li.list-group-item 批改作业(已截止)
+      .content-right
+        block content-right

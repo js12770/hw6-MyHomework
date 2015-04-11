@@ -1,0 +1,22 @@
+extends layout
+
+block content
+    - var identity = user.identity
+
+    nav(class='navbar navbar-inverse navbar-fixed-top')
+        div.container
+            div.navbar-header
+                a(href='#',class='navbar-brand')
+                    - if (identity == 'teacher')
+                        p you are a teacher
+                    - else
+                        p you are a student
+            div(id='navbar',class='navbar-collapse collapse')
+                ul.nav.navbar-nav
+                    li
+                        a(href='/signout') Sign Out
+    div.container                       
+        - if (identity == 'teacher')
+            include teacher.jade
+        - else
+            include student.jade

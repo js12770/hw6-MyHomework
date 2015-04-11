@@ -1,0 +1,27 @@
+extends layout
+
+block content
+	div.container
+		p Welcome #{user.username}!
+		if user.character == 'student'
+			div#homeworkList
+				| Your homework is listed below:
+				if homeworks.length != 0
+					ul
+						each homework in homeworks
+							li
+								a(href="./#{homework._id}") #{homework.name}
+				else
+					p You have no homeworks, congratulation!
+		if user.character == 'teacher'
+			div#homeworkList
+				| You can see the homework below
+				if homeworks.length != 0
+					ul
+						each homework in homeworks
+							li
+								a(href="./#{homework._id}") #{homework.name}
+				else
+					p
+						| You haven't create any homework
+						a(href="/homeworks/create") Create one?

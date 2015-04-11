@@ -1,0 +1,19 @@
+extends basestudent
+
+block content-right
+    .unfinish
+      table.table.table-bordered
+        tr
+          th.col-md-2 课程名
+          th.col-md-2 发布者
+          th.col-md-3 要求
+          th.col-md-3 截止日期
+          th.col-md-2 操作
+        each course in hw
+            tr
+              td.changeStuUn #{course.coursename}
+              td.changeStuUn #{course.createby}
+              td.changeStuUn #{course.command}
+              td.changeStuUn #{course.ddl}
+              td
+                button.btn.btn-primary(type="button") 提交

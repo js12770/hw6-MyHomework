@@ -1,0 +1,19 @@
+extends baseteacher
+
+block content-right
+    .correcthw
+      table.table.table-bordered
+        tr
+          th.col-md-3 课程名
+          th.col-md-3 文件
+          th.col-md-3 上传者
+          th.col-md-3 时间
+          th.col-md-2 操作
+        each course in hw
+          tr
+            td.changetdfont #{course.coursename}
+            td.changetdfont b
+            td.changetdfont c
+            td.changetdfont #{course.ddl}
+            td
+              button.btn.btn-primary(type="button") 批改
