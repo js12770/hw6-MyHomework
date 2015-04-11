@@ -1,0 +1,88 @@
+extends layout
+
+block content
+	div.container
+		div.row
+			div.col-sm-6.col-md-4.col-md-offset-4
+				#user
+					h1.text-center.login-title Welcome #{user.firstName}. Check your details below:
+						div.signup-wall
+							ul.user-details
+								li Usernameaaa ---> #{user.username}
+								li Email    ---> #{user.email}
+								li First Name ---> #{user.firstName} 
+								li Last Name ---> #{user.lastName}
+						a(href='/signout', class='text-center new-account') Sign Out
+		if user.role == 'teacher'
+			fieldset
+				legend 布置作业
+				form(role='form', action='/assign', method='POST')
+					div.form-group
+						label 作业编号
+						input.form-control(type='text',placeholder='id' name='homeworkid')
+						label 作业要求
+						textarea.form-control(rows='3',name='require')
+						label 截止时间
+						input.form-control(name='ddl',type='text',placeholder='2000/01/01 00:00:00')
+					button.btn.btn-default(type="submit") 发布
+			hr
+			if homeworks != null
+				div
+					table.table
+						caption
+							h3 已经布置作业
+						thead
+							tr
+								th 作业编号
+								th 作业要求
+								th 截止时间
+						tbody
+							for homework in homeworks
+								tr
+									td #{homework.homeworkid}
+									td #{homework.require}
+									td #{homework.ddl}
+			hr
+			h4 已经提交
+			if studenthomework != null
+				for shomework in studenthomework
+					ul.list-group
+						li.list-group-item 学生: #{shomework.student}
+						li.list-group-item 作业编号: #{shomework.homeworkid}
+						li.list-group-item 作业: #{shomework.content}
+
+		else
+			fieldset
+				legend 提交作业
+				form(role='form', action='/commit', method='POST')
+					div.form-group
+						label 作业编号
+						input.form-control(type='text',placeholder='id' name='homeworkid')
+						label 我的作业
+						textarea.form-control(rows='3',name='content')
+					button.btn.btn-default(type="submit") 提交
+			hr
+			if homeworks != null
+				div
+					table.table
+						caption
+							h3 已经布置作业
+						thead
+							tr
+								th 作业编号
+								th 作业要求
+								th 截止时间
+						tbody
+							for homework in homeworks
+								tr
+									td #{homework.homeworkid}
+									td #{homework.require}
+									td #{homework.ddl}
+			hr
+			h4 已经提交
+			if studenthomework != null
+				for shomework in studenthomework
+					ul.list-group
+						li.list-group-item 学生: #{shomework.student}
+						li.list-group-item 作业编号: #{shomework.homeworkid}
+						li.list-group-item 作业: #{shomework.content}
