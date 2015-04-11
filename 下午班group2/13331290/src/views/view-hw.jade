@@ -1,0 +1,32 @@
+extends student
+
+block sub-container
+  h1.page-header 作业详情
+
+  .form-horizontal
+    .form-group
+      label.col-sm-2.control-label 作业标题
+      .col-sm-10.col-md-5
+        input.form-control(type='text' name='title' value='#{homework.title}' readonly)
+
+    .form-group
+      label.col-sm-2.control-label 出题老师
+      .col-sm-10.col-md-5
+        input.form-control(type='text' name='teacherName' value='#{homework.teacherName}' readonly)
+
+    .form-group
+      label.col-sm-2.control-label 截止时间
+      .col-sm-10.col-md-5
+        input.form-control(type='text' name='deadline' value='#{homework.deadline}' readonly)
+
+    .form-group
+      label.col-sm-2.control-label 具体要求
+      .col-sm-10
+        textarea.form-control(rows='15' name='requirement' readonly) #{homework.requirement}
+
+  form.form-horizontal(method='post' enctype='multipart/form-data')
+    .form-group
+      .col-sm-offset-2.col-sm-10
+        input.form-control(type='file' name='file' accept='application/x-zip-compressed, application/pdf' required)
+        button.btn.btn-default(type='submit') 提交
+        a.btn.btn-default(href='/home') 返回

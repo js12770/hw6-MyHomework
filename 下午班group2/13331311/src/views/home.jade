@@ -1,0 +1,53 @@
+extends layout
+
+block content
+    if user.career == 'Student'
+      nav.navbar.navbar-ghost(role='navigation')
+        .container-fluid
+          h1 Hello Student! Here are your assignments:
+          a(href='/signout')
+            button.replyBtn.btn.btn-primary 退出
+          .navbar-header
+      .container
+        each Assignment in AssignmentList
+          .jumbotron.question.col-sm-10.col-sm-offset-1
+            .title #{Assignment.assignmentname}
+            .time #{Assignment.deadline}
+            .author #{Assignment.author}
+            .clearfix
+            .text #{Assignment.content}
+            a(href='/submit/#{Assignment._id}')
+              button.replyBtn.btn.btn-primary 提交作业
+            .clearfix
+            each Homework in HomeworkList
+              if Homework.assignmentid == Assignment._id
+                if Homework.upper == user.username
+                  .reply.col-sm-10.col-sm-offset-2
+                    .replyTxt #{Homework.content}
+                    .replyAuthor #{Homework.studentName}
+
+    if user.career == 'Teacher'
+      nav.navbar.navbar-ghost(role='navigation')
+        .container-fluid
+          h1 Hello Teacher! What can I do for you?
+          a(href='/signout')
+            button.replyBtn.btn.btn-primary 退出
+          a(href='/create')
+            button.replyBtn.btn.btn-primary 发布作业
+          .navbar-header
+      .container
+        each Assignment in AssignmentList
+          .jumbotron.question.col-sm-10.col-sm-offset-1
+            .title #{Assignment.assignmentname}
+            .time #{Assignment.deadline}
+            .author #{Assignment.author}
+            .clearfix
+            .text #{Assignment.content}
+            a(href='/modify/#{Assignment._id}')
+              button.replyBtn.btn.btn-primary 修改要求
+            .clearfix
+            each Homework in HomeworkList
+              if Homework.assignmentid == Assignment._id
+                .reply.col-sm-10.col-sm-offset-2
+                  .replyTxt #{Homework.content}
+                  .replyAuthor #{Homework.studentName}

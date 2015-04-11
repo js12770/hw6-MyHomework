@@ -1,0 +1,25 @@
+extends layout
+
+block content
+    link(rel='stylesheet', href='/stylesheets/home.css')
+    nav.navbar-inverse.navbar.navbar-fixed-top
+        .container-fluid
+            .navbar-header
+                button(type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar")
+                    span.sr-only Toggle navigation
+                    span.icon-bar
+                    span.icon-bar
+                    span.icon-bar
+                a.navbar-brand(href='/home') #{user.username}
+            #navbar.navbar-collapse.collapse
+                ul.nav.navbar-nav.navbar-right
+                    li: a(href='#') 设置
+                    li: a(href='#') 个人
+                    li: a(href='#') 帮助
+                    li: a(href='/signout') 退出
+                form.navbar-form.navbar-right
+                    input(type="text" class="form-control" placeholder="搜索...")
+    
+    .container-fluid
+        .row
+            block main-container

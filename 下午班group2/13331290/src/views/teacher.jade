@@ -1,0 +1,11 @@
+extends home
+
+block main-container
+    script(type='text/javascript', src='/javascripts/teacher.js')
+    .col-sm-3.col-md-2.sidebar
+        ul.nav.nav-sidebar
+            li: a(href='/home') 所有作业
+            li: a(href='/publish') 发布作业
+
+    .col-sm-9.col-sm-offset-3.col-md-10.col-md-offset-2.main
+        block sub-container
