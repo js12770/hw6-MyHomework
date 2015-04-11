@@ -1,0 +1,57 @@
+extends home
+
+block homework
+  div.well
+    h1 所有作业要求
+    each requirement in requirements
+      div.well
+        h2 课程名字: #{requirement.coursename}
+        h2 作业名字: #{requirement.requirementname}
+        h2 截止时间: #{requirement.deadline} 
+        if user.status == 'student'
+          h2 作业要求: #{requirement.requirementcontent}
+        else
+          form(role='form', action='/updaterequirement', method='post')
+            div.form-group
+              h2 作业要求: #{requirement.requirementcontent}
+              textarea.form-control(rows='5', name='requirementcontent', value="#{requirement.requirementcontent}", placeholder='作业要求...')
+              input(type='text', style='display: none', name='coursename', value="#{requirement.coursename}")
+              input(type='text', style='display: none', name='requirementname', value="#{requirement.requirementname}")
+            button.btn.btn-default(type='submit') 更新作业要求
+
+  if user.status == 'student'
+    div.well
+      h1 我的作业
+      each homework in homeworks
+        if user.username == homework.username
+          each requirement in requirements
+            if homework.requirementname == requirement.requirementname
+              div.well
+                h2 课程名字: #{requirement.coursename}
+                h2 作业名字: #{requirement.requirementname}
+                h2 作业要求: #{requirement.requirementcontent}
+                h2 用户名: #{homework.username}
+                h2 作业内容: #{homework.content}
+                h2 作业分数: #{homework.score == undefined ? 'none' : homework.score}
+  else
+    div.well
+      h1 所有学生的作业
+      each homework in homeworks
+        each requirement in requirements
+          if homework.requirementname == requirement.requirementname
+            div.well
+              h2 课程名字: #{requirement.coursename}
+              h2 作业名字: #{requirement.requirementname}
+              h2 作业要求: #{requirement.requirementcontent}
+              h2 学生: #{homework.username}
+              h2 作业内容: #{homework.content}
+
+              form(role='form', action='/mark', method='post')
+                div.form-group
+                  label
+                    h2 分数: #{homework.score}
+                    input.form-control(type='text', name='score', placeholder='评分或重评')
+                  input(type='text', style='display: none', name='coursename', value="#{requirement.coursename}")
+                  input(type='text', style='display: none', name='requirementname', value="#{requirement.requirementname}")
+                  input(type='text', style='display: none', name='username', value="#{homework.username}")
+                  button.btn.btn-default(type='submit') 提交评分
