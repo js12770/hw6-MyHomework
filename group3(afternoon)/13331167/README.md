@@ -2,7 +2,7 @@
 1. 安装 MonogoDB
 2. 命令行运行 `mongod`，若不成功请确认系统根目录是否有`data/db`文件夹。
 3. 命令行运行 `npm install`，安装不成功请运行 `sudo npm install`，win下请用管理员身份打开命令行。
-4. 命令行运行 `grunt watch'`
+4. 命令行运行 `grunt watch`
 5. 浏览器打开```localhost:5000```
 
 ## 逻辑说明
