@@ -1,0 +1,61 @@
+doctype html
+html
+  head
+    title= 'student_home'
+    link(rel='stylesheet', href='/stylesheets/bootstrap.min.css')
+    link(rel='stylesheet', href='/stylesheets/bootstrap-theme.min.css')
+    link(rel='stylesheet', href='/stylesheets/mycss.css')
+    //- link(rel='stylesheet', href='http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css')
+  body
+    #user
+      if user.state == 'teacher'
+        nav(class='navbar navbar-inverse navbar-fixed')
+          div(class='container')
+            div.row
+              div.col-md-8
+                div(class='navbar-head')
+                  a(class='navbar-brand', href) HomeWork
+                div(class='navbar-collapse collapse' id='navbar')
+                  ul(class = 'nav navbar-nav')
+                    li.active
+                      a(href='/home') home
+                    li
+                      a(href='/profile') profile
+                    li
+                      a(href='/create') create
+                    li
+                      a(href='/history') history
+                    li
+                      a(href='/stu_homework') homework
+              div.col-md-4
+                ul.nav.navbar-nav
+                  li
+                    a.navbar-link.nav #{user.username}
+                  li
+                    button(type="button" class="btn btn-info navbar-btn") Log out
+      else
+        nav(class='navbar navbar-inverse navbar-fixed')
+          div(class='container')
+            div.row
+              div.col-md-8
+                div(class='navbar-head')
+                  a(class='navbar-brand', href) HomeWork
+                div(class='navbar-collapse collapse' id='navbar')
+                  ul(class = 'nav navbar-nav')
+                    li.active
+                      a(href='/home') home
+                    li
+                      a(href='/profile') profile
+                    li
+                      a(href='/submit') submit
+                    li
+                      a(href='/history') history
+                    li
+                      a(href='/my_homework') my homework
+              div.col-md-4
+                ul.nav.navbar-nav
+                  li
+                    a.navbar-link.nav #{user.username}
+                  li
+                    button(type="button" class="btn btn-info navbar-btn") Log out
+    block content

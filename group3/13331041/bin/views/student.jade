@@ -1,0 +1,67 @@
+doctype html
+html
+  head
+    title= 'student_home'
+    link(rel='stylesheet', href='/stylesheets/bootstrap.min.css')
+    link(rel='stylesheet', href='/stylesheets/bootstrap-theme.min.css')
+    //- link(rel='stylesheet', href='http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css')
+  body
+    block content
+      nav(class='navbar navbar-inverse navbar-fixed')
+        div(class='container')
+          div.row
+            div.col-md-8
+              div(class='navbar-head')
+                button(type="button", class="navbar-toggle collapsed", data-toggle='collapse', data-target='#navbar',aria-exparanded='false','aria-control'='navbar')
+                  span(class='sr-only')
+                  for (var i = 0; i < 3; ++i)
+                  span(class='icon-bar')
+                a(class='navbar-brand', href) HomeWork
+              div(class='navbar-collapse collapse' id='navbar')
+                ul(class = 'nav navbar-nav')
+                  li.active
+                    a(href='') home
+                  li
+                    a(href='') profile
+                  li
+                    a(href='') homework
+                  li
+                    a(href='history') history
+            div.col-md-4
+              ul.nav.navbar-nav
+                li
+                  a.navbar-link.nav #{user.username}
+                li
+                  button(type="button" class="btn btn-info navbar-btn") Log out
+      div.container
+        div.row
+          div.col-sm-6.col-md-10.col-md-offset-1    
+            div.well
+              p Welcome to our homework system. Your homework is as shown below
+        div.row
+          div.col-sm-6.col-md-10.col-md-offset-1
+            table.table
+              thead
+                tr
+                  th #
+                  th First Name
+                  th Last Name
+                  th Username
+              tbody
+                tr
+                  td 1
+                  td Mark
+                  td Otto
+                  td @mdo
+                tr
+                  td 2
+                  td Jacob
+                  td Thornton
+                  td @fat             
+                tr 
+                  td 3
+                  td Larry
+                  td the Bird
+                  td @twitter
+    script(type="application/javascript", src="http://localhost:35729/livereload.js")
+    
