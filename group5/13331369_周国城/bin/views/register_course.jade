@@ -1,0 +1,14 @@
+extends layout
+
+block content
+	div.container
+		div.row
+			div.col-sm-6.col-md-4.col-md-offset-4
+				h1.text-center.login-title Choose your role(teacher or student) and the course(default) here!
+					div.account-wall
+						form(class='form-register-course', action='/controllers/course', method='POST')
+							select(class='form-control' name='role')
+								option(selected) teacher
+								option student
+							input(type='text', name='course', class='form-control', value='course',required)
+							button(class='btn btn-lg btn-primary btn-block', type='submit') Register the course and the role

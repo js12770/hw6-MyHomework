@@ -1,0 +1,17 @@
+doctype html
+html
+	head
+		title= title
+		link(rel="stylesheet", href="/stylesheets/style.css")
+		link(rel="stylesheet", href="/stylesheets/bootstrap.min.css")
+	body
+		div.teacher Hi! #{user.username}
+		input.homework_name
+		button.public public
+		ul.homework_list
+			//- each val in #{homework}
+				li
+					//- |#{homework.name}
+					button.modify modify
+					button.detail detail
+					button.require require
