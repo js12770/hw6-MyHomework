@@ -1,0 +1,16 @@
+extends layout
+
+block content
+	div.container
+		div.row
+			div.col-sm-6.col-md-2
+				span.h4 Hello #{user.firstName}.
+			div.col-sm-6.col-md-2.col-md-offset-8
+				a(href='/signout', class='text-center new-account') Sign Out
+		div.row
+			div.col-sm-12.col-md-6.col-md-offset-3
+				div.h3 #{homework.title}
+				form(class='form-signin', action="/anwser/#{homework._id}", method='POST')
+					input(type='text', name='anwser', class='form-control', placeholder='Your anwser',required, autofocus)
+					button(class='btn btn-lg btn-primary btn-block', type='submit') Register
+					span.clearfix
