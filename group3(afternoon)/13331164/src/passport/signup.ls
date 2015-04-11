@@ -14,6 +14,9 @@ module.exports = (passport)!-> passport.use 'signup',  new LocalStrategy pass-re
     new-user = new User {
       username  : username
       password  : hash password
+
+      character:  req.param 'character'
+      
       email     : req.param 'email'
       firstName : req.param 'firstName'
       lastName  : req.param 'lastName'

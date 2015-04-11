@@ -7,3 +7,13 @@ based on http://code.tutsplus.com/tutorials/authenticating-nodejs-applications-w
 2. run mongod (on default port 27017)
 3. npm install
 4. grunt watch
+
+
+teacher: 王青
+password: 123
+
+student1: lin
+password: 123
+
+student2: luking
+password: 123
