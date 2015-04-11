@@ -9,5 +9,4 @@ module.exports = mongoose.model 'User', {
 	lastName: String,
 	state: String,
 	course: String,
-	homework: String
 }

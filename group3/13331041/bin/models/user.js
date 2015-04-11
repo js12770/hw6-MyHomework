@@ -9,7 +9,6 @@
     firstName: String,
     lastName: String,
     state: String,
-    course: String,
-    homework: String
+    course: String
   });
 }).call(this);
