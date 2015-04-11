@@ -1,0 +1,129 @@
+extends layout
+
+block content
+  nav.navbar.navbar-default.navbar-fixed-top
+    div.container-fluid.col-sm-offset-1.col-sm-8.col-md-offset-1.col-md-8
+      div.collapse.navbar-collapse
+        ul.nav.navbar-nav
+          - var role = '老师'
+          if data.user.role == 'student'
+            - role = '同学'
+          li
+            a 欢迎您！ #{data.user.username} #{role} ！
+          li.active
+            a(href="/home") 首页
+          li
+            a(href="/signout") 登出
+  span.clearfix
+
+  if data.user.role == 'student'
+    div.panel-group.col-sm-offset-1.col-sm-10.col-md-offset-1.col-md-10(role="tablist" aria-multiselectable="true")
+      div.panel.panel-default
+        div.panel-heading(role="tab" id="headingOne")
+          h4.panel-title
+            a(data-toggle="collapse" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne")
+              | 您所有的课程
+        div.panel-collapse.collapse.in(id="collapseOne" role="tabpanel" aria-labelledby="headingOne")
+          div.panel-body
+            div.row
+              for course in data.courses
+                div.col-sm-4.col-md-3
+                  div.thumbnail
+                    a(href="/home")
+                      img(src="/images/photo3.jpg" alt="homework")
+                    div.caption
+                      h3 #{course.courseName}
+                      p #{course.shortDiscription}
+                    a.btn.btn-info(href="/course") 选择
+
+      div.panel.panel-default
+        div.panel-heading(role="tab" id="headingTwo")
+          h4.panel-title
+            a(data-toggle="collapse" href="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo")
+              | 你还可以提交的homework
+        div.panel-collapse.collapse.in(id="collapseTwo" role="tabpanel" aria-labelledby="headingTwo")
+          div.panel-body
+            table.table.table-hover
+                  thead
+                    tr
+                      th 序号
+                      th 课程
+                      th 描述
+                      th deadline
+                  tbody
+                    tr
+                      th(scope="row") 1
+                      td Mark
+                      td Otto
+                      td @mdo
+                    tr
+                      th(scope="row") 2
+                      td Jacob
+                      td Thornton
+                      td @fat
+                    tr
+                      th(scope="row") 3
+                      td Larry
+                      td the Bird
+                      td @twitter
+    span.clearfix
+
+  else
+    div.panel-group.col-sm-offset-1.col-sm-10.col-md-offset-1.col-md-10(role="tablist" aria-multiselectable="true")
+      div.panel.panel-default
+        div.panel-heading(role="tab" id="headingOne")
+          h4.panel-title
+            a(data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne")
+              | 您创建的所有课程
+        div.panel-collapse.collapse.in(id="collapseOne" role="tabpanel" aria-labelledby="headingOne")
+          div.panel-body
+            div.row
+              for course in data.courses
+                div.col-sm-4.col-md-3
+                  div.thumbnail
+                    a(href="/#{course.courseShortName}/course")
+                      img(src="/images/photo3.jpg" alt="homework")
+                    div.caption
+                      h3 #{course.courseName}
+                      p #{course.shortDiscription}
+                      a.btn.btn-info(href="/#{course.courseShortName}/course") 选择
+
+      div.panel.panel-default
+        div.panel-heading(role="tab" id="headingTwo")
+          h4.panel-title
+            a.collapsed(data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo")
+              | 创建课程
+        div.panel-collapse.collapse.in(id="collapseTwo" role="tabpanel" aria-labelledby="headingTwo")
+          div.panel-body
+            form.form-horizontal(action='/home', method="POST")
+              div.form-group
+                label(for="courseName" class="col-sm-2 control-label") 课程名称
+                div.col-sm-8
+                  input(type="text" name="courseName" class="form-control" id="courseName" maxlength='20' placeholder="标题 20字" required)
+              div.form-group
+                label(for="courseShortName" class="col-sm-2 control-label") 英文简称
+                div.col-sm-8
+                  input(type="text" name="courseShortName" class="form-control" id="courseShortName" maxlength='20' placeholder="English Only 20字母" required)
+              div.form-group
+                label(for="shortDiscription" class="col-sm-2 control-label") 简短描述
+                div.col-sm-8
+                  input(type="text" name="shortDiscription" class="form-control" id="shortDiscription" maxlength='20' placeholder="描述 20字" required)
+              div.form-group
+                label(for="detailDiscription" class="col-sm-2 control-label") 具体描述
+                div.col-sm-8
+                  textarea(name="detailDiscription" class="col-sm-12 textarea-discription")
+              div.form-group
+                label(for="selectStudent" class="col-sm-2 control-label") 选择学生
+                div.col-sm-8
+                  select(id="selectStudent" name="selectStudent" class="js-example-basic-multiple form-control" multiple="multiple" required)
+                    for student in data.students
+                      option(value="#{student.username}") #{student.username}
+              div.form-group
+                div.col-sm-offset-2.col-sm-10
+                  button(type="submit" class="btn btn-default") 确认
+
+  span.clearfix
+  div.text-center
+    hr
+    p Copyright © Modern Web Camp
+  script(src="/javascript/main.js")
