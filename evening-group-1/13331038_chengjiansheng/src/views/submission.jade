@@ -1,0 +1,48 @@
+extends layout
+
+block content
+  .container
+    .ui.pointing.menu
+      a.item(href='/homework')
+        i.home.icon
+        | Homework-List
+      if user.identity == 'teacher'
+        a(href='/create', class='item')
+          i.grid.layout.icon
+          |  Create new one
+      if user.identity == 'teacher'
+        a(href='/modify', class='active item')
+          i.grid.layout.icon
+          |  Modify submissions
+      if user.identity == 'student'
+        a(href='/my-submissions', class='item')
+          i.grid.layout.icon
+          |  My submissions
+      .right.menu
+        .item
+          .ui.transparent.icon.input
+            input(type="text", placeholder="Search...")
+            i.search.link.icon
+        a.ui.item(href='/signout') Logout
+
+    .ui.segment
+      .ui.vertical.segment
+        label studentName
+        p #{sub.studentName}
+      .ui.vertical.segment
+        label uploadDate
+        p #{sub.uploadDate}
+      .ui.vertical.segment
+        label content
+        p #{sub.content}
+
+    if user.identity == 'teacher'
+      form(class='ui grid', action='/modify', method='POST')
+        .column
+          .ui.fluid.form.segment
+            .one.fields
+              .field
+                label Grade
+                input(type="hidden", name='sub_id', value='#{sub._id}')
+                input.one(type="text", placeholder="", name='grade')
+                button(class = 'ui blue submit button', type='submit') Submit A Grade

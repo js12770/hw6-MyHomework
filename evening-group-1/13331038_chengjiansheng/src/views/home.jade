@@ -13,5 +13,8 @@ block content
 								li First Name ---> #{user.firstName} 
 								li Last Name ---> #{user.lastName}
 								li identity ---> #{user.identity}
-						a(href='/signout', class='text-center new-account') Sign Out
-						a(href='/homework', class='text-center new-account') Homework List
+						.row
+							span.clearfix
+							p
+							a.text-center.ui.button(href='/homework') Homework List
+							a.ui.button(href='/signout') Sign Out

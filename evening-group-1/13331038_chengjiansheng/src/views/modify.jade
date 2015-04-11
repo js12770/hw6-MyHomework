@@ -3,7 +3,7 @@ extends layout
 block content
   .container
     .ui.pointing.menu
-      a.active.item(href='/homework')
+      a(class='item' href='/homework')
         i.home.icon
         | Homework-List
       if user.identity == 'teacher'
@@ -11,11 +11,11 @@ block content
           i.grid.layout.icon
           |  Create new one
       if user.identity == 'teacher'
-        a(href='/modify', class='item')
+        a(href='/modify', class='active item')
           i.grid.layout.icon
           |  Modify submissions
       if user.identity == 'student'
-        a(href='/my-submissions', class='item')
+        a(href='/my-submissions', class='active item')
           i.grid.layout.icon
           |  My submissions
       .right.menu
@@ -23,23 +23,23 @@ block content
           .ui.transparent.icon.input
             input(type="text", placeholder="Search...")
             i.search.link.icon
-        a.ui.item(href='/signout') Logout
+        a(href='/signout', class = 'ui item') Logout
 
     table.ui.table
       thead
         tr
-          th Name
-          th Teacher
-          th Start-date
+          th HomeworkName
+          th studentName
           th Deadline
-          th Detail-links
+          th Grade
+          th Modify
       tbody
-        each hw in hwlist
+        each sub in sublist
           tr
-            td #{hw.name}
-            td #{hw.teacherName}
-            td #{hw.startDate}
-            td #{hw.deadLine}
+            td #{sub.homeworkName}
+            td #{sub.studentName}
+            td #{sub.uploadDate}
+            td #{sub.grade}
             td
-              a(href='/homework/#{hw._id}')
+              a(href='/modify/#{sub._id}')
                 button.ui.button detail
