@@ -11,8 +11,7 @@ block content
         i.graduation.icon
         .content
           | #{assignment.title}
-      p
-        | #{assignment.description}
+      != assignment.htmlcontent
       .ui.icon.error.message
         if isvalid
           i.attention.circle.icon

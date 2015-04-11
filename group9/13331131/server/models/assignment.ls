@@ -1,4 +1,4 @@
-require! {'./db': db, './user': User}
+require! {'./db': db, './user': User, 'markdown': Md}
 
 Schema = db.mongoose.Schema
 
@@ -19,6 +19,9 @@ AssignmentSchema.virtual 'datestring' .get ->
 
 AssignmentSchema.virtual 'briefdescription' .get ->
     @description.substring(0, 140)
+
+AssignmentSchema.virtual 'htmlcontent' .get ->
+    Md.markdown.toHTML @description
 
 module.exports = db.mongoose.model 'Assignment', AssignmentSchema
 

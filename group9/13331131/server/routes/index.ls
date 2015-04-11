@@ -1,4 +1,4 @@
-require! {'express', fs, '../models/assignment': Assignment, '../models/homework': Homework, path}
+require! {'express', fs, '../models/assignment': Assignment, '../models/homework': Homework, path, 'markdown': Md}
 router = express.Router!
 
 mkdirsSync = (dirpath, mode, callback) ->
