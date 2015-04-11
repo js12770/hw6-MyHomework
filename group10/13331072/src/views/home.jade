@@ -1,0 +1,66 @@
+extends layout
+
+block content
+	div.container
+		div.row
+			div.col-sm-6.col-md-4.col-md-offset-4
+				#user
+					h1.text-center.login-title Welcome #{user.firstName}. Check your details below:
+						div.signup-wall
+							ul.user-details
+								li Isteacher ---> #{user.isteacher}
+								li Username ---> #{user.username}
+								li Email    ---> #{user.email}
+								li First Name ---> #{user.firstName} 
+								li Last Name ---> #{user.lastName}
+						a(href='/signout', class='text-center new-account') Sign Out
+					#message
+							h1.text-center.error-message #{message}
+					h1.text-center.login-title Homework Requests:
+						div.signup-wall
+							ul.user-details
+								if homeworkrequests
+									each homeworkrequest in homeworkrequests
+											li Name:#{homeworkrequest.name}
+											li Request:#{homeworkrequest.request}
+											li Ddl:#{homeworkrequest.ddl}
+											li --------------------------
+							if user.isteacher == 'yes'
+								form(class='form-signin', action='/changeddl', method='POST')
+									input(type='text', name='change_name', class='form-control', placeholder='Request Name',required, autofocus)
+									input(type='text', name='change_ddl', class='form-control', placeholder='New Ddl:yyyy/mm/dd',required, autofocus)
+									button(class='btn btn-lg btn-primary btn-block', type='submit') changeDeadline
+									span.clearfix
+
+								form(class='form-signin', action='/addrequest', method='POST')
+									input(type='text', name='add_name', class='form-control', placeholder='Request Name',required, autofocus)
+									input(type='text', name='add_request', class='form-control', placeholder='request',required, autofocus)
+									input(type='text', name='add_ddl', class='form-control', placeholder='New Ddl:yyyy/mm/dd',required, autofocus)
+									button(class='btn btn-lg btn-primary btn-block', type='submit') add/updateRequest
+									span.clearfix
+							else
+								form(class='form-signin', action='/uploadhomework', method='POST')
+									input(type='text', name='up_name', class='form-control', placeholder='Request Name',required, autofocus)
+									input(type='text', name='up_content', class='form-control', placeholder='content',required, autofocus)
+									button(class='btn btn-lg btn-primary btn-block', type='submit') uploadHomework
+									span.clearfix
+
+					h1.text-center.login-title Homeworks:
+						div.signup-wall
+							ul.user-details
+								if homeworks
+									each homework in homeworks
+											li RequestName:#{homework.name}
+											li Author:#{homework.uploader}
+											li Content:#{homework.content}
+											li Ddl:#{homework.ddl}
+											li Score:#{homework.score}
+											li --------------------------
+
+							if user.isteacher == 'yes'
+								form(class='form-signin', action='/scoring', method='POST')
+									input(type='text', name='request_name', class='form-control', placeholder='Request Name',required, autofocus)
+									input(type='text', name='student_name', class='form-control', placeholder='Student Name',required, autofocus)
+									input(type='text', name='score', class='form-control', placeholder='Score',required, autofocus)
+									button(class='btn btn-lg btn-primary btn-block', type='submit') scoring
+									span.clearfix
