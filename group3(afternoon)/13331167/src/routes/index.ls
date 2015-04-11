@@ -23,6 +23,7 @@ module.exports = (passport)->
     else if req.user.role is 'teacher'
       role = '老师'
     Assignment.fetch (err, assignments)!->
+
       if err
         console.log err
       res.render 'home', {
@@ -43,18 +44,28 @@ module.exports = (passport)->
     if req.user.role is 'teacher'
       Assignment.findById id,(err, assignment)!->
         Homework.findByAssignment assignment._id,(err, homeworks)!->
+          if assignment.deadline < Date.now!
+            isPassed = true
+          else
+            isPassed = false
           res.render 'teacher', {
             user: req.user
             assignment: assignment
             homeworks: homeworks
+            isPassed: isPassed
           }
     if req.user.role is 'student'
       Assignment.findById id,(err, assignment)!->
         Homework.findByAssignmentAndStudent assignment._id,req.user._id,(err, homework)!->
+          if assignment.deadline < Date.now!
+            isPassed = true
+          else
+            isPassed = false
           res.render 'student', {
             user: req.user
             assignment: assignment
             homework: homework
+            isPassed: isPassed
           }
 
   router.post '/assignment/new', is-authenticated, (req, res)!->
@@ -66,16 +77,19 @@ module.exports = (passport)->
           console.log err
 
         _assignment = _.extend assignment, assignmentObj
+        _assignment.deadline_text = _assignment.deadline.getFullYear! + '-' + (parseInt _assignment.deadline.getMonth! + 1) + '-' + _assignment.deadline.getDate!
         _assignment.save (err, assignment)!->
           if err 
             console.log err
           res.redirect '/assignment/' + assignment._id
     else
+      deadline_text = assignmentObj.deadline.toString!
       _assignment = new Assignment {
         name: assignmentObj.name,
         description: assignmentObj.description,
         deadline: assignmentObj.deadline,
         teacher: req.user.firstName,
+        deadline_text: deadline_text
       }
       _assignment.save (err, assignment)!->
           if err 

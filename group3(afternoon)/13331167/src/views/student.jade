@@ -8,7 +8,7 @@ block content
 			div.panel-body
 				h4 #{assignment.name}
 				pre #{assignment.description}
-				h4 截止时间：#{assignment.deadline}
+				h4 截止时间：#{assignment.deadline_text}
 				h4 布置老师：#{assignment.teacher}
 				a(href='/home')
 					button.btn.btn-info(type="button") 返回
@@ -19,17 +19,28 @@ block content
 				div.panel-body
 					h4 作业内容
 					pre #{homework.content}
-					a(href='/homework/update/#{homework._id}')
-						button.btn.btn-warning(type="button") 修改
+					if isPassed
+						p.warning 作业已截止，你不能修改
+						if homework.grade !== undefined
+							h4 分数
+							p #{homework.grade}
+						else
+							p 老师还未给你打分
+					else
+						a(href='/homework/update/#{homework._id}')
+							button.btn.btn-warning(type="button") 修改
 		else
-			div.panel.panel-primary
-				div.panel-heading
-					h3.panel-title 完成作业
-				div.panel-body
-					form(role="form", action="/homework/new", method='POST')
-						div.form-group
-							input(type="hidden",name="assignment[_id]", value="#{assignment._id}")
-							label 请在下方完成作业
-							textarea.form-control(rows="10", placeholder="请完成作业", name="homework[content]", required)
-							br
-							button.btn.btn-success(type="submit") 提交
+			if isPassed
+				p.warning 作业已截止，你不能提交
+			else
+				div.panel.panel-primary
+					div.panel-heading
+						h3.panel-title 完成作业
+					div.panel-body
+						form(role="form", action="/homework/new", method='POST')
+							div.form-group
+								input(type="hidden",name="assignment[_id]", value="#{assignment._id}")
+								label 请在下方完成作业
+								textarea.form-control(rows="10", placeholder="请完成作业", name="homework[content]", required)
+								br
+								button.btn.btn-success(type="submit") 提交

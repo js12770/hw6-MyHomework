@@ -8,10 +8,13 @@ block content
 			div.panel-body
 				h4 #{assignment.name}
 				pre #{assignment.description}
-				h4 截止时间：#{assignment.deadline}
+				h4 截止时间：#{assignment.deadline_text}
 				h4 布置老师：#{assignment.teacher}
-				a(href='/assignment/update/#{assignment._id}')
-					button.btn.btn-warning(type="button") 修改
+				if isPassed
+					p.warning 作业已截止，你不能修改
+				else
+					a(href='/assignment/update/#{assignment._id}')
+						button.btn.btn-warning(type="button") 修改
 				a.back-button(href='/home')
 					button.btn.btn-info(type="button") 返回
 		if homeworks.length === 0
@@ -26,15 +29,16 @@ block content
 						p #{item.student_name}
 						h4 作业内容
 						pre #{item.content}
-						if item.grade === undefined
-							form(role="form", action="/homework/grade", method='POST')
-								div.form-group
-									input(type="hidden",name="homework[_id]", value="#{item._id}")
-									input(type="hidden",name="assignment[_id]", value="#{item.assignment_id}")
-									label.control-label(for="homework-grade") 分数
-										input.form-control#homework-grade(type="text", placeholder="请给分", name="homework[grade]", required)
-									br
-									button.btn.btn-success(type="submit") 打分
-						else
-							h4 分数
-							p #{item.grade}
+						if isPassed
+							if item.grade === undefined
+								form(role="form", action="/homework/grade", method='POST')
+									div.form-group
+										input(type="hidden",name="homework[_id]", value="#{item._id}")
+										input(type="hidden",name="assignment[_id]", value="#{item.assignment_id}")
+										label.control-label(for="homework-grade") 分数
+											input.form-control#homework-grade(type="text", placeholder="请给分", name="homework[grade]", required)
+										br
+										button.btn.btn-success(type="submit") 打分
+							else
+								h4 分数
+								p #{item.grade}

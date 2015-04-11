@@ -6,6 +6,7 @@ assignmentSchema = new mongoose.Schema {
 	description: String,
 	deadline: Date,
 	teacher: String,
+	deadline_text: String
 	meta: {
 		createAt: {
 			type: Date,

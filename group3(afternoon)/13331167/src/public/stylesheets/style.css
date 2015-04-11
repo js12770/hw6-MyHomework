@@ -93,3 +93,9 @@ ul.user-details{
 .back-button {
     margin-left: 10px;
 }
+
+.warning {
+    color: red;
+    font-weight: bold;
+    font-family: '微软雅黑', sans-serif;
+}

@@ -18,7 +18,8 @@ module.exports = (passport)->
       _assignment = new Assignment {
         name:        'MyHomework'
         description: 'MyHomework 是一个基于ExpressJS的Web 2.0应用，老师可以发布作业，学生可以提交作业。\r\n\r\n角色: 学生，老师。\r\n访问管理：\r\n只有选定了本课程老师和学生才能够访问使用本系统。\r\n老师可以看到所有的作业要求和所有学生提交的作业。\r\n学生能看到所有的作业要求，但只能够看到自己的作业。\r\n发布作业要求：老师可以发布作业要求，也可以修改一个已发布但是尚未截止的作业要求。\r\n提交作业：学生可以提交作业（可以多次提交作业，系统将保留最新的版本）。\r\ndeadline：老师可以设定/修改作业要求的截止时间，截止时间到达后，任何学生都将无法提交作业。\r\n作业评分: 截止时间到达之后，老师可以批改作业给出分数。\r\n'
-        deadline:    '6.9'
+        deadline:    new Date "July 21, 2015 01:15:00"
+        deadline_text: "2015-07-21"
         teacher:     '王青'
       }
       _assignment.save (err)!->
