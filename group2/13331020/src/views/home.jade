@@ -1,0 +1,32 @@
+extends layout
+
+block content
+	div.container
+		div.row
+			div.col-sm-6.col-md-4.col-md-offset-4
+				#user
+					h1.text-center.login-title Welcome #{user.firstName}(#{user.identity})
+						div.signup-wall
+							if user.identity == 'student'
+								p All requirements:
+								|#{requirement}
+								br
+								p Your homework:
+								|#{homework}
+
+								p Submit your homework
+								form(action='/submit', method='POST')
+									textarea(name='homework', rows='6', cols='40')
+									button(class='btn btn-lg btn-primary btn-block', type='submit') Submit
+
+							if user.identity == 'teacher'
+								p All requirements:
+								|#{requirement}
+								br
+								p All homeworks from students:
+								|#{homework}
+								form(action='/submit', method='POST')
+									p Publish or modify the requirements:
+									textarea(name='requirement', rows='6', cols='40')
+									button(class='btn btn-lg btn-primary btn-block', type='submit') Submit
+						a(href='/signout', class='text-center new-account') Sign Out
