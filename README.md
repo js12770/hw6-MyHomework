@@ -12,4 +12,4 @@ based on http://code.tutsplus.com/tutorials/authenticating-nodejs-applications-w
 * Part of User Administration Control
 
 #### Install
-* Try to use `mongorestore` to import test data into MongoDB, from file test, if you would like to.
+* Try to use `mongorestore` to import test data into MongoDB, from data_dump, if you would like to.
