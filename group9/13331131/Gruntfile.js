@@ -31,6 +31,14 @@ module.exports = function(grunt) {
         ext: '.jade'
       }
     },
+    concat: {
+      all: {
+        files: {
+          'dist/public/js/hw_app.js': ['dist/public/js/jquery.js', 'dist/public/js/semantic.min.js', 'dist/public/js/jquery.datetimepicker.js', 'dist/public/js/myhw.js'],
+          'dist//public/css/hw_app.css':  ['dist/public/css/semantic.min.css', 'dist/public/css/jquery.datetimepicker.css', 'dist/public/css/app.css']
+        }
+      }
+    },
     livescript: {
       server: {
         expand: true,
@@ -104,6 +112,7 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-sass');
   grunt.loadNpmTasks('grunt-contrib-watch');
   grunt.loadNpmTasks('grunt-contrib-copy');
+  grunt.loadNpmTasks('grunt-contrib-concat');
   grunt.loadNpmTasks('grunt-livescript');
   grunt.loadNpmTasks('grunt-open');
   grunt.loadNpmTasks('grunt-express');
@@ -115,12 +124,13 @@ module.exports = function(grunt) {
     }
 
     grunt.task.run([
+      'concat',
       'express:livereload',
       'open',
       'watch'
     ]);
   });
-  grunt.registerTask('build', ['copy', 'livescript', 'sass']);
+  grunt.registerTask('build', ['copy', 'livescript', 'sass', 'concat']);
   grunt.registerTask('default', ['build']);
 
 };

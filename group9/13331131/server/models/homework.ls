@@ -14,7 +14,7 @@ HomeworkSchema = new Schema {
 
 HomeworkSchema.virtual 'scorestring' .get -> if @score >= 0 then @score else '尚未评分'
 HomeworkSchema.virtual 'path' .get ->
-    '/uploads/'+ @requirementName + @requirementId + '/' + @studentName + @studentUsr + '.' + @extend
+    './dist/uploads/'+ @requirementName + @requirementId + '/' + @studentName + @studentUsr + '.' + @extend
 
 HomeworkSchema.virtual 'name' .get ->
     @studentName + @studentUsr + '.' + @extend

@@ -7,7 +7,7 @@ app.set 'view engine', 'jade'
 
 app.use bodyParser.json!
 app.use bodyParser.urlencoded!
-app.use mult {dest: './dist/public/uploads/'}
+app.use mult {dest: './dist/uploads/'}
 app.use cookieParser!
 
 app.use expressSession secret: 'mySecretKey'

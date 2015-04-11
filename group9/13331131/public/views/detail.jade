@@ -40,52 +40,57 @@ block content
               i.checkmark.icon
               | 提交作业
       else if user._id == assignment.teacherId
-        .ui.labeled.pink.icon.button.update-deadline
-          i.history.icon
-          | 更新截止日期
-        .ui.right.labeled.teal.icon.button.update-assignment(data-href='/update?aid=#{assignment._id}')
-          i.paint.brush.icon
-          | 更新作业要求
-        .myhw-list
-          table.ui.celled.striped.table
-            thead
+        if isvalid
+          .ui.labeled.pink.icon.button.update-deadline
+            i.history.icon
+            | 更新截止日期
+          .ui.right.labeled.teal.icon.button.update-assignment(data-href='/update?aid=#{assignment._id}')
+            i.paint.brush.icon
+            | 更新作业要求
+
+      .myhw-list
+        table.ui.celled.striped.table
+          thead
+            tr
+              th(colspan='3')
+                | 已提交作业
+          tbody
+            if hwlist.length <= 0
               tr
-                th(colspan='3')
-                  | 已提交作业
-            tbody
-              if hwlist.length <= 0
+                td.myhw-empty
+                  .ui.icon.header
+                    i.bitbucket.icon
+                    .content
+                      | 并没有东西
+                      .sub.header 尚无人提交作业
+            else
+              each val in hwlist
                 tr
-                  td.myhw-empty
-                    .ui.icon.header
-                      i.bitbucket.icon
-                      .content
-                        | 这里没有东西
-                        .sub.header 还没有人提交作业
-              else
-                each val in hwlist
-                  tr
-                    td
-                      a(href='#{val.path}')
-                        i.tasks.icon
+                  td
+                    if user.identity == 1
+                      a(href='/download/#{val.path}')
+                        i.file.archive.outline.icon
                         | #{val.name}
-                    td.right.aligned.collapsing #{val.datestring}
-
-                    if isvalid
-                      | hello
                     else
-                      td.right.aligned.collapsing
-                        form.ui.action.input.score-form
-                          input(type='hidden', name='homework_id', value='#{val._id}')
-                          if val.score >= 0
-                            input.score-input(type='number', value='#{val.score}', name='score')
-                          else
-                            input.score-input(type='number', placeholder='Score', name='score')
-                          button.ui.green.right.labeled.icon.button(type='submit')
-                            i.find.icon
-                            | 评分
+                      p
+                        i.file.archive.outline.icon
+                        | #{val.name}
+                  td.right.aligned.collapsing #{val.datestring}
+
+                  if !isvalid && user.identity == 1
+                    td.right.aligned.collapsing
+                      form.ui.action.input.score-form
+                        input(type='hidden', name='homework_id', value='#{val._id}')
+                        if val.score >= 0
+                          input.score-input(type='number', value='#{val.score}', name='score')
+                        else
+                          input.score-input(type='number', placeholder='Score', name='score')
+                        button.ui.green.right.labeled.icon.button(type='submit')
+                          i.find.icon
+                          | 评分
 
 
-    if user.identity == 1
+    if user.identity == 1 && isvalid
       .ui.basic.modal
         i.close.icon
         .header

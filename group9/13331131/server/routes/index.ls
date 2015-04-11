@@ -24,7 +24,9 @@ module.exports = (passport)->
     success-redirect: '/home', failure-redirect: '/', failure-flash: true
   }
 
-  router.get '/signup', (req, res)!-> res.render 'signup', message: req.flash 'message'
+  router.get '/signup', (req, res)!->
+    links = [{to: '/home', name: '首页'}, {to: '/assign', name: '注册'}]
+    res.render 'signup', {links: links}
 
   router.post '/signup', passport.authenticate 'signup', {
     success-redirect: '/assign', failure-redirect: '/signup', failure-flash: true
@@ -90,7 +92,7 @@ module.exports = (passport)->
 
     obj = req.files.homework
     tmp-path = obj.path
-    new-path = './dist/public/uploads/'+req.param 'assignment_title'
+    new-path = './dist/uploads/'+req.param 'assignment_title'
     new-path += (req.param 'assignment_id') + '/'
     console.log new-path
 
@@ -115,6 +117,13 @@ module.exports = (passport)->
           Homework.find-by-id new-homework, (err, doc)!->
             if err then return handle-error err
             console.log doc
+
+  router.get /^\/download\/(.*)/, is-authenticated, (req, res)!->
+    if req.user.identity is 0
+      res.send '没有权限'
+      return
+    res.download req.params[0], (err)!->
+
 
   router.post '/modify', is-authenticated, (req, res)!->
     if req.user.identity is 0
