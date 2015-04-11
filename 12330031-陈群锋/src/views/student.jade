@@ -1,0 +1,10 @@
+div.form-horizontal
+    div.page-header
+        h1 作业提交
+        -if(newHomework)
+            -for (var key in newHomework)
+                div(class='alert alert-success',role='alert')
+                    a(href='/home/'+'#{newHomework[key]._id}',class='alert-link') #{newHomework[key].title} #{newHomework[key].deadline}
+        -else
+            div(class='alert alert-success',role='alert')
+                a(href='#',class='alert-link') 当前没有发布作业
