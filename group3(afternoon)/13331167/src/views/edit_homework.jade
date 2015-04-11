@@ -1,0 +1,17 @@
+extends layout
+
+block content
+	div.container
+		div.panel.panel-primary
+			div.panel-heading
+				h3.panel-title 修改作业
+			div.panel-body
+				form(role="form", action="/homework/new", method='POST')
+					input(type="hidden",name="homework[_id]", value="#{homework._id}")
+					input(type="hidden",name="assignment[_id]", value="#{homework.assignment_id}")
+					div.form-group
+						textarea.form-control(rows="10", placeholder="请完成作业", name="homework[content]", required) #{homework.content}
+						br
+						button.btn.btn-success(type="submit") 提交
+						a.back-button(href='/assignment/#{homework.assignment_id}')
+							button.btn.btn-info(type="button") 返回

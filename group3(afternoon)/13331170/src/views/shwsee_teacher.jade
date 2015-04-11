@@ -1,0 +1,11 @@
+extends layout
+
+block content
+	h1.text-center.login-title Welcome ! The Students Homeworks:
+		each item in collection
+			div.signup-wall
+				ul.user-details
+					li Student  :  #{item.worker}
+			input(type='text', name='hwid', class='form-control', value = '#{item.content}' ,required)
+	a(href='/hwsee', class='text-center new-account') Back
+					

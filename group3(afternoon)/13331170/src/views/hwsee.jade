@@ -1,0 +1,21 @@
+extends layout
+
+block content
+	h1.text-center.login-title All Requirements:
+		each item in collection
+			div.signup-wall
+				ul.user-details
+					li Homework Title  :  #{item.hwname}
+					li Master  :  #{item.master}
+					li DeadLine  :  #{item.hwddl}
+				span #{item.hwrequest}
+			if user.chara == 'student'
+				a(href='/submit/#{item._id}')
+					button(class = "submit") Submit
+			if user.chara == 'teacher'
+				a(href='/republish/#{item._id}')
+					button(class = "submit") Republish
+				a(href='/watch_homework/#{item._id}')
+					button(class = "submit") WatchHomeWork
+	a(href='/main', class='text-center new-account') Back
+					

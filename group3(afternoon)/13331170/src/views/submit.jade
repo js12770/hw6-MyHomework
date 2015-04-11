@@ -1,0 +1,18 @@
+extends layout
+
+block content
+	h1.text-center.login-title All Requirements:
+		form(class='form-signin', action='/submit/#{item._id}', method='POST')
+			div.signup-wall
+				ul.user-details
+					li Homework Title  :  #{item.hwname}
+					li Master  :  #{item.master}
+					li DeadLine  :  #{item.hwddl}
+				span Requirements : <br> #{item.hwrequest}
+			textarea(name='hwcontent', class='form-control', placeholder='write you homework here',required)
+			button(class='btn btn-lg btn-primary btn-block', type='submit') Upload
+		form(class='form-signin', action='/shwsee', method='POST')
+			input(type='hidden', name='hwid', class='form-control', value = '#{item._id}' ,required)
+			button(class='btn btn-lg btn-primary btn-block', type='submit') See Last Homework
+	a(href='/hwsee', class='text-center new-account') Back
+					
