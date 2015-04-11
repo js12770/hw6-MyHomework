@@ -5,6 +5,7 @@ http://my.ss.sysu.edu.cn/wiki/display/SPSP/Lab+06.+MyHomework
 ## install & run
 1. 进入文件夹"13331157", 找到data文件夹, 命令行输入 mongod --dbpath=the/path/to/data, 
    e.g: mongod --dbpath=C:\Users\Administrator\Desktop\13331157\data
+   你也可以将data文件夹中的两个文件复制到你的C:\data\db目录下, 然后直接运行mongod
 2. 命令行输入 npm install （如果在某处卡住, 可以Ctrl+c 停止, 运行 npm clean, 
    然后删除node_modules文件夹, 重新 npm install）
 3. 命令行输入 grunt watch
