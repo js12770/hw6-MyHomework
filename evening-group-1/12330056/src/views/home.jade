@@ -1,0 +1,56 @@
+extends layout
+
+block content
+	div.container
+		div.row
+			div.col-sm-6.col-md-4.col-md-offset-4
+				#user
+					h1.text-center.login-title Welcome #{user.firstName}. Check your details below:
+						div.signup-wall
+							ul.user-details
+								li isTeacher ---> #{user.isTeacher}
+								li Username ---> #{user.username}
+								li Email    ---> #{user.email}
+								li First Name ---> #{user.firstName} 
+								li Last Name ---> #{user.lastName}
+						a(href='/signout', class='text-center new-account') Sign Out
+					if (user.isTeacher)
+						form(class='form-signin', action='/assign', method='POST')
+							input(type='text', name='question', class='form-control', placeholder='question', required, autofocus)
+							input(type='text', name='deadline', class='form-control', placeholder='format: yyyy,mm,dd,hh,mm,ss', required)
+							button(class='btn btn-lg btn-primary btn-block', type='submit') Assign
+							span.clearfix
+					#message
+						if message
+							h1.text-center.error-message #{message}
+					h1.text-center.login-title Assignment
+						div.signup-wall
+							ul.user-details
+								if assignments
+									each assignment in assignments
+										li #{assignment}
+							if user.isTeacher
+								form(class='form-signin', action='/changedeadline', method='POST')
+									input(type='text', name='assignId', class='form-control', placeholder='assignId',required, autofocus)
+									input(type='text', name='deadline', class='form-control', placeholder='deadline',required)
+									button(class='btn btn-lg btn-primary btn-block', type='submit') changeDeadline
+									span.clearfix
+							else
+								form(class='form-signin', action='/submit', method='POST')
+									input(type='text', name='assignId', class='form-control', placeholder='assignId',required, autofocus)
+									input(type='text', name='content', class='form-control', placeholder='content', required)
+									button(class='btn btn-lg btn-primary btn-block', type='submit') submit
+									span.clearfix
+					h1.text-center.login-title Submission
+						div.signup-wall
+							ul.user-details
+								if submissions
+									each submission in submissions
+										li #{submission}
+								if user.isTeacher
+									form(class='form-signin', action='/grade', method='POST')
+										input(type='text', name='assgnId', class='form-control', placeholder='assignId', required, autofocus)
+										input(type='text', name='studentName', class='form-control', placeholder='student', required)
+										input(type='text', name='score', class='form-control', placeholder='score', required)
+										button(class='btn btn-lg btn-primary btn-block', type='submit') grade
+										span.clearfix
