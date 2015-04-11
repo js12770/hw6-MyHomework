@@ -1,0 +1,16 @@
+extends layout
+
+block content
+	div.container
+		div.row
+			div.col-sm-6.col-md-4.col-md-offset-4
+				#homework
+					h1.text-center.login-title Home work:
+						each item in collection
+							a(href='/answer?item=#{item.Name}', class='text-center new-account')
+								div.signup-wall
+									ul.user-details										
+										li Title -->#{item.Name}
+										li Teacher--> #{item.teacher}
+										li Deadline--->#{item.deadline}
+										li Content---> #{item.Content}
