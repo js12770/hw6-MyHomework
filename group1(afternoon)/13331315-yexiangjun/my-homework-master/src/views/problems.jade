@@ -1,0 +1,19 @@
+extends layout
+
+block content
+	h1.text-center.login-title #{user.firstname} All Homework:
+		each item in collection
+			div.signup-wall
+				ul.user-details
+					li Homework Title  :  #{item.title}
+					li Master  :  #{item.teacher}
+					li DeadLine  :  #{item.ddl}
+				span #{item.content}
+			if user.identity == 'S'
+				a(href='/submit/#{item.title}')
+					button(class = "submit") Submit
+			else
+				a(href='/submit/#{item.title}')
+					button(class = "submit") Change
+	a(href='/home', class='text-center new-account') Back
+					

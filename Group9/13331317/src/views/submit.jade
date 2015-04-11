@@ -1,0 +1,7 @@
+extends layout
+
+block content
+	form(class='form-signin', action='/submit/#{requirement.Head}', method='POST')
+		textarea(rows="10", cols="100", name="answer", placeholder='please type in your answer', class='form-control')
+		button(class='btn btn-lg btn-primary btn-block', type='submit') Submit
+	a(href='/home', class='text-center new-account') Back

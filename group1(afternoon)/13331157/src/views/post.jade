@@ -1,0 +1,31 @@
+extends layout
+
+block content
+    div.container
+        h1 Post a homework
+
+        form(method="post" action= homework == null ? "/post":"/post/#{homework.title}" class="ui form")
+            div.field
+                label 标题
+                input(type="text", name="title" value= homework == null ? "":"#{homework.title}" required)
+            div.field
+                label 内容（支持markdown标记语言）
+                if homework
+                    textarea(type="text" name="description" required) #{homework.description}
+                else
+                    textarea(type="text" name="description" required)
+            div.field
+                label 开始日期
+                //-console.log #{homework.start.getFullYear()}
+                input(type="date" name="start" value=homework == null ? "":"#{homework.startDate}" required)
+            div.field
+                label 截止日期
+                input(type="date" name="end" value=homework == null ? "":"#{homework.endDate}" required)
+            if overtime
+                input(class="ui button green " type="submit", value="save")
+            else if homework
+                p <b>已经过了截止日期, 无法保存修改</b>
+                input(class="ui button green disabled" type="submit", value="save" disabled)
+            else
+                input(class="ui button green " type="submit", value="save")
+            

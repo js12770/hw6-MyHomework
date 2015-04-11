@@ -1,0 +1,47 @@
+extends layout
+
+block content
+	div.container
+		if user.type == 'teacher'
+			h3 Welcome, #{user.username} 老师
+		else
+			h3 Welcome, #{user.username} 同学
+		ul(class="nav nav-tabs")
+			li(role="presentation" class="active")
+				a(href="/") Course Page
+			li(role="presentation")
+				a(href="/home") My Home Page
+			li(role="presentation" class="navbar-right")
+				a(href="/signout") Signout
+		br
+		each item in homeworks
+			div.panel.panel-success
+				p.panel-heading <b>#{item.title}</b>
+				div.panel-body !{item.description}
+					p 开始时间: #{item.startDate}&nbsp;&nbsp;&nbsp;&nbsp;截止时间: #{item.endDate}
+					if user.type == 'student'
+						if date < item.end
+							a(href="/submit/#{item.title}")
+								button.ui.button.positive submit homework
+						else
+							p <b>已经过了截止日期</b>
+							a(href="/submit/#{item.title}" disabled)
+								button.ui.button.positive.disabled(disabled) submit homework
+						&nbsp;&nbsp;&nbsp;&nbsp;
+						a(href="/homework/#{item.title}/#{user.username}")
+							button.ui.button.positive view my submit
+					if user.type == 'teacher'
+						if date < item.end
+							a(href="/post/#{item.title}")
+								button.ui.button.positive edite
+						else
+							p <b>已经过了截止日期</b>
+							a(href="/post/#{item.title}" disabled)
+								button.ui.button.positive.disabled(disabled) edite
+						&nbsp;&nbsp;&nbsp;&nbsp;
+						a(href="/homework/#{item.title}")
+							button.ui.button.positive view all submit
+			br
+		if user.type == 'teacher'
+			a(href="/post")
+				button.ui.button.purple create new homework
