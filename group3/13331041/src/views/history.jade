@@ -1,0 +1,112 @@
+doctype html
+html
+  head
+    title= 'student_home'
+    link(rel='stylesheet', href='/stylesheets/bootstrap.min.css')
+    link(rel='stylesheet', href='/stylesheets/bootstrap-theme.min.css')
+    link(rel='stylesheet', href='/stylesheets/mycss.css')
+    //- link(rel='stylesheet', href='http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css')
+  body
+    #user
+    #homework
+    #date
+      if user.state == 'teacher'
+        nav(class='navbar navbar-inverse navbar-fixed')
+          div(class='container')
+            div.row
+              div.col-md-8
+                div(class='navbar-head')
+                  a(class='navbar-brand', href) HomeWork
+                div(class='navbar-collapse collapse' id='navbar')
+                  ul(class = 'nav navbar-nav')
+                    li
+                      a(href='/home') home
+                    li
+                      a(href='/profile') profile
+                    li
+                      a(href='/create') create
+                    li.active
+                      a(href='/history') history
+                    li
+                      a(href='stu_homework') homework
+              div.col-md-4
+                ul.nav.navbar-nav
+                  li
+                    a.navbar-link.nav #{user.username}
+                  li
+                    a(href="/" class="navbar-link") Log out
+        div.container
+          div.row
+              div.col-sm-6.col-md-10.col-md-offset-1
+                table.table
+                  thead
+                    tr
+                      th #
+                      th course
+                      th homework
+                      th deadline
+                      th change
+                  tbody
+                    - var i = 1
+                    - each hw in homework
+                        tr
+                          td #{i}
+                          td #{hw.course}
+                          td #{hw.homework}
+                          td #{hw.deadline}
+                          td
+                            - if (date > hw.deadline)
+                              a(href = '/outofdate?id=#{hw._id}') Out of Date
+                            - else
+                              a(href='/homework?id=#{hw._id}') change
+                        - i = i+1
+      else
+        nav(class='navbar navbar-inverse navbar-fixed')
+          div(class='container')
+            div.row
+              div.col-md-8
+                div(class='navbar-head')
+                  a(class='navbar-brand', href = '/home') HomeWork
+                div(class='navbar-collapse collapse' id='navbar')
+                  ul(class = 'nav navbar-nav')
+                    li
+                      a(href='/home') home
+                    li
+                      a(href='/profile') profile
+                    li
+                      a(href='/history') submit
+                    li.active
+                      a(href='/history') history
+                    li
+                      a(href='my_homework') my homework
+              div.col-md-4
+                ul.nav.navbar-nav
+                  li
+                    a.navbar-link.nav #{user.username}
+                  li
+                    a(href="/" class="navbar-link") Log out
+              div.container
+        div.row
+            div.col-sm-6.col-md-10.col-md-offset-1
+              table.table
+                thead
+                  tr
+                    th #
+                    th course
+                    th homework
+                    th deadline
+                    th change
+                tbody
+                  - var i = 1
+                  - each hw in homework
+                      tr
+                        td #{i}
+                        td #{hw.course}
+                        td #{hw.homework}
+                        td #{hw.deadline}
+                        td
+                          - if (date > hw.deadline)
+                            a(href='/outofdate?id=#{hw._id}') outofdate
+                          - else                    
+                            a(href='/submit?id=#{hw._id}') submit
+                      - i = i+1

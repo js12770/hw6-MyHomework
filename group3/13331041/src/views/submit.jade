@@ -1,0 +1,68 @@
+doctype html
+html
+  head
+    title= 'student_home'
+    link(rel='stylesheet', href='/stylesheets/bootstrap.min.css')
+    link(rel='stylesheet', href='/stylesheets/bootstrap-theme.min.css')
+    link(rel='stylesheet', href='/stylesheets/mycss.css')
+    //- link(rel='stylesheet', href='http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css')
+  body
+    #user
+    #homework
+      nav(class='navbar navbar-inverse navbar-fixed')
+        div(class='container')
+          div.row
+            div.col-md-8
+              div(class='navbar-head')
+                a(class='navbar-brand', href) HomeWork
+              div(class='navbar-collapse collapse' id='navbar')
+                ul(class = 'nav navbar-nav')
+                  li
+                    a(href='/home') home
+                  li
+                    a(href='/profile') profile
+                  li.active
+                    a(href='/history') submit
+                  li
+                    a(href='/history') history
+            div.col-md-4
+              ul.nav.navbar-nav
+                li
+                  a.navbar-link.nav #{user.username}
+                li
+                  a(href="/" class="navbar-link") Log out
+      
+      form(class ='form-horizontal', method = 'post' action= '/submit')
+        div.container
+          div.row.col-md-offset-2.col-md-8
+            
+              fieldset
+                #legend
+                  legend Homework
+                div.col-md-3
+                  .control-group
+                    // Text input
+                    label.control-label(for='input01') HomeWork
+                    .controls
+                      input.input-xlarge(type='text', name = 'homework',readOnly = 'True' value = '#{homework.homework}')
+                  .control-group
+                    // Text input
+                    label.control-label(for='input01') Course
+                    .controls
+                      input.input-xlarge(type='text', name = 'course', readOnly = 'True', value = '#{homework.course}')
+                    label.control-label(for='input01') Deadline
+                    .controls
+                      input(type='date', name = 'deadline', value = '#{homework.deadline}', readOnly = 'True')
+                    label.control-label(for='input01') Student
+                    .controls
+                      input.input-xlarge(type='text', name = 'student', value = '#{user.username}', readOnly = 'True') 
+                div.col-md-5
+                  label.control-label detail
+                  .textarea
+                  textarea(class = 'from-control', rows = '7', cols='60', name='detail', readOnly = 'True', value = '#{homework.detail}') #{homework.detail}
+            div.col-md-8.sub.col-md-offset-2
+              textarea(class = 'from-control sub', rows = '5', cols='87', name='content')
+            div.row.col-md-2.col-md-offset-5
+              .control-group
+                .controls
+                  button.btn.btn-success.submit Submit
