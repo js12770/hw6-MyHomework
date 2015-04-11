@@ -1,0 +1,16 @@
+extends layout
+
+block content
+	div.container
+		div.row
+			div.col-sm-6.col-md-4.col-md-offset-4
+				#homework
+					h1.text-center.login-title HOMEWORKS
+						ul.user-details
+							if homeworks
+								each homework in homeworks
+									div.homework
+										li HomeworkTitle: #{homework.HomeworkTitle}
+										li HomeworkDeadline: #{homework.HomeworkDeadline}
+										li HomeworkRequirement: #{homework.HomeworkRequirement}
+										a(href='/changeDeadline', class='text-center new-account') Change Deadline
