@@ -12,6 +12,12 @@ block content
 							input(type='email', name='email', class='form-control', placeholder='Email',required)
 							input(type='text', name='firstName', class='form-control', placeholder='First Name',required)
 							input(type='text', name='lastName', class='form-control', placeholder='Last Name',required)
+							
+							label.checkbox-inline Student
+								input(type="radio" name="character", value="student" checked)
+							label.checkbox-inline Teacher
+								input(type="radio" name="character", value="teacher")
+
 							button(class='btn btn-lg btn-primary btn-block', type='submit') Register
 							span.clearfix
 					#message

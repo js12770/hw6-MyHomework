@@ -12,4 +12,11 @@ block content
 								li Email    ---> #{user.email}
 								li First Name ---> #{user.firstName} 
 								li Last Name ---> #{user.lastName}
+								li character ---> #{user.character}
+						a(href='/viewrequirement', class='text-center new-account') See Homework Requirements
+						if user.character == 'teacher'
+							a(href='/viewhomework', class='text-center new-account') See All Homework Answer
+							a(href='/create', class='text-center new-account') Add A Homework Requirements
+						if user.character == 'student'
+							a(href='/viewhomework', class='text-center new-account') See All Homework Answer
 						a(href='/signout', class='text-center new-account') Sign Out
