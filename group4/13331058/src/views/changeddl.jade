@@ -1,0 +1,7 @@
+extends layout
+
+block content
+	form(class='form-signin', action='/changeddl/#{requirement.Head}', method='POST')
+		input(type='text', name='ddl' class='form-control', placeholder='ChangeDDL (yyyy-mm-dd-hh:minmin)',required)
+		button(class='btn btn-lg btn-primary btn-block', type='submit') Modify
+	a(href='/viewrequirement', class='text-center new-account') Back

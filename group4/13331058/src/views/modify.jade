@@ -1,0 +1,7 @@
+extends layout
+
+block content
+	form(class='form-signin', action='/modify/#{requirement.Head}', method='POST')
+		textarea(rows="12", cols="113", name="content", placeholder='New Requirement', class='form-control')
+		button(class='btn btn-lg btn-primary btn-block', type='submit') Modify
+	a(href='/viewrequirement', class='text-center new-account') Back
