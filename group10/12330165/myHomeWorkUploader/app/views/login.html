@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+    <title>Login Page</title>
+
+    <!-- Bootstrap -->
+    <link href="../bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="../stylesheets/login.css" rel="stylesheet">
+
+</head>
+<body>
+<header>
+    <ul>
+        <li>
+            <a>首页</a>
+        </li>
+        <li>
+            <a>安全中心</a>
+        </li>
+    </ul>
+</header>
+
+<div id="main-container">
+    <img src="images/backgroundImage.jpg" id="firstImage">
+</div>
+
+<div id="login-container">
+    <form name="loginForm">
+        <fieldset>
+            <h2>作业提交系统</h2>
+            <div id="username">
+                <label class="label-area">
+                    <span class="background-icon-area"></span>
+                </label>
+                <input type="text" class="input-text-area" placeholder="填写你的学号 例如:12330165">
+            </div>
+            <div id="password">
+                <label class="label-area">
+                    <span class="background-icon-area"></span>
+                </label>
+                <input type="password" class="input-text-area">
+            </div>
+            <div class="submit-button1">
+                <input type="button" value="登 录">
+            </div>
+            <div class="submit-button1">
+                <a href="/safe"><input type="button" value="注 册"></a>
+            </div>
+        </fieldset>
+    </form>
+</div>
+
+<footer>
+    <span>This WebPage Is Created By Lijianhua</span>
+</footer>
+<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+<script src="../javascripts/jquery.js"></script>
+<!-- Include all compiled plugins (below), or include individual files as needed -->
+<script src="../bootstrap/js/bootstrap.min.js"></script>
+<script src="../javascripts/accountController.js"></script>
+</body>
+</html>
