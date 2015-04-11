@@ -1,0 +1,30 @@
+extends layout
+
+block content
+	div.container
+		div.row
+			div.col-sm-6.col-md-4.col-md-offset-4
+				#user
+					h1.text-center.login-title Welcome #{user.firstName}. Check your details below:
+						div.signup-wall
+							ul.user-details
+								li Username ---> #{user.username}
+								li Email    ---> #{user.email}
+								li First Name ---> #{user.firstName} 
+								li Last Name ---> #{user.lastName}
+						a(href='/signout', class='text-center new-account') Sign Out
+	each obj in assignment
+		div.container
+			div.row
+				div.col-sm-6.col-md-4.col-md-offset-4
+					#assignment
+						h1.text-center.login-title #{obj.name}:
+							div.signup-wall
+								ul.user-details
+									li 作业要求 ：< #{obj.demand} >
+									li 截止时间 ：< #{obj.endtime} >
+								ul.user-details
+									span 提交的作业：
+									each student in obj.finishedstudent
+										if user.username == student.name || user.type == 'Teacher'
+											li < #{student.name} > : < #{student.assignment} >
