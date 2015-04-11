@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+
+    <!-- Bootstrap -->
+    <link href="../bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="../stylesheets/login.css" rel="stylesheet">
+    <link href="../stylesheets/register.css" rel="stylesheet">
+</head>
+<body>
+<div id="register-container">
+    <form method="post">
+        <fieldset>
+            <label class="label-area">
+                <span class="span-area">学号</span>
+            </label>
+            <input type="text" class="input-text-area" name="studentID">
+            <label class="label-area">
+                <span class="span-area">密码</span>
+            </label>
+            <input type="password" class="input-text-area" name="password">
+            <label class="label-area">
+                <span class="span-area">姓名</span>
+            </label>
+            <input type="text" class="input-text-area" name="name">
+            <label class="label-area">
+                <span class="span-area">性别</span>
+            </label>
+            <input type="text" class="input-text-area" name="sexprefer">
+            <label class="label-area">
+                <span class="span-area">小组</span>
+            </label>
+            <input type="text" class="input-text-area" name="group">
+            <label class="label-area">
+                <span class="span-area">手机</span>
+            </label>
+            <input type="text" class="input-text-area" name="phonenumber">
+            <label class="label-area">
+                <span class="span-area">邮箱</span>
+            </label>
+            <input type="text" class="input-text-area" name="email">
+        </fieldset>
+        <div class="submit-button2">
+            <input type="button" value="注 册">
+        </div>
+    </form>
+</div>
+<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+<script src="../javascripts/jquery.js"></script>
+<!-- Include all compiled plugins (below), or include individual files as needed -->
+<script src="../bootstrap/js/bootstrap.min.js"></script>
+<script src="../javascripts/accountController.js"></script>
+</body>
+</html>
