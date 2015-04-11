@@ -1,0 +1,20 @@
+extends baseteacher
+
+block content-right
+    .showhw
+      form(method="post", action="/modify")
+        table.table.table-bordered
+          tr
+            th.col-md-2 课程名
+            th.col-md-2 发布者
+            th.col-md-3 要求
+            th.col-md-3 截止日期
+            th.col-md-3 操作
+          each course in hw
+            tr
+              td.changetdfont #{course.coursename}
+              td.changetdfont #{course.createby}
+              td.changetdfont #{course.command}
+              td.changetdfont #{course.ddl}
+              td
+                button.btn.btn-primary(type="button") 修改

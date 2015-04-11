@@ -1,0 +1,27 @@
+extends baseteacher
+
+block content-right
+    .publish-hw
+      form.form-horizontal(method="post", action="/publish")
+        .form-group
+          label.col-sm-2.control-label 课程名
+          .col-sm-8
+            input#inputEmail3.form-control(type="text" name="coursename")
+        .form-group
+          label.col-sm-2.control-label 发布者
+          .col-sm-8
+            input#inputEmail3.form-control(type="text" name="createby")
+        .form-group
+          label.col-sm-2.control-label 截止日期
+          .col-sm-3
+            input#inputEmail3.form-control(type="date" name="date")
+          .col-sm-3
+            input#inputEmail3.form-control(type="time" name="time")
+        .form-group
+          label.col-sm-2.control-label(for="inputEmail3") 作业要求
+          .col-sm-8
+            textarea.form-control(rows="8" name="command")
+        .form-group
+          .col-sm-offset-2.col-sm-8
+            button.btn.btn-default(type="submit") 发布
+

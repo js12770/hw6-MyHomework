@@ -1,0 +1,17 @@
+doctype html
+html(lang="en")
+  head
+    meta(charset="UTF-8")
+    title MyHomework
+    link(rel="stylesheet", type="text/css", href="/mystylesheets/bootstrap.min.css")
+    link(rel="stylesheet", type="text/css", href="/mystylesheets/style.css")
+  body
+    .header
+      nav.navbar.navbar-inverse.changeRadius
+        .row.changeFont
+          .col-md-2.changeText #{user.username}
+          .col-md-8.changeTextLeft Myhomework
+          .col-md-2.changeTextright
+            a(href="/signout") 退出
+    .content
+      block content

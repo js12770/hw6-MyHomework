@@ -1,0 +1,14 @@
+extends layout
+
+block content
+	p The courses are below:
+	div#courses
+		if courses.length == 0
+			| There is no courses
+			if user.character == 'teacher'
+				a(href='courses/create') Create one?
+		else
+			ul
+				each course in courses
+					li
+						a(href="/courses/#{course._id}") #{course.name} 

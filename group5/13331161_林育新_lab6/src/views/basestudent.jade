@@ -1,0 +1,13 @@
+extends base
+
+block content
+    .nav-bar-left
+        ul.list-group.changeborder
+          a(href="#")
+            li.list-group-item
+          a(href="/unfinish")
+            li.list-group-item 未截止作业
+          a(href="/finish")
+            li.list-group-item 已截止作业
+      .content-right
+        block content-right
