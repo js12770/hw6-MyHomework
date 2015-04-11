@@ -180,7 +180,7 @@ module.exports = (passport)->
 
 # 设置分数
   router.post '/grades/:_author/:_title', is-authenticated, (req, res)!->
-    if req.type == 'teacher'
+    if req.user.type == 'teacher'
       update = ($set:{grade: req.param 'grade'})
       author = req.param '_author'
       homework = req.param '_title'
