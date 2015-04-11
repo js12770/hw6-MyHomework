@@ -1,0 +1,45 @@
+extends layout
+
+block content
+  .container
+    .ui.pointing.menu
+      a.active.item(href='/homework')
+        i.home.icon
+        | Homework-List
+      if user.identity == 'teacher'
+        a(href='/create', class='item')
+          i.grid.layout.icon
+          |  Create new one
+      if user.identity == 'teacher'
+        a(href='/modify', class='item')
+          i.grid.layout.icon
+          |  Modify submissions
+      if user.identity == 'student'
+        a(href='/my-submissions', class='item')
+          i.grid.layout.icon
+          |  My submissions
+      .right.menu
+        .item
+          .ui.transparent.icon.input
+            input(type="text", placeholder="Search...")
+            i.search.link.icon
+        a.ui.item(href='/signout') Logout
+
+    table.ui.table
+      thead
+        tr
+          th Name
+          th Teacher
+          th Start-date
+          th Deadline
+          th Detail-links
+      tbody
+        each hw in hwlist
+          tr
+            td #{hw.name}
+            td #{hw.teacherName}
+            td #{hw.startDate}
+            td #{hw.deadLine}
+            td
+              a(href='/homework/#{hw._id}')
+                button.ui.button detail
