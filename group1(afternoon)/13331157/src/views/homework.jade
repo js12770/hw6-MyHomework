@@ -1,0 +1,39 @@
+extends layout
+
+block content
+	div.container
+		h3 Submits for #{title}
+
+		ul(class="nav nav-tabs")
+			li(role="presentation")
+				a(href="/") Course Page
+			li(role="presentation")
+				a(href="/home") My Home Page
+			li(role="presentation" class="navbar-right")
+				a(href="/signout") Signout
+		br
+		if !submits
+			p you have no submit for this homework
+		each item in submits
+			div.panel.panel-success
+				p.panel-heading <b>#{item.title}</b>
+				div.panel-body !{item.description}
+					p 作者: #{item.author}
+					p 提交时间: #{item.time}
+					if item.grade
+						p 分数: #{item.grade}
+					else
+						p 分数: 未给出分数
+					if user.type == 'teacher'
+						if overtime
+							p <b>还未到达截止日期, 不能给出分数</b>
+							form(method="post" action="/grades/#{item.author}/#{title}" )
+								input(type="text" name="grade" required disabled)
+								&nbsp;&nbsp;&nbsp;&nbsp;
+								button.ui.button.positive.disabled(type="submit" disabled) give a grade
+						else
+							form(method="post" action="/grades/#{item.author}/#{title}")
+								input(type="text" name="grade" required)
+								&nbsp;&nbsp;&nbsp;&nbsp;
+								button.ui.button.positive(type="submit") give a grade
+			br

@@ -1,0 +1,20 @@
+extends layout
+
+block content
+    div.container
+        h1 Post a homework
+        form(method="post" action= "/submit/#{title}" class="ui form")
+            div.field
+                label 标题
+                input(type="text", name="title" value= sub == null ? "":"#{sub.title}" required)
+            div.field
+                label 内容（支持markdown标记语言）
+                if sub
+                    textarea(type="text" name="description" required) #{sub.description}
+                else
+                    textarea(type="text" name="description" required)
+            if overtime
+                input(class="ui button green" type="submit" value="save" )
+            else
+                p <b>已经过了截止日期, 无法保存修改</b>
+                input(class="ui button green disabled" type="submit" value="save" disabled)
