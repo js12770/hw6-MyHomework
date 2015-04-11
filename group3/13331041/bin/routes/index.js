@@ -1,9 +1,20 @@
 (function(){
-  var express, Homework, HW, router, isAuthenticated;
+  var express, Homework, HW, router, history, year, month, day, date, isAuthenticated;
   express = require('express');
   Homework = require('../models/homework');
   HW = require('../models/hw');
   router = express.Router();
+  history = new Date();
+  year = history.getFullYear();
+  month = history.getMonth() + 1;
+  if (month < 10) {
+    month = '0' + month.toString();
+  }
+  day = history.getDate();
+  if (day < 10) {
+    day = '0' + day.toString();
+  }
+  date = year + '-' + month + '-' + day;
   isAuthenticated = function(req, res, next){
     if (req.isAuthenticated()) {
       return next();
@@ -103,7 +114,7 @@
       value = req.query;
       hw = value['id'];
       Homework.findOne({
-        homework: hw
+        _id: hw
       }, function(err, result){
         return res.render('submit', {
           user: req.user,
@@ -113,34 +124,24 @@
     });
     router.post('/homework', isAuthenticated, function(req, res){
       Homework.findOneAndUpdate({
-        homework: req.param('homework')
+        _id: req.param('id')
       }, {
         $set: {
           deadline: req.param('deadline')
         }
+      }, function(err){
+        Homework.findOneAndUpdate({
+          _id: req.param('id')
+        }, {
+          $set: {
+            detail: req.param('detail')
+          }
+        }, function(err){
+          res.redirect('/history');
+        });
       });
-      Homework.findOneAndUpdate({
-        homework: req.param('homework')
-      }, {
-        $set: {
-          detail: req.param('detail')
-        }
-      });
-      res.redirect('/history');
     });
     router.get('/history', isAuthenticated, function(req, res){
-      var history, year, month, day, date;
-      history = new Date();
-      year = history.getFullYear();
-      month = history.getMonth() + 1;
-      if (month < 10) {
-        month = '0' + month.toString();
-      }
-      day = history.getDate();
-      if (day < 10) {
-        day = '0' + day.toString();
-      }
-      date = year + '-' + month + '-' + day;
       Homework.find(function(err, result){
         return res.render('history', {
           user: req.user,
@@ -208,17 +209,22 @@
       HW.findOne({
         _id: hw
       }, function(err, result){
-        return res.render('homework', {
-          user: req.user,
-          homework: result
-        });
+        if (error) {
+          console.log("Error in saving user: ", error);
+          throw error;
+        } else {
+          return res.render('homework', {
+            user: req.user,
+            homework: result
+          });
+        }
       });
     });
     router.get('/outofdate', isAuthenticated, function(req, res){
       var value, hw;
       value = req.query;
       hw = value['id'];
-      HW.findOne({
+      Homework.findOne({
         _id: hw
       }, function(err, result){
         return res.render('outofdate', {
@@ -234,8 +240,14 @@
         $set: {
           content: req.param('content')
         }
+      }, function(error){
+        if (error) {
+          console.log("Error in saving user: ", error);
+          throw error;
+        } else {
+          res.redirect('/my_homework');
+        }
       });
-      res.redirect('/my_homework');
     });
     router.get('/view', isAuthenticated, function(req, res){
       var value, hw;
@@ -257,8 +269,14 @@
         $set: {
           grade: req.param('grade')
         }
+      }, function(error){
+        if (error) {
+          console.log("Error in saving user: ", error);
+          throw error;
+        } else {
+          res.redirect('/stu_homework');
+        }
       });
-      res.redirect('/stu_homework');
     });
     router.get('/resubmit', isAuthenticated, function(req, res){
       var history, year, month, day, date, value, hw;
@@ -292,8 +310,14 @@
         $set: {
           content: req.param('content')
         }
+      }, function(error){
+        if (error) {
+          console.log("Error in saving user: ", error);
+          throw error;
+        } else {
+          res.redirect('/my_homework');
+        }
       });
-      res.redirect('/my_homework');
     });
   };
 }).call(this);

@@ -32,7 +32,7 @@ html
                   li
                     a.navbar-link.nav #{user.username}
                   li
-                    button(type="button" class="btn btn-info navbar-btn") Log out
+                    a(href="/" class="navbar-link") Log out
       else
         nav(class='navbar navbar-inverse navbar-fixed')
           div(class='container')
@@ -71,4 +71,4 @@ html
                     li Last Name ---> #{user.lastName}
                     li Course    ---> #{user.course}
                     li identity  ---> #{user.state}
-                a(href='/signout', class='text-center new-account') Sign Out
+                a(href="/" class="navbar-link") Log out

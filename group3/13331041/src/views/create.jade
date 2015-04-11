@@ -25,12 +25,14 @@ html
                       a(href='/create') create
                     li
                       a(href='/history') history
+                    li
+                      a(href='/homework') homework
               div.col-md-4
                 ul.nav.navbar-nav
                   li
                     a.navbar-link.nav #{user.username}
                   li
-                    button(type="button" class="btn btn-info navbar-btn") Log out
+                    a(href="/" class="navbar-link") Log out
     div.container
       div.row.col-md-offset-2.col-md-8
         form(class ='form-horizontal', method = 'post' action= '/create')
@@ -42,15 +44,15 @@ html
                 // Text input
                 label.control-label(for='input01') HomeWork
                 .controls
-                  input.input-xlarge(type='text', name = 'homework', readOnly = 'True')
+                  input.input-xlarge(type='text', name = 'homework')
               .control-group
                 // Text input
                 label.control-label(for='input01') Course
                 .controls
-                  input.input-xlarge(type='text', name = 'course', readOnly = 'True')
+                  input.input-xlarge(type='text', name = 'course')
                 label.control-label(for='input01') Author
                 .controls
-                  input.input-xlarge(type='text', name = 'author', value = '#{user.username}' readOnly = 'True')
+                  input.input-xlarge(type='text', name = 'author', value = '#{user.username}')
                 label.control-label(for='input01') Deadline
                 .controls
                   input(type='date', name = 'deadline')

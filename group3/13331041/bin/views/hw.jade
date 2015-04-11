@@ -34,7 +34,7 @@ html
                   li
                     a.navbar-link.nav #{user.username}
                   li
-                    button(type="button" class="btn btn-info navbar-btn") Log out
+                    a(href="/" class="navbar-link") Log out
         div.container
           div.row
               div.col-sm-6.col-md-10.col-md-offset-1
@@ -55,8 +55,8 @@ html
                           td #{hw.homework}
                           td #{hw.deadline}
                           td
-                            - if('#{date}'>'#{hw.deadline}')
-                              a(href='/view?id=#{hw_id}')
+                            - if(date>hw.deadline)
+                              a(href='/view?id=#{hw_id}') mark
                             - else
                               a(href='/view?id=#{hw._id}') View
                         - i = i+1
@@ -84,7 +84,7 @@ html
                   li
                     a.navbar-link.nav #{user.username}
                   li
-                    button(type="button" class="btn btn-info navbar-btn") Log out
+                    a(href="/" class="navbar-link") Log out
               div.container
         div.row
             div.col-sm-6.col-md-10.col-md-offset-1

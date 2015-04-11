@@ -34,7 +34,7 @@ html
                   li
                     a.navbar-link.nav #{user.username}
                   li
-                    button(type="button" class="btn btn-info navbar-btn") Log out
+                    a(href="/" class="navbar-link") Log out
         div.container
           div.row
               div.col-sm-6.col-md-10.col-md-offset-1
@@ -55,7 +55,7 @@ html
                           td #{hw.homework}
                           td #{hw.deadline}
                           td
-                            - if ('#{date}' > '#{hw.deadline}')
+                            - if (date > hw.deadline)
                               a(href = '/outofdate?id=#{hw._id}') Out of Date
                             - else
                               a(href='/homework?id=#{hw._id}') change
@@ -74,7 +74,7 @@ html
                     li
                       a(href='/profile') profile
                     li
-                      a(href='/submit') submit
+                      a(href='/history') submit
                     li.active
                       a(href='/history') history
                     li
@@ -84,7 +84,7 @@ html
                   li
                     a.navbar-link.nav #{user.username}
                   li
-                    button(type="button" class="btn btn-info navbar-btn") Log out
+                    a(href="/" class="navbar-link") Log out
               div.container
         div.row
             div.col-sm-6.col-md-10.col-md-offset-1
@@ -105,7 +105,7 @@ html
                         td #{hw.homework}
                         td #{hw.deadline}
                         td
-                          - if ('#{date}' > '#{hw.deadline}')
+                          - if (date > hw.deadline)
                             a(href='/outofdate?id=#{hw._id}') outofdate
                           - else                    
                             a(href='/submit?id=#{hw._id}') submit

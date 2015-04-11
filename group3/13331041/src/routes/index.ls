@@ -2,6 +2,15 @@ require! ['express']
 require! {Homework:'../models/homework'}
 require! {HW: '../models/hw' }
 router = express.Router!
+history = new Date()
+year = history.getFullYear!
+month = history.getMonth!+1
+if month < 10
+  month = '0'+month.toString!
+day = history.getDate!
+if day < 10
+  day = '0'+day.toString!
+date = year+'-'+month+'-'+day
 is-authenticated = (req, res, next)-> if req.is-authenticated! then next! else res.redirect '/'
 
 module.exports = (passport)->
@@ -58,25 +67,16 @@ module.exports = (passport)->
   router.get '/submit', is-authenticated, (req, res)!->
     value = req.query
     hw = value['id']
-    Homework.find-one {homework:hw} (err, result)->
+    Homework.find-one {_id:hw} (err, result)->
       res.render 'submit',user:req.user, homework:result
 
   router.post '/homework', is-authenticated, (req,res)!->
-    Homework.findOneAndUpdate {homework:req.param 'homework'},{$set:{deadline:req.param 'deadline'}}
-    Homework.findOneAndUpdate {homework:req.param 'homework'},{$set:{detail:req.param 'detail'}}
-    res.redirect '/history'
+    Homework.findOneAndUpdate {_id:req.param 'id'},{$set:{deadline:req.param 'deadline'}} (err)!->
+      Homework.findOneAndUpdate {_id:req.param 'id'},{$set:{detail:req.param 'detail'}} (err)!->
+        res.redirect '/history'
 
 
   router.get '/history', is-authenticated, (req,res)!->
-    history = new Date()
-    year = history.getFullYear!
-    month = history.getMonth!+1
-    if month < 10
-      month = '0'+month.toString!
-    day = history.getDate!
-    if day < 10
-      day = '0'+day.toString!
-    date = year+'-'+month+'-'+day
     Homework.find (err, result)->
       res.render 'history',user:req.user, homework: result, date:date
 
@@ -120,17 +120,25 @@ module.exports = (passport)->
     value = req.query
     hw = value['id']
     HW.find-one {_id:hw} (err, result)->
-      res.render 'homework',user:req.user, homework:result
+      if error
+        console.log "Error in saving user: ", error
+        throw error
+      else
+        res.render 'homework',user:req.user, homework:result
 
   router.get '/outofdate', is-authenticated, (req, res)!->
     value = req.query
     hw = value['id']
-    HW.find-one {_id:hw} (err, result)->
+    Homework.find-one {_id:hw} (err, result)->
       res.render 'outofdate',user:req.user, homework:result
 
   router.post '/change', is-authenticated, (req,res)!->
-    HW.findOneAndUpdate {_update:req.param 'id'},{$set:{content:req.param 'content'}}
-    res.redirect '/my_homework'
+    HW.findOneAndUpdate {_update:req.param 'id'},{$set:{content:req.param 'content'}} (error)!->
+      if error
+        console.log "Error in saving user: ", error
+        throw error
+      else  
+        res.redirect '/my_homework'
 
   router.get '/view', is-authenticated, (req, res)!->
     value = req.query
@@ -139,8 +147,12 @@ module.exports = (passport)->
       res.render 'view',user:req.user, homework:result
 
   router.post '/view', is-authenticated, (req,res)!->
-    HW.findOneAndUpdate {_id: req.param 'id'}, {$set:{grade:req.param 'grade'}}
-    res.redirect '/stu_homework'
+    HW.findOneAndUpdate {_id: req.param 'id'}, {$set:{grade:req.param 'grade'}} (error)!->
+      if error
+        console.log "Error in saving user: ", error
+        throw error
+      else
+        res.redirect '/stu_homework'
 
   router.get '/resubmit', is-authenticated, (req, res)!->
     history = new Date()
@@ -158,5 +170,9 @@ module.exports = (passport)->
       res.render 'view',user:req.user, homework:result, date:date
 
   router.post '/resubmit', is-authenticated, (req,res)!->
-    HW.findOneAndUpdate {_id:req.param 'id'}, {$set:{content:req.param 'content'}}
-    res.redirect '/my_homework'
+    HW.findOneAndUpdate {_id:req.param 'id'}, {$set:{content:req.param 'content'}} (error)!->
+      if error
+        console.log "Error in saving user: ", error
+        throw error
+      else
+        res.redirect '/my_homework'
