@@ -1,0 +1,7 @@
+extends layout
+
+block content
+	h1.text-center.login-title Welcome ! You Last Homework:
+		input(type='text', name='hwid', class='form-control', value = '#{item.content}' ,required)
+	a(href='/hwsee', class='text-center new-account') Back
+					

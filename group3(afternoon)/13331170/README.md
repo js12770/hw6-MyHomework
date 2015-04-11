@@ -7,3 +7,5 @@ based on http://code.tutsplus.com/tutorials/authenticating-nodejs-applications-w
 2. run mongod (on default port 27017)
 3. npm install
 4. grunt watch
+
+除了关于ddl判断之外，其他都已经实现
