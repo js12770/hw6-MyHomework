@@ -1,0 +1,38 @@
+extends my
+
+block content
+  div.container
+    div.row
+      div.col-sm-6.col-md-10.col-md-offset-1    
+        div.well
+          p Sorry, this homework is out of date, you could not change it
+  div.container
+    div.row.col-md-offset-2.col-md-8
+      form(class ='form-horizontal', method = 'post' action= '/homework')
+        fieldset
+          #legend
+            legend Homework
+          div.col-md-3
+            .control-group
+              // Text input
+              label.control-label(for='input01') HomeWork
+              .controls
+                input.input-xlarge(type='text', name = 'homework', value = '#{homework.homework}')
+            .control-group
+              // Text inputss
+              label.control-label(for='input01') Course
+                .controls
+                  input.input-xlarge(type='text', name = 'course', value = '#{homework.course}')
+              label.control-label(for='input01') Author
+              .controls
+                input.input-xlarge(type='text', name = 'author', value = '#{user.username}' readOnly = 'True')
+              label.control-label(for='input01') Deadline
+              .controls
+                input(type='date', name = 'deadline', value = '#{homework.deadline}', readOnly = '')
+            .control-group
+              .controls
+                button.btn.btn-success.submit Change
+          div.col-md-5
+            label.control-label detail
+            .textarea
+            textarea(class = 'from-control', rows = '5', cols='60', name='detail', readOnly = 'True') #{homework.detail}
