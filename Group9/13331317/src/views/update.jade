@@ -1,7 +1,0 @@
-extends layout
-
-block content
-	form(class='form-signin', action='/update/#{homework.title}', method='POST')
-		textarea(rows="12", cols="113", name="answer", placeholder='New Answer', class='form-control')
-		button(class='btn btn-lg btn-primary btn-block', type='submit') Update
-	a(href='/home', class='text-center new-account') Back
