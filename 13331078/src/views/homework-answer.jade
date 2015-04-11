@@ -1,0 +1,22 @@
+extends layout
+
+block content
+	div.nav.navbar.navbar-inverse.navbar-fixed-top
+		div.container
+			div.user-info
+				#user
+				p.navbar-text Welcome #{user.firstName}.#{user.lastName}!
+			div.sign-out
+				a.btn.navbar-btn.home-btn(href='/home') Home
+				a.btn.navbar-btn.publish-btn(href='/hw-view') View
+				a.btn.navbar-btn.signout-btn(href='/signout') Signout
+	div.produce-homework
+		div.col-sm-6.col-md-4.col-md-offset-4
+			h1.text-center.login-title Answer Homework
+			#question
+			p.question-content #{question[0].question}
+			form(action='/hw-answer' method='POST')
+				input(name='question-content' type='hidden' value='#{question[0].question}')
+				input.form-control(name='answer-question-content' type='text' placeholder='Put answer here...')
+				button.btn.btn-lg.btn-primary.btn-block(type='submit') Publish
+					
