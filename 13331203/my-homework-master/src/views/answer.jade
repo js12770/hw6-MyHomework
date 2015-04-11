@@ -1,0 +1,45 @@
+extends layout
+
+block content
+	div.container
+		div.row
+			div.col-sm-6.col-md-4.col-md-offset-4
+				#content
+					h1.text-center.login-title Home work:
+						div.signup-wall
+							ul.user-details								
+								li Title -->#{content[0].Name}
+								li Teacher--> #{content[0].teacher}
+								li Deadline--->#{content[0].deadline}
+								li Content---> #{content[0].Content} 
+				if user.identity == 't'
+					#change
+						h1.text-center.login-title Change homework :
+							div.signup-wall 
+								form(class='form-signin', action='/change', method='POST')
+									input(type='text', name='Name',class='form-control',value='#{content[0].Name}')
+									input(type='text', name='teacher',class='form-control',style='display: none;',value='#{user.username}') 	
+									input(type='text', name='deadline', class='form-control',value='#{content[0].deadline}',required) 
+									input(name='Content', class='form-control',value='#{content[0].Content} ',required)
+									button(class='btn btn-lg btn-primary btn-block', type='submit') Change
+									span.clearfix
+				else
+					#submit
+						h1.text-center.login-title Homework submit:
+							div.signup-wall
+								ul.user-details
+									form(class='form-signin', action='/submit', method='POST')
+										textarea(name='Content', class='form-control',placeholder='Content',required) 
+										input(type='text', name='Name',style='display: none;',value='#{content[0].Name}')
+										button(class='btn btn-lg btn-primary btn-block', type='submit') submit
+										span.clearfix
+				#submitted
+					h1.text-center.login-title Homework submitted:
+						each item in anwers
+							if user.identity == 't' || item.student == user.username
+								if item.Name  ==  content[0].Name
+									div.signup-wall
+										ul.user-details
+											if user.identity == 't'
+												li Student-->#{item.student}
+											li Content---> #{item.Content} 
