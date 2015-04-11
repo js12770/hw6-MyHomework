@@ -1,0 +1,35 @@
+extends layout
+
+block content
+	div.container
+		div.row
+			div.col-sm-10.col-md-10.col-md-offset-1
+				#user
+					h1.text-center.login-title Welcome #{user.firstName} #{user.lastName} (#{user.usertype}).
+						div.signup-wall.col-sm-10.col-md-10.col-md-offset-1
+							if user.usertype == "teachers"
+								form(class='add-content', action='/home', method='POST')
+									textarea(id='add-requirement' rows='4' cols='25', placeholder='Add a new requirement')
+									input(type='button', id='add-btn', value='Add', onclick='addRequirement(#{user.username})')
+								span.rqmt_title Requirement
+								div.rqmt_block MyHomework是一个基于ExpressJS的Web 2.0应用，老师可以发布作业，学生可以提交作业.
+									span.close_btn X
+								div.rqmt_block MyHomework是一个基于ExpressJS的Web 2.0应用，老师可以发布作业，学生可以提交作业.
+									span.close_btn X
+								div.rqmt_block MyHomework是一个基于ExpressJS的Web 2.0应用，老师可以发布作业，学生可以提交作业.
+									span.close_btn X
+								div.rqmt_block MyHomework是一个基于ExpressJS的Web 2.0应用，老师可以发布作业，学生可以提交作业.
+									span.close_btn X
+							else
+								div.rqmt_block MyHomework是一个基于ExpressJS的Web 2.0应用，老师可以发布作业，学生可以提交作业.
+									span.close_btn X
+								div.rqmt_block MyHomework是一个基于ExpressJS的Web 2.0应用，老师可以发布作业，学生可以提交作业.
+									span.close_btn X
+								div.rqmt_block MyHomework是一个基于ExpressJS的Web 2.0应用，老师可以发布作业，学生可以提交作业.
+									span.close_btn X
+								div.rqmt_block MyHomework是一个基于ExpressJS的Web 2.0应用，老师可以发布作业，学生可以提交作业.
+									span.close_btn X
+							a(href='/signout', class='text-center new-account') Sign Out
+	//- script(type="application/javascript", src="/js/home.js")
+	//- script(src='livescript.js')
+	//- script(type='text/ls', src='../public/ls/home.ls')

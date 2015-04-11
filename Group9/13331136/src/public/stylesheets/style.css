@@ -1,0 +1,151 @@
+body {
+  padding: 50px;
+  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+}
+
+a {
+  color: #00B7FF;
+}
+
+.form-signin{
+    max-width: 330px;
+    padding: 15px;
+    margin: 0 auto;
+}
+.form-signin .form-signin-heading, .form-signin .checkbox{
+    margin-bottom: 10px;
+}
+.form-signin .checkbox{
+    font-weight: normal;
+}
+.form-signin .form-control{
+    position: relative;
+    font-size: 16px;
+    height: auto;
+    padding: 10px;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+.form-signin .form-control:focus{
+    z-index: 2;
+}
+.form-signin input[type="text"]{
+    margin-bottom: -1px;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+}
+.form-signin input[type="password"]{
+    margin-bottom: 10px;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+}
+.form-signin input[type="password"].nomargin{
+	margin-bottom: 0px;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+}
+.account-wall{
+    margin-top: 20px;
+    padding: 40px 0px 20px 0px;
+    background-color: #f7f7f7;
+    -moz-box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
+    -webkit-box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
+    box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
+}
+.signup-wall{
+	margin-top: 20px;
+    padding: 20px 0px 20px 0px;
+    background-color: #f7f7f7;
+    -moz-box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
+    -webkit-box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
+    box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);	
+}
+.login-title{
+    color: #555;
+    font-size: 18px;
+    font-weight: 400;
+    display: block;
+    margin-bottom: 3px;
+}
+.profile-img{
+    width: 96px;
+    height: 96px;
+    margin: 0 auto 10px;
+    display: block;
+    -moz-border-radius: 50%;
+    -webkit-border-radius: 50%;
+    border-radius: 50%;
+}
+.new-account{
+    display: block;
+    margin-top: 10px;
+}
+h1.error-message{
+    color: red;
+}
+ul.user-details{
+    list-style: none;
+}
+
+
+.signup-wall input[type=radio] {
+    position: static;
+    margin: 18px 10px 18px 10px;
+}
+
+
+#add-btn {
+    display: block;
+    margin: 3px auto;
+}
+
+#add-requirement {
+    width: 50%;
+}
+
+.rqmt_block {
+    position: relative;
+    background-color: #FFFFFF;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 9pt;
+    line-height: 25px;
+    text-align:left;
+    display: block;
+    width: 50%;
+    margin: 20px auto;
+    padding: 15px 20px;
+    border-radius: 2px;
+    box-shadow: 1px 1px 5px;
+
+}
+
+#add-requirement {
+    margin-top: 30px;
+    font-family: Helvetica, sans-serif;
+    font-size: 11pt;
+}
+
+.close_btn {
+    color: #ffffff;
+    font-style: Arial, Helvetica, sans-serif;
+    text-align: center;
+    vertical-align: middle;
+    display: block;
+    width: 20px;
+    height: 20px;
+    background-color: #879DFE;
+    opacity: 0.8;
+    border-radius: 50%;
+    position: absolute;
+    top: -10px;
+    right: -10px;
+    box-shadow: 1px 1px 3px #989898;
+    cursor: pointer;
+}
+
+.rqmt_title {
+    display: block;
+    margin-top: 30px;
+    color: #727272;
+}
