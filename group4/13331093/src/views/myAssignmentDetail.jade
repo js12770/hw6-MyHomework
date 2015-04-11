@@ -1,0 +1,21 @@
+extends layout
+
+block content
+    link(rel='stylesheet', href='/stylesheets/assignmentdetail.css')
+    div.container
+        div.row
+            div.panel.panel-primary
+                div.panel-heading
+                    h1.text-center.panel-title #{assignment.username} 的 #{assignment.title} 作业
+                h3.account-wall
+                    i.icon-magic 作业详情：#{assignment.content}
+                if user.identity == 'teacher'
+                    form(class="input-group text-center col-sm-2 col-sm-offset-5" method='POST')
+                        if assignment.status != '已提交'
+                            input(type='text' class="form-control" name='score' value="#{assignment.status}" size="3")
+                        else
+                            input(type='text' class="form-control" name='score' size="3")
+                        div.input-group-addon 分
+                        span.input-group-btn
+                            button(class="btn btn-default" type="submit") 评分
+                br

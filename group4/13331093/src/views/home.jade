@@ -1,0 +1,16 @@
+extends layout
+
+block content
+	div.container
+		div.row
+			div.col-sm-6.col-md-4.col-md-offset-4
+				#user
+					h1.text-center.login-title 你好 #{user.firstName}， 你的信息如下：
+						div.signup-wall
+							ul.user-details
+								li 用户名 ： #{user.username}
+								li Email ： #{user.email}
+								li 名字 ： #{user.lastName} #{user.firstName} 
+								li 身份 ： #{user.identity}
+						a(href='/signout', class='text-center new-account btn btn-danger')
+							i.icon-signout 退出

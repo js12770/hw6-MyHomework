@@ -1,0 +1,27 @@
+extends layout
+
+block content
+    link(rel='stylesheet', href='/stylesheets/assignmentdetail.css')
+    div.container
+        div.row
+            div.panel.panel-primary
+                div.panel-heading
+                    h1.text-center.panel-title #{assignment.title}
+                h4
+                    i.icon-user 作者：#{assignment.author}
+                h4.ddl
+                    i.icon-time 截止日期：#{assignment.deadline}
+                h3
+                    i.icon-magic 作业要求：#{assignment.content}
+                div.text-center
+                    if user.identity == 'student'
+                        if isvalid
+                            a(href='/assignment/submit/#{aid}', class='oper-btn btn btn-lg btn-success' role="button")
+                                i.icon-pencil 提交作业
+                        else
+                            p 已超过截止日期，无法提交作业
+                    else 
+                        a(href='/setassignment?aid=#{aid}&op=edit', class='oper-btn btn btn-lg btn-primary' role="button")
+                            i.icon-pencil 修改
+                        a(href='/setassignment?aid=#{aid}&op=delete', class='oper-btn btn btn-lg btn-danger' role="button")
+                            i.icon-trash 删除
