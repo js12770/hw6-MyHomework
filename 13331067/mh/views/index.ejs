@@ -1,0 +1,16 @@
+<%- include header %>
+<% posts.forEach(function (post, index) { %>
+</br>
+<div class="panel panel-info shorter">
+  <div class="panel-body">
+  <p><h2><a href="u/<%= post.name %>/<%= post.time.day %>/<%= post.title %>"><%= post.title %></a></h2></p>
+  <nav>
+    <p><span class="label label-info ilb">老师：<a href="u/<%= post.name %>"><%= post.name %></a><span>  |
+    <span class="label label-info ilb">发布日期：<%= post.time.minute %><span>|
+    <span class="label label-danger ilb">Deadline：<%= post.ddl %><span></p>
+  </nav>
+  <b>作业要求：</b><%- post.post %>
+  </div>
+</div>
+<% }) %>
+<%- include footer %>

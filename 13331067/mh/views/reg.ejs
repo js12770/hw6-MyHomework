@@ -1,0 +1,17 @@
+<%- include header %>
+<form method="post"  class="shorter">
+  <br/>用户名：  <input type="text" class="form-control" name="name" placeholder="Your Name"/></br>
+  密码：    <input type="password" class="form-control" name="password" placeholder="Your Password"/></br>
+  确认密码：<input type="password" class="form-control" name="password-repeat" placeholder="Password Again"/></br>
+  <div>         
+	<label class="radio-inline">
+	  <input type="radio" name="type" value= "student" checked> 学生
+	</label>
+	<label class="radio-inline">
+	  <input type="radio" name="type" value="teacher"> 老师
+	</label>
+  </div>
+</br><button class="btn btn-lg btn-primary btn-block" type="submit">注册</button>
+</form>
+
+<%- include footer %>
