@@ -1,0 +1,18 @@
+extends layout
+
+block content
+  div.container
+    div user: #{user.username}
+    form(action='/submit', method='post')
+      input(type='hidden', name='belongTo', value='#{belongTo}')
+
+      div
+        作业标题:
+        input(name="title", type="text")
+
+      div
+        作业内容:
+        textarea(name="content", rows="5", cols="30")
+
+      div
+        button(type="submit") 提交

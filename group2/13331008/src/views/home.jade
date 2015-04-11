@@ -1,0 +1,35 @@
+extends layout
+
+block content
+	div.container
+		div user: #{user.username}
+
+		a(href='/signout', class='text-center new-account') Sign Out
+		a(href='/publish') publish
+
+		hr
+
+		div homework-publish-list
+
+		hr
+
+		each item in homeworkPublishList
+			ul
+				li publisher: #{item.publisher}
+				li title: #{item.title}
+				li description: #{item.description}
+				li deadline: #{item.deadline}
+
+				li
+					form(action='submit')
+						input(type='hidden', name='belongTo', value='#{item.title}')
+						button(type='submit') submit
+
+				li
+					form(action='publish')
+						input(type='hidden', name='modify', value='#{item.title}')
+						button(type='submit') modify
+
+				hr
+
+
