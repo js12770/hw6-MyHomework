@@ -1,15 +1,88 @@
 extends layout
 
 block content
-	div.container
-		div.row
-			div.col-sm-6.col-md-4.col-md-offset-4
-				#user
-					h1.text-center.login-title Welcome #{user.firstName}. Check your details below:
-						div.signup-wall
-							ul.user-details
-								li Username ---> #{user.username}
-								li Email    ---> #{user.email}
-								li First Name ---> #{user.firstName} 
-								li Last Name ---> #{user.lastName}
-						a(href='/signout', class='text-center new-account') Sign Out
+  nav.navbar.navbar-default.navbar-fixed-top(role='navigation')
+    .navbar-header
+      a.navbar-brand(href='/home') 主页
+    div
+      ul.nav.navbar-nav.navbar-right
+        if user.status == 'teacher'
+          li
+            a#SetUpCourse.btn(type='button') 开设课程
+
+
+        li.dropdown    
+          a#dropdownMenu1.btn.dropdown-toggle(type='button', data-toggle='dropdown')
+            | 所有课程
+            span.caret
+          ul.dropdown-menu(role='menu', aria-labelledby='dropdownMenu1')
+            each course in courses
+              li(role='presentation')
+                a(role='menuitem', tabindex='-1', href="/entercourse?coursename=#{course.coursename}") #{course.coursename}
+
+        li.dropdown
+          a#dropdownMenu2.btn.dropdown-toggle(type='button', data-toggle='dropdown')
+            | 我的课程
+            span.caret
+          ul.dropdown-menu(role='menu', aria-labelledby='dropdownMenu2')
+            each mycourse in mycourses
+              li(role='presentation')
+                a(role='menuitem', tabinex='-1', href="/homework?coursename=#{mycourse.coursename}") #{mycourse.coursename}
+        
+        if user.status == 'teacher'
+          li
+            a#AddHomework(href='#') 布置作业
+        else
+          li
+            a#SubmitHomework(href='#') 提交作业
+        li
+          a(href='#') #{user.username}
+
+        li
+          a(href='#') #{user.status == 'student' ? '学生' : '教师'}
+
+        li
+          a(href='/signout') 退出登录
+  div#show
+  block homework
+    //- div.well
+    //-   form(role='form', action= '/addhomework', method='post')
+    //-     div.form-group
+    //-       label
+    //-         | 课程名
+    //-         input.form-control(type='text', name='coursename', placeholder='请输入课程名')
+    //-     div.form-group
+    //-       label
+    //-         | 作业名
+    //-         input.form-control(type='text', name='requirementname', placeholder='请输入作业名')
+    //-     div.form-group
+    //-       label
+    //-         | 截止时间
+    //-         input#datepicker(type='text', style='size: 30', name='deadline', placeholder='时间日期')
+    //-     div.form-group
+    //-       label
+    //-         | 作业内容
+    //-         input.form-control(type='text', name='requirementcontent', placeholder='请输入你的作业')
+    //-     button.btn.btn-default(type='submit') 提交
+
+    //- form#addcourse.unvisiable(role='form', action='/addcourse' , method='post')
+    //-   div.form-group
+    //-     label
+    //-       | 课程名
+    //-       input.form-control(type='text', name='coursename', placeholder='请输入开设的课程名')
+    //-   button.btn.btn-default(type='submit') 提交
+
+    //- form(role='form', action= '/submithomework', method='post')
+    //-   div.form-group
+    //-     label
+    //-       | 课程名
+    //-       input.form-control(type='text', name='coursename', placeholder='请输入课程名')
+    //-   div.form-group
+    //-     label
+    //-       | 作业名
+    //-       input.form-control(type='text', name='requirementname', placeholder='请输入作业名')
+    //-   div.form-group
+    //-     label
+    //-       | 你的作业
+    //-       input.form-control(type='text', name='content', placeholder='请输入你的作业')
+    //-   button.btn.btn-default(type='submit') 提交

@@ -23,8 +23,12 @@ app.use flash!
 
 initPassport = require './passport/init'
 initPassport passport
+
 routes = (require './routes/index') passport
 app.use '/', routes
+
+# routes2 = require './routes/test'
+# app.use '/', routes2
 
 app.use (req, res, next) ->
   err = new Error 'Not Found'
