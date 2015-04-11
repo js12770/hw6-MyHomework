@@ -1,0 +1,18 @@
+extends layout
+
+block content
+  div.container
+    div.row
+      div.col-sm-6.col-md-4.col-md-offset-4
+        div.homework-info-wall
+          each homework in homeworks
+            div.homework-info
+              |#{homework.homeworkName} given by #{homework.teacherName}
+              br
+              |最近上传: hw1_v0.rar
+              br
+              |上传作业：
+              form.homework-upload-form(method='post' action='/homework-list')
+                input.form-control(name='homework' type='file' enctype='multipart/form-data' placeholder='Upload your homework here')
+                button.homework-upload-button(type='submit') 上传
+        a(href='/home' class='text-center new-account') Back to home
