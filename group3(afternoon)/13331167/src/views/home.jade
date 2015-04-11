@@ -1,0 +1,28 @@
+extends layout
+
+block content
+	div.container
+		div.row 
+			div.col-sm-6.col-md-4.col-md-offset-4
+				#user
+					h1.text-center.login-title 欢迎，#{user.firstName}#{role} 
+						a(href='/signout', class='text-center new-account') Sign Out
+					h3.text-center 作业列表
+		table.table.table-hover
+			thead
+				tr
+					th 名称
+					th 截止时间
+					th 布置老师
+			tbody
+				each item in assignments
+					tr
+						th 
+							a(href='/assignment/#{item._id}', class='assginment') #{item.name}
+						th #{item.deadline}
+						th #{item.teacher}
+
+		if role == '老师'
+			a(href='/create')
+				button.btn.btn-success(type="button") 布置新作业
+		

@@ -1,4 +1,4 @@
-require! {express, http, path, 'cookie-parser', 'body-parser', mongoose, passport, 'express-session', './db'}
+require! {express, http, path, 'cookie-parser', 'body-parser', mongoose, passport, 'express-session', './db', underscore}
 logger = require 'morgan'
 flash = require 'connect-flash'
 favicon = require 'static-favicon'
@@ -21,7 +21,7 @@ app.use passport.initialize!
 app.use passport.session!
 app.use flash!
 
-initPassport = require './passport/init'
+initPassport = require './app/init'
 initPassport passport
 routes = (require './routes/index') passport
 app.use '/', routes

@@ -1,0 +1,23 @@
+extends layout
+
+block content
+	div.container
+		div.panel.panel-primary
+			div.panel-heading
+				h3.panel-title 修改作业
+			div.panel-body
+				form(role="form", action="/assignment/new", method='POST')
+					input(type="hidden",name="assignment[_id]", value="#{assignment._id}")
+					div.form-group
+						label.control-label(for="homework-name") 作业名称
+						input.form-control#homework-name(type="text", placeholder="请输入作业名称", name="assignment[name]", value="#{assignment.name}", required)
+						br
+						label 作业要求
+						textarea.form-control(rows="10", placeholder="请输入作业作业要求", name="assignment[description]", required) #{assignment.description}
+						br
+						label.control-label(for="homework-deadline") 截止时间
+						input.form-control#homework-deadline(type="text", placeholder="请输入截止时间", name="assignment[deadline]", value="#{assignment.deadline}", required)
+						br
+						button.btn.btn-success(type="submit") 发布
+						a.back-button(href='/assignment/#{assignment._id}')
+							button.btn.btn-info(type="button") 返回
