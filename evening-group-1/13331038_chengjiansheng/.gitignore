@@ -1,3 +1,4 @@
+*.md
 *.sw*
 *~
 node_modules/
