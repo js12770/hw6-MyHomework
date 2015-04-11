@@ -1,0 +1,11 @@
+<%- include header %>
+<form method="post" class = "shorter">
+  作业标题：<br />
+  <input type="text" name="title" class="form-control" /><br />
+  作业DDL：<br />
+  <input type="text" name="ddl" class="form-control" placeholder="YYYY-MM-DD"/><br />
+  作业要求：(支持markdown语法)<br />
+  <textarea name="post" rows="10" cols="40" class="form-control"></textarea><br />
+  <button type="submit" class="btn btn-success">发布！</button>
+</form>
+<%- include footer %>

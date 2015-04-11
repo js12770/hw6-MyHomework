@@ -1,0 +1,36 @@
+extends layout
+
+block content
+	div.container
+		div.row
+			div.col-sm-6.col-md-2
+				span.h4 Hello #{user.firstName}.
+			div.col-sm-6.col-md-2.col-md-offset-8
+				a(href='/signout', class='text-center new-account') Sign Out
+		div.row
+			div.col-sm-12.col-md-6.col-md-offset-3
+				div.h3 #{homework.title}
+				if user.presence === 'teacher'
+					div.h5 Here are the students' answers:
+					ul
+						if homework.anwser.length !== 0
+							each val in homework.anwser
+								li #{val.name}: #{val.anwser}
+						else
+							li There are still not any students.
+				else
+					div.h5 There are your answer:
+					ul
+						if user.problem.length !== 0
+							-var a = true
+							each val in user.problem
+								if val.id.toString() == homework._id.toString()
+									li
+										div #{val.anwser}
+										-a = false
+							if a
+								You haven't answer this problem. To answer:
+								a(href="/anwser/#{homework._id}") #{homework.title}
+						else 
+							You haven't answer any problem. To answer:
+							a(href="/anwser/#{homework._id}") #{homework.title}

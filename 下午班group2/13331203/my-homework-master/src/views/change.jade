@@ -1,0 +1,17 @@
+extends layout
+
+block content
+	div.container
+		div.row
+			div.col-sm-6.col-md-4.col-md-offset-4
+				h1.text-center.login-title Change homework 
+					div.signup-wall 
+						form(class='form-signin', action='/change', method='POST')
+							select(name='Name', class='form-control',placeholder='Identity') 
+								each item in changed 
+									option(value='#{item.Name}') #{item.Name}
+								input(type='text', name='teacher', class='form-control',style='display: none;',value='#{user.username}',required, autofocus) 	
+								input(type='text', name='deadline', class='form-control', placeholder='deadline:2015-6-17',required) 
+								textarea(name='Content', class='form-control',placeholder='Content',required) 
+								button(class='btn btn-lg btn-primary btn-block', type='submit') Change
+								span.clearfix*/

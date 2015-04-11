@@ -1,0 +1,21 @@
+extends layout
+
+block content
+
+	h1.login-title Assignment list
+	
+	table
+		thead
+			tr
+				th Assignment
+				th Deadline
+				th Operations
+		tbody
+			tr
+				td Assignment2
+				td 2001-12-23
+				td asd
+
+	#message
+		if message
+			h1.text-center.error-message #{message}

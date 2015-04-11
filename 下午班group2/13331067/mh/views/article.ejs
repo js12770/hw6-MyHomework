@@ -1,0 +1,22 @@
+<%- include header %>
+<p>
+<% if (user && (user.name == post.name)) { %>  <!-- 只有本用户才有权利修改DDL -->
+  <a class="edit" href="/edit/<%= post.name %>/<%= post.time.day %>/<%= post.title %>"><button type="button" class="btn btn-default">修改Deadline</button></a>
+<% } %>
+</p>
+
+<div class="panel panel-info shorter">
+  <div class="panel-body">
+  <nav>
+    <p><span class="label label-info ilb">老师：<a href="u/<%= post.name %>"><%= post.name %></a><span>  |
+    <span class="label label-info ilb">发布日期：<%= post.time.minute %><span>|
+    <span class="label label-danger ilb">Deadline：<%= post.ddl %><span></p>
+  </nav>
+  <b>作业要求：</b><%- post.post %>
+  </div>
+</div>
+
+<% if (user && user.type == 'student' && !(user.name == post.name)) { %>  <!-- 如果不是本用户 但是却是学生 则可以提交作业 -->
+  <a href="/hwpost/<%= user.name %>/<%= post.name %>/<%= post.title %>"><button class="btn btn-success">去做作业！</button></a>
+<% } %>
+<%- include footer %>

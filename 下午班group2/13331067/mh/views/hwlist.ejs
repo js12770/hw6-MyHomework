@@ -1,0 +1,39 @@
+<%- include header %>
+<% if (user.type == 'student') {%>
+
+<% hws.forEach(function (hw, index) { %>
+	<% if (hw.stu_name == user.name) { %>
+		</br><div class="panel panel-info shorter">
+		  <div class="panel-heading">
+		    <h4>作业标题：<a href="#"><%= hw.title %></a></h3>
+		    <h6>[由 <a href="#"><%= hw.tc_name %></a> 老师布置]</h6>
+		  </div>
+		  <div class="panel-body">
+		    作业内容: <%- hw.post %>
+		  </div>
+		</div>
+	<% } %>
+<% }); %>
+
+<% } %>
+
+<% if (user.type == 'teacher') {%>
+
+<% hws.forEach(function (hw, index) { %>
+	<% if (hw.tc_name == user.name) { %>
+		</br><div class="panel panel-info shorter">
+		  <div class="panel-heading">
+		    <h4>作业标题：<a href="#"><%= hw.title %></a></h3>
+		    <h6>[由 <a href="#"><%= hw.stu_name %></a> 同学完成]</h6>
+		  </div>
+		  <div class="panel-body">
+		    作业内容: <%- hw.post %>
+		  </div>
+		</div>
+	<% } %>
+
+<% }); %>
+
+<% } %>
+
+<%- include footer %>

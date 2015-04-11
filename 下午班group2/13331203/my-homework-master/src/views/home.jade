@@ -1,0 +1,27 @@
+extends layout
+
+block content
+	div.container
+		div.row
+			div.col-sm-6.col-md-4.col-md-offset-4
+				#user
+					h1.text-center.login-title Welcome #{user.firstName}. Check your details below:
+						div.signup-wall
+							ul.user-details
+								li Username ---> #{user.username}
+								li Email    ---> #{user.email}
+								li First Name ---> #{user.firstName} 
+								li Last Name ---> #{user.lastName}
+								li identity ---> #{user.identity}
+						a(href='/signout', class='text-center new-account') Sign Out
+						a(href='/homework', class='text-center new-account') homework
+						if user.identity == 't'
+							h1.text-center.login-title New homework
+								div.signup-wall
+									form(class='form-signin', action='/publish', method='POST')
+										input(type='text', name='Name', class='form-control', placeholder='Name',required)
+										input(type='text', name='teacher', class='form-control',style='display: none;',value='#{user.username}',required, autofocus)
+										input(type='text', name='deadline', class='form-control', placeholder='deadline:2015-6-17',required)
+										textarea(name='Content', class='form-control',placeholder='Content',required)
+										button(class='btn btn-lg btn-primary btn-block', type='submit') Publish
+										span.clearfix

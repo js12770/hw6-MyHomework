@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8" />
+	<title>My-Homework-System</title>
+	<link rel="stylesheet" href="/stylesheets/style.css">
+	<link href="/stylesheets/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+<div class="container">
+<header>
+<h1><%= title %></h1>
+</header>
+
+<% if (user) { %>
+<div>
+  <% if (user.type == 'teacher') { %>
+  	<span class="label label-info"><%= user.name %>老师 </span>
+  <% } else { %>
+      <span class="label label-info"><%= user.name %>同学 </span>
+  <% } %>
+</div><br />
+<% } %>
+
+<% if (user) { %>
+  <% if (user.type == 'teacher') {%>
+	  <div class="btn-group btn-group-justified" role="group" aria-label="...">
+		<a href="/"><button type="button" class="btn btn-default">作业列表</button></a>
+		<a href="/post"><button type="button" class="btn btn-default">发布作业</button></a>
+		<a href="/stuhws"><button type="button" class="btn btn-default">学生提交列表</button></a>
+		<a href="/logout"><button type="button" class="btn btn-default">登出</button></a><br />
+	  </div>
+
+  <% } %>
+
+  <% if (user.type == 'student') {%>
+	<a href="/"><button type="button" class="btn btn-default">作业列表</button></a>
+	<a href="/myhw"><button type="button" class="btn btn-default">我的提交列表</button></a>
+	<a href="/logout"><button type="button" class="btn btn-default">登出</button></a><br />
+  <% } %>
+
+<% } else { %>
+	<a href="/login"><button type="button" class="btn btn-default">登录</button></a>
+	<a href="/reg"><button type="button" class="btn btn-default">注册</button></a><br />
+<% } %>
+
+
+<% if (success) { %>
+  </br><div class="alert alert-success shorter" role="alert"><%= success %></div>
+<% } %>
+<% if (error) { %>
+  </br><div class="alert alert-danger shorter" role="alert"><%= error %> </div>
+<% } %>

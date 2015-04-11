@@ -1,0 +1,11 @@
+<%- include header %>
+<form method="post" class = "shorter">
+  <br/>作业标题：<br />
+  <input type="text" class="form-control" name="title" value="<%= hwtitle %>" disabled="disabled"/><br />
+  作业要求：
+  <blockquote> <%- hwrequirement %> </blockquote>
+  作业内容正文：(支持markdown语法)<br />
+  <textarea class="form-control" name="post" rows="10" cols="100"></textarea><br />
+  <button type="submit" class="btn btn-success">提交作业</button>
+</form>
+<%- include footer %>
