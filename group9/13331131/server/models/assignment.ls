@@ -11,11 +11,11 @@ AssignmentSchema = new Schema {
 }
 
 AssignmentSchema.virtual 'datestring' .get ->
-    month = if (@deadline.getMonth!+1) >= 10 then ''+(@deadline.getMonth!+1) else '0'+(@deadline.getMonth!+1)
-    date = if (@deadline.getDate!) >= 10 then ''+(@deadline.getDate!) else '0'+(@deadline.getDate!)
-    hour = if (@deadline.getHours!) >= 10 then ''+(@deadline.getHours!) else '0'+(@deadline.getHours!)
-    minute = if (@deadline.getMinutes!) >= 10 then ''+(@deadline.getMinutes!) else '0'+(@deadline.getMinutes!)
-    @deadline.getFullYear! + '/' + month + '/' + date + ' ' + hour + ':' +minute
+    month = if (@deadline.getMonth!+1) >= 10 then "#{@deadline.getMonth!+1}" else "0#{@deadline.getMonth!+1}"
+    date = if (@deadline.getDate!) >= 10 then "#{@deadline.getDate!}" else "0#{@deadline.getDate!}"
+    hour = if (@deadline.getHours!) >= 10 then "#{@deadline.getHours!}" else "0#{@deadline.getHours!}"
+    minute = if (@deadline.getMinutes!) >= 10 then "#{@deadline.getMinutes!}" else "0#{@deadline.getMinutes!}"
+    "#{@deadline.getFullYear!}/#{month}/#{date} #{hour}:#{minute}"
 
 AssignmentSchema.virtual 'briefdescription' .get ->
     @description.substring(0, 140)
