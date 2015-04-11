@@ -1,0 +1,10 @@
+//弹出提示框
+
+if msg && msg.length
+    div(id="myModal" class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true")
+        div.modal-dialog.modal-sm
+            div.modal-content.modal-body
+                button(type="button" class="close" data-dismiss="modal" aria-label="Close")
+                    span(aria-hidden="true") ×
+                span #{msg}
+    script $(function(){$('#myModal').modal({show:true,backdrop:true})});

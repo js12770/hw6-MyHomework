@@ -1,0 +1,79 @@
+extends layout
+
+mixin idTitleAuthor(id,title,author,aid)
+    td #{id}
+    td
+        a(href='assignment/#{aid}') #{title}
+    td
+        i.icon-user #{author}
+
+
+mixin allass(id,title,author,status,aid,_id,deadline)
+    if status == '已提交'
+      if time > deadline
+        tr.info
+          +idTitleAuthor(id,title,author,aid)
+          td #{status}
+          td 
+              a(href='myassignment/#{_id}' class="btn btn-info") 批改
+      else
+        tr
+          +idTitleAuthor(id,title,author,aid)
+          td #{status}
+          td 尚未到达截止日期
+      
+    else
+      tr.success
+        +idTitleAuthor(id,title,author,aid)
+        td 
+            i.icon-check #{status} 分
+        td
+            a(href='myassignment/#{_id}' class="btn btn-info") 查看
+
+mixin ass(id,title,status,aid,_id)
+    if status == '已提交'
+      tr
+        td #{id}
+        td
+            a(href='assignment/#{aid}') #{title}
+        td #{status}
+        td
+            a(href='myassignment/#{_id}' class="btn btn-info") 查看
+    else
+      tr.success
+        td #{id}
+        td
+            a(href='assignment/#{aid}') #{title}
+        td
+            i.icon-check #{status} 分
+        td
+            a(href='myassignment/#{_id}' class="btn btn-info") 查看
+
+block content
+
+    div.container
+        div.row
+            div.signup-wall
+                if user.identity == 'teacher'
+                    h1.text-center 所有作业
+                    p.text-center 白色：还未截止的作业
+                    p.text-center 蓝色：已经截止，可以批改
+                    p.text-center 绿色：已经批改
+                else
+                    h1.text-center 我的作业
+                table.table.table-striped.table-hover
+                    thead
+                        tr
+                            th 编号
+                            th 作业
+                            if user.identity == 'teacher'
+                                th 提交者
+                            th 分数
+                            th 操作
+                    tbody
+                        if user.identity == 'teacher'
+                            each assignment in assignments
+                                +allass(assignments.indexOf(assignment)+1, assignment['title'], assignment['username'], assignment['status'], assignment['assignmentid'], assignment['_id'], assignment['deadline'])
+                        else
+                            each assignment in assignments
+                                +ass(assignments.indexOf(assignment)+1, assignment['title'], assignment['status'], assignment['assignmentid'], assignment['_id'])

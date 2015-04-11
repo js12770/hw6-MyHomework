@@ -1,0 +1,26 @@
+extends layout
+
+mixin ass(id,title,ddl,_id)
+    tr
+        td #{id}
+        td #{title}
+        td #{ddl}
+        td
+            a(href='assignment/#{_id}' class="btn btn-info") 查看
+
+block content
+    div.container
+        div.row
+            div.signup-wall
+                h1.text-center 作业列表
+                table.table.table-striped.table-hover
+                    thead
+                        tr
+                            th 编号
+                            th 作业
+                            th 
+                                i.icon-time 截止时间
+                            th 操作
+                    tbody
+                        each assignment in assignments
+                            +ass(assignments.indexOf(assignment)+1, assignment['title'], assignment['deadline'], assignment['_id'])

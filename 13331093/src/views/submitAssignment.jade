@@ -1,0 +1,11 @@
+extends layout
+
+block content
+    div.container
+        div.row
+            h1.text-center 提交作业
+            form(class='text-center', action='/assignment/submit/#{id}', method='POST')
+                div.form-group
+                    textarea(name='content' rows="3" class="form-control" placeholder="作业内容" width="100%")
+                button(class='btn btn-lg btn-primary', type='submit')
+                    i.icon-upload-alt 提交

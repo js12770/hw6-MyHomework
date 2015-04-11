@@ -1,0 +1,26 @@
+doctype html
+html
+  head
+    title MyHomework
+    link(rel='stylesheet', href='/stylesheets/style.css')
+    link(rel='stylesheet', href='/stylesheets/bootstrap.min.css')
+    link(rel='stylesheet', href='/stylesheets/font-awesome.min.css')
+    script(type="text/javascript", src="/js/jquery.min.js")
+    script(type="text/javascript", src="/js/bootstrap.min.js")
+    //- link(rel='stylesheet', href='http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css')
+  body
+    nav.navbar.navbar-inverse
+        a(href='/home', class='navbar-brand') 首页
+        if user
+            a(href='/assignment', class='navbar-brand') 查看作业
+            if user.identity == 'student'
+                a(href='/myassignment', class='navbar-brand') 我的作业
+            else
+                a(href='/setassignment', class='navbar-brand') 发布作业
+                a(href='/correctassignment', class='navbar-brand') 批改作业
+            p.identity #{user.identity}:#{user.username}
+
+    include ./hint.jade
+    block content
+    
+    script(type="application/javascript", src="http://localhost:35729/livereload.js")
