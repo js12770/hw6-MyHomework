@@ -1,0 +1,57 @@
+extends layout
+
+block content
+    div.container
+        div.row
+            div.col-sm-6.col-md-4.col-md-offset-4
+                #user
+                    h1.text-center.login-title Welcome #{user.firstName}. Check your details below:
+                        div.signup-wall
+                            ul.user-details
+                                li Username ---> #{user.username}
+                                li Email    ---> #{user.email}
+                                li First Name ---> #{user.firstName} 
+                                li Last Name ---> #{user.lastName}
+                                li You are a: #{user.identity}
+                        #assignments
+                        if user.identity == 'teacher'
+                            form(action='/add-asgn', method='post')
+                                div.asgn-block
+                                    p.asgn-title Assignment Name:
+                                    input(type='text', name='asgnname', class='asgn-input', required)
+                                div.asgn-block
+                                    p.asgn-title Deadline:
+                                    input(type='datetime-local', name='deadline', required)
+                            
+                                div.asgn-block
+                                    p.asgn-title Requirement:
+                                    input(type='text', name='requirement', required, class='asgn-input input-block')
+                                button(type='submit') Submit
+                        else
+                            form(action='/add-stuwork', method='post')
+                                div.asgn-block
+                                    p.asgn-title Assignment Submitted:
+                                    select(name='asgnment')
+                                        for item in assignments
+                                            option(value='#{item.asgnname}') #{item.asgnname}
+                                div.asgn-block
+                                    p.asgn-title Content:
+                                    input(type='text', name='content')
+                                button(type='submit') Submit
+
+                        table.asgn-table
+                            thead
+                                tr
+                                    th Assignment
+                                    th Deadline
+                                    th Requirement
+                            tbody
+                                for item in assignments
+                                    tr
+                                        th 
+                                            a(href='details?asgn=#{item.asgnname}') #{item.asgnname}
+                                        th #{item.deadline}
+                                        th #{item.requirement}
+
+                        a(href='/signout', class='text-center new-account') Sign Out
+

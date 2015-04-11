@@ -1,0 +1,41 @@
+extends layout
+
+block content
+  .container
+    .ui.pointing.menu
+      a(class='item' href='/homework')
+        i.home.icon
+        | Homework-List
+      if user.identity == 'teacher'
+        a(href='/create', class='active item')
+          i.grid.layout.icon
+          |  Create new one
+      if user.identity == 'teacher'
+        a(href='/modify', class='item')
+          i.grid.layout.icon
+          |  Modify submissions
+      .right.menu
+        .item
+          .ui.transparent.icon.input
+            input(type="text", placeholder="Search...")
+            i.search.link.icon
+        a(href='/signout', class = 'ui item') Logout
+
+    form(class='ui grid', action='/create', method='POST')
+      .column
+        .ui.fluid.form.segment
+          .one.fields
+            .field
+              label HomeworkName
+              input(type="text", placeholder="", name='name')
+            .field
+              label StartDate
+              input#startdate(type="text", placeholder="", name='startdate', data-date-format='yyyy-mm-dd hh:ii')
+            .field
+              label Deadline
+              input#deadline(type="text", placeholder="", name='deadline', data-date-format='yyyy-mm-dd hh:ii')
+          .field
+            label Description
+            textarea(placeholder="Description", type="text", name='description')
+          button(class = 'ui blue submit button', type='submit') CREATE A HOMEWORK
+          a(href='/homework', class= 'ui button') Back
