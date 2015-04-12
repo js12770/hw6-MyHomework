@@ -1,0 +1,14 @@
+extends layout
+
+block content
+	div.center
+		div.signup-wall
+			ul.user-details
+				li Homework Title  :  #{homework.title}
+				li By  :  #{homework.student}
+				li Answer  :
+			span #{homework.answer}	
+	form(class='form-signin', action='/grade/#{homework.title}', method='POST')
+		input(type='text', name='grade' class='form-control', placeholder='0 ~ 100 or (A, B, C, D)',required)
+		button(class='btn btn-lg btn-primary btn-block', type='submit') Submit
+	a(href='/viewhomework', class='text-center new-account') Back

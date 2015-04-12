@@ -1,0 +1,14 @@
+extends layout
+
+block content
+	div.container
+		div.row
+			div.col-sm-6.col-md-4.col-md-offset-4
+					div.signup-wall
+						span.time Current Time
+						br
+						span.timeing #{time}
+					h1.text-center.login-title  Pay Attention !!
+						div.signup-wall
+							span This mission's DDL is #{requirement.ddl}, your action is illegal .
+						a(href='/home', class='text-center new-account') Back to homepage

@@ -1,0 +1,37 @@
+extends layout
+
+block content
+    link(rel='stylesheet', href='/stylesheets/bootstrap-datetimepicker.min.css')
+    link(rel='stylesheet', href='/stylesheets/setAssignment.css')
+    script(type="text/javascript", src="/js/bootstrap-datetimepicker.min.js")
+    script(type="text/javascript", src="/js/datepicker.js")
+    div.container
+        div.row.signup-wall
+            if mode == "set"
+                h1.text-center 发布作业
+                form(class='text-center', method='POST')
+                    div.form-group
+                        label(for='title' class='control-label') 标题
+                        input(type='text' name='title' size="30")
+                        label(for='deadline' class='control-label')
+                            i.icon-time 截止时间
+                        input(type='text' placeholder="点击选择截止时间"  name="deadline" readonly  size="14" id="datetimepicker")
+                    div.form-group
+                        textarea(name='content' rows="3"  placeholder="详细的作业要求" width="100%")
+                    button(class='btn btn-lg btn-primary', type='submit')
+                        i.icon-pencil 发布
+            else
+                h1.text-center 修改作业
+                form(class='text-center', method='POST')
+                    div.form-group
+                        label(for='title' class='control-label') 标题
+                        input(type='text' name='title' size="30" value='#{title}')
+                        label(for='deadline' class='control-label')
+                            i.icon-time 截止时间
+                        input(type='text' placeholder="点击选择截止时间"  name="deadline" readonly  size="14" id="datetimepicker" value='#{deadline}') 
+                    div.form-group
+                        textarea(name='content' rows="6"  placeholder="详细的作业要求" width="100%") #{content}
+                    button(class='btn btn-lg btn-primary', type='submit')
+                        i.icon-pencil 修改
+            
+    

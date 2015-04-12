@@ -1,0 +1,69 @@
+extends layout
+
+block content
+    div.container
+        div.row
+            div.col-xs-10.col-sm-10.col-md-10.col-md-offset-1
+                h2.text-primary.text-center Welcome back, #{user.lastName}#{user.firstName}! 
+                #message
+                    if message
+                        div.alert.alert-success.text-center #{message}
+                br
+                div.menu-wall
+                    h3 
+                        span.label.label-primary Teacher
+                    h3.text-primary What can I do for you?
+
+                    hr
+                    button.btn.btn-success.center-block.btn-lg(data-toggle="modal", data-target="#issue") Issue New Homework
+                    div#issue.modal.fade(tabindex="-1", role="dialog", aria-labelledby="myModalLabel", aria-hidden="true")
+                        .modal-dialog.modal-lg
+                            .modal-content
+                                .modal-header
+                                    h2.text-center.text-primary Issue new homework
+                                form(action='/issue', method='POST')
+                                    .modal-body.issue.center-block
+                                    
+                                        div.form-group
+                                            label Title
+                                            input(type='text', name='title', class='form-control', placeholder='Title',required, autofocus)
+                                        div.form-group
+                                            label Deadline
+                                            input(todayBtn="true", required, placeholder="Click to choose..." name="deadline", autoclose="true", class='form-control', type="text" size="10" id="datetimepicker" data-date-format="yyyy-mm-dd hh:ii", todayHighlight="true")
+
+                                        div.form-group
+                                            label Content
+                                            textarea(rows="10" name='content', class='form-control', placeholder="The details about your homework...",required, autofocus)
+                                    .modal-footer
+                                        .text-center
+                                            button.btn.btn-success.btn-margin(type="submit") Issue
+                                            button.btn.btn-danger.btn-margin(data-dismiss="modal") Close
+                                
+
+                    br
+
+                    h4 The homework I issued:
+                    table.table.table-hover.text-center.all-homework
+                        tr
+                            th Title
+                            th Content
+                            th Deadline
+                            th Operation
+                        each issue in issues
+                            tr
+                                td #{issue.title}
+                                td 
+                                    a.btn.btn-primary(data-toggle="modal", data-target='##{issue._id}') Click to view
+                                td #{issue.deadline}
+                                td 
+                                    a.btn.btn-primary(href='/grade/?title=#{issue.title}') Grade
+                                div.modal.fade(id='#{issue._id}', tabindex="-1", role="dialog", aria-labelledby="myModalLabel", aria-hidden="true")
+                                    .modal-dialog
+                                        .modal-content
+                                            .modal-header
+                                                h4 #{issue.title}
+                                            .modal-body #{issue.content}
+                                            .modal-footer
+                                                button.btn.btn-default(data-dismiss="modal") Close
+                a(href='/signout', class='text-center new-account') Sign Out
+    

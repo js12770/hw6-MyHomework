@@ -1,0 +1,70 @@
+extends layout
+
+block content
+    div.container
+        div.row
+            div.col-xs-10.col-sm-10.col-md-10.col-md-offset-1
+
+                h2.text-primary.text-center Welcome back, #{user.lastName}#{user.firstName}! 
+                br
+                div.menu-wall
+                    h3 
+                        span.label.label-primary Student
+                    h3.text-primary What can I do for you?
+
+                    hr
+                    h4 Here's your homework, you can submit your homework if you have finished:
+                    br
+                    table.table.table-hover.all-homework.text-center
+                        tr
+                            th Teacher
+                            th Title
+                            th Content
+                            th Deadline
+                            th Operation
+                            th Latest Submission
+                            th Score
+                        each homework in allHomework
+                            tr
+                                td #{homework.teacher}
+                                td #{homework.title}
+                                td 
+                                    button.btn.btn-primary(data-toggle="modal", data-target="##{homework.id}") Click to view
+                                    div.modal.fade(id="#{homework.id}", tabindex="-1", role="dialog", aria-labelledby="myModalLabel", aria-hidden="true")
+                                        .modal-dialog
+                                            .modal-content
+                                                .modal-header
+                                                    h4 #{homework.title}
+                                                .modal-body #{homework.content}
+                                                .modal-footer
+                                                    button.btn.btn-default(data-dismiss="modal") Close
+                                td #{homework.deadline}
+                                td 
+                                    if homework.overdue
+                                        button.btn.btn-default(disabled, data-toggle="modal", data-target="##{homework.title}") Overdue
+                                    else
+                                        button.btn.btn-primary(data-toggle="modal", data-target="##{homework.title}") Submit
+                                    div.modal.fade(id="#{homework.title}", tabindex="-1", role="dialog", aria-labelledby="myModalLabel", aria-hidden="true")
+                                        .modal-dialog.modal-lg
+                                            .modal-content
+                                                .modal-header
+                                                    h2.text-center.text-primary Submit homework
+                                                form(action='/submit', method='POST')
+                                                    .modal-body 
+                                                        .issue.center-block
+                                                            div.form-group
+                                                                label Title
+                                                                input(readonly, value="#{homework.title}", type='text', name='title', class='form-control', placeholder='Title',required, autofocus)
+                                                                input(style="display:none", value="#{homework.id}", type='text', name='id')
+                                                            hr
+                                                            div.form-group
+                                                                label Content
+                                                                textarea(rows="10" name='content', class='form-control', placeholder="Your homework should be written here",required, autofocus)
+                                                    .modal-footer
+                                                        .text-center
+                                                            button.btn.btn-success.btn-margin Submit
+                                                            button.btn.btn-danger.btn-margin(data-dismiss="modal") Close
+                                td #{homework.latestSubmitTime}
+                                td #{homework.score}
+                            
+                a(href='/signout', class='text-center new-account') Sign Out

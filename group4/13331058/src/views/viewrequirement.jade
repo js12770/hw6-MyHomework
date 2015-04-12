@@ -1,0 +1,23 @@
+extends layout
+
+block content
+	h1.text-center.login-title All Requirements:
+		each item in collection
+			div.center
+				div.signup-wall
+					ul.user-details
+						li Homework Title  :  #{item.Head}
+						li Master  :  #{item.master}
+						li DeadLine  :  #{item.ddl}
+						li Mission  :
+					span #{item.content}
+				if user.status == 'S'
+					a(href='/submit/#{item.Head}')
+						button(class = "submit") Submit
+				if user.status == 'T'
+					a(href='/modify/#{item.Head}')
+						button(class = "submit") Modify Mission
+					a(href='/changeddl/#{item.Head}')
+						button(class = "submit") Change Deadline
+	a(href='/home', class='text-center new-account') Back
+					
