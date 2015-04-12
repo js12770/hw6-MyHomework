@@ -1,0 +1,44 @@
+extends layout
+
+block content
+    div.container
+        div.row
+            div.col-xs-10.col-sm-10.col-md-10.col-md-offset-1
+                h2.text-primary.text-center Welcome back, #{user.lastName}#{user.firstName}! 
+                br
+                #message
+                    if message
+                        div.alert.alert-danger.text-center #{message}
+                div.menu-wall
+                    h3 
+                        span.label.label-primary #{title}
+                    h3.text-primary Here is the homework of all students, you can grade it.
+                    br
+
+                    table.table.table-hover.text-center.all-homework
+                        tr
+                            th Name
+                            th Content
+                            th Submit Time
+                            th Score
+                        each submit in submitList
+                            tr
+                                td #{submit.username}
+                                td 
+                                    a.btn.btn-primary(data-toggle="modal", data-target="##{submit._id}") Click to view
+                                td #{submit.submittime}
+                                td #{submit.score}
+                                div.modal.fade(id="#{submit._id}", tabindex="-1", role="dialog", aria-labelledby="myModalLabel", aria-hidden="true")
+                                    .modal-dialog
+                                        .modal-content
+                                            .modal-header
+                                                h3.text-primary #{submit.username}'s homework of #{title}
+                                            .modal-body #{submit.content}
+                                            .modal-footer
+                                                form(action='/grade', method='POST')
+                                                    input.form-control.score-input(required, name="score" type="text" placeholder="Grade here")
+                                                    input(style="display:none", name="id", value="#{submit._id}")
+                                                    input(style="display:none", name="title", value="#{title}")
+                                                    button.btn.btn-danger(data-dismiss="modal") Close
+                                                    button.btn.btn-primary.pull-left Grade
+                a(href='/signout', class='text-center new-account') Sign Out
