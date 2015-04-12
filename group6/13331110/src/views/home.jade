@@ -1,0 +1,23 @@
+extends layout
+
+block content
+	div.container
+		div.row
+			div.col-sm-6.col-md-4.col-md-offset-4
+				div.user
+					h1.text-center.login-title Welcome #{user.firstName}. Check your details below:
+						div.signup-wall
+							ul.user-details
+								li Username ---> #{user.username}
+								li Email    ---> #{user.email}
+								li First Name ---> #{user.firstName} 
+								li Last Name ---> #{user.lastName}
+								li Role     --->  #{user.role}
+						a(href='/signout', class='text-center new-account') Sign Out
+
+				if user.role == 'T'
+					a(href='/create_hw', class='text-center new-account publish') Publish Assignment
+				else if user.role == 'S'
+					a(href='/submit_hw', class='text-center new-account submit') Submit Assignment
+
+				a(href='/listAllAssignments', class='text-center new-account submit') View All Assignments

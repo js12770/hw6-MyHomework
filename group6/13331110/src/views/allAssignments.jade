@@ -1,0 +1,15 @@
+extends layout
+
+block content
+    div.container
+        div.row
+            div.col-sm-6.col-md-4.col-md-offset-4
+                div.assignments
+                    each assignment in assignments
+                        div.assignment_info
+                            h2 Assignment Details:
+                            span #{assignment.detail}
+                            h2 Deadline:
+                            span #{assignment.deadline}
+
+                a(href='/home' class='text-center new-account') Back to home

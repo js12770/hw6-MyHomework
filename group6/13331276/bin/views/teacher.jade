@@ -1,0 +1,28 @@
+mixin homeworkb
+	li
+		ul
+			li deadline:
+				button change deadline
+			li homework requirement:
+			button(type='submit') change requirement 
+			li submited student: 
+
+mixin homeworka
+	li submited student:
+
+mixin teacher
+	a(href='/signout') Sign Out
+	div.container
+		br
+		p Your username:
+		p Identity: Teacher
+		button(type='submit') Add new homework 
+		div
+			p Homework before deadline:
+			ol
+				+homeworkb
+				+homeworkb
+			p Homework after deadline:
+			ol
+				+homeworka
+				+homeworka

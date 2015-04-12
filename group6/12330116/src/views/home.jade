@@ -1,0 +1,113 @@
+extends layout
+
+block content
+	div.container
+		ul.nav.nav-tabs
+			li(role='presentation',class='active')
+				a(href='#') 作业要求
+			li(role='presentation')
+				if user.role === 'student'
+					a(href='/submit') 提交作业
+				else if user.role === 'teacher'
+					a(href='/submit') 发布作业要求
+			li(role='presentation')
+				a(href='/homework') 查看作业
+		div.view
+
+		div(class='modal fade',id='myModal',tabindex='-1',role='dialog',aria-labelledby='myModalLabel',aria-hidden='true')
+			.modal-dialog
+				div(class='modal-content' id='view-dialog')
+					div(class='modal-header')
+						p Title:
+						p(id='title',style='') 
+					div(class='modal-body')
+						p Content:
+						p(id='content',style='') 
+						p Time:
+						p(id='time',style='')
+					div(class='modal-footer',id='footer')
+						button(class='btn btn-info',id='change') 修改
+					input(type='hidden',value='',id='x-id')
+				div(class='modal-content' id='change-dialog')
+					div.modal-body
+						p
+							label 标题:
+							input(class='form-control',size='16',type='text',id='x-title')
+						p
+							label 内容:
+							textarea(class='form-control' cols='50',rows='10',id='x-content')
+						p
+							label deadline:
+						div(class='input-group date form_datetime col-md-5 form-control',data-date='2015-04-11T00:00:00Z',data-date-format='dd MM yyyy - HH:ii p',data-link-field='time')
+							input(class='form-control',size='16',type='text',readonly,id='x-time')
+							span.input-group-addon
+								span.glyphicon.glyphicon-remove
+							span.input-group-addon
+								span.glyphicon.glyphicon-th
+						input(type='hidden',value='',id='y-time')
+					div.modal-footer
+						button(class='btn btn-info' id='submit') 确定
+		a(href='/signout',style='float:right') Sign Out
+
+
+	script.
+		$('#change-dialog').hide();
+		$.post('/viewRequest',function(data) {
+			var data = eval('(' + data + ')');
+			var requests = data.requests;
+			var html = '<ul>';
+			for(var i = 0;i < requests.length;i++) {
+				var html = html + '<li><button value=' + requests[i]._id + ' onclick="view(this.value)" class="btn btn-link">' + requests[i].title + '</button></li>';
+			}
+			html = html + '</ul>';
+			$('.view').append(html);		
+		});
+		function view(id) {
+			$.post('/viewRequest',{id : id},function(data) {
+				var data = eval('(' + data + ')');
+				var request = data.request;
+				$('#title').html(request.title);
+				$('#content').html(request.content);
+				$('#time').html(request.deadline);
+				$('#x-id').val(request._id);
+				$('#myModal').modal();
+			})
+		}
+
+		$("#change").click(function() {
+			$('#x-title').val($('#title').html());
+			$('#x-content').val($('#content').html().replace(/<br>/g,'\n').replace(/&nbsp/g,' '));
+			$('#x-time').val($('#time').html());
+			$('#y-time').val($('#time').html());
+			$('#view-dialog').hide();
+			$('#change-dialog').show();
+		})
+
+		$('#myModal').on('hidden.bs.modal', function (e) {	
+			$('#view-dialog').show();
+			$('#change-dialog').hide();
+		})
+
+		$('#submit').click(function() {
+			var content = $('#x-content').val();
+			var time = $('#y-time').val();
+			var title = $('#x-title').val();
+			var id = $('#x-id').val();
+			var postData = {
+				content : content,
+				deadline : time,
+				title : title,
+				id : id
+			};
+			console.log(postData);
+			$.post('/createRequest',postData,function(data) {
+				var data = eval('(' + data + ')');
+				if(!!data.err) {
+					alert(data.msg);
+					window.location.href = '/home';
+				}
+				else {
+					alert('修改作业要求成功!');
+				}
+			})
+		})

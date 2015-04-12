@@ -1,0 +1,14 @@
+extends layout
+
+block content
+    div.container
+        div.row
+            div.col-sm-6.col-md-4.col-md-offset-4
+                div.submit
+                    h1 Submit:
+                    form(class="submit_form", action='/home',method='GET')
+                        input(type='text', name='detail', size='54' placeholder='detail',required)
+                        input(type='text', name='deadline', size='54',placeholder='deadline',required)
+                        button(class='submit_s' type='submit') submit
+                        span.clearfix
+                    a(href='/home' class='text-center new-account') Back to home

@@ -1,0 +1,19 @@
+extends layout
+
+block content
+	div.container
+		ul.nav.nav-tabs
+			li(role='presentation')
+				a(href='/home') 作业要求
+			li(role='presentation')
+				if user.role === 'student'
+					a(href='/submit') 提交作业
+				else if user.role === 'teacher'
+					a(href='/submit') 发布作业要求
+			li(role='presentation',class='active')
+				a(href='#') 查看作业
+		each homework in homeworks
+			ul
+				li
+					a(href="/homework/"+homework.filename)=homework.filename
+		a(href='/signout',style='float:right') Sign Out

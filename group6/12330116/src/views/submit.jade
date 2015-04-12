@@ -1,0 +1,36 @@
+extends layout
+
+block content
+	div.container
+		script(type="application/javascript", src="/js/submit.js")
+		ul.nav.nav-tabs
+			li(role='presentation')
+				a(href='/home') 作业要求
+			li(role='presentation',class='active')
+				if user.role === 'student'
+					a(href='#') 提交作业
+				else if user.role === 'teacher'
+					a(href='#') 发布作业要求
+			li(role='presentation')
+				a(href='/homework') 查看作业
+		if user.role === 'student'
+			div#file_upload
+		else if user.role === 'teacher'
+					p
+						label 标题:
+						input(class='form-control',size='16',type='text',id='title')
+					p
+						label 内容:
+						textarea(class='form-control' cols='50',rows='10',id='content')
+					p
+						label deadline:
+					div(class='input-group date form_datetime col-md-5 form-control',data-date='2015-04-11T00:00:00Z',data-date-format='dd MM yyyy - HH:ii p',data-link-field='time')
+						input(class='form-control',size='16',type='text',value='',readonly)
+						span.input-group-addon
+							span.glyphicon.glyphicon-remove
+						span.input-group-addon
+							span.glyphicon.glyphicon-th
+					input(type='hidden',id='time',value='')
+					p
+						button(class='btn btn-success',id='update') 确定
+		a(href='/signout',style='float:right') Sign Out

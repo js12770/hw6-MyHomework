@@ -1,0 +1,71 @@
+extends layout
+
+block content
+	if user.identity === 'teacher'
+		+teacher
+	else if user.identity === 'student'
+		+student
+	else
+		h1 You account is invalid!
+		p You give a correct username and password, but database return a invalid type user account
+
+mixin identity
+	h2 Profile:
+	ul
+		li Your username: #{user.username}
+		li Email: #{user.email}
+		li First Name: #{user.firstName}
+		li Last Name: #{user.lastName}
+		p Identity: #{user.identity}
+
+mixin homework()
+	li
+		ul
+			li homework: express and passport
+			li deadline: 2015-04-12/24:00
+			li homework requirement: finish in time
+			li last submit:no submit
+			input(type='file' name='files')
+			br
+			button Submit
+
+mixin student
+	a(href='/signout') Sign Out
+	div.container
+		br
+		+identity
+		div
+			h3 Homework:
+			ol
+				+homework
+
+
+
+mixin homeworkb
+	li
+		ul
+			li homework: express and passport
+			li deadline: 2015-04-12/24:00
+			button change deadline
+			li homework requirement: finish in time
+			button(type='submit') change requirement 
+			li submited student: none
+
+mixin homeworka
+	li homework: menu ring
+	li deadline: 2015-04-05/24:00
+	li submited student: none
+
+mixin teacher
+	a(href='/signout') Sign Out
+	div.container
+		br
+		+identity
+		button(type='submit') Add new homework 
+		div
+			h3 Homework before deadline:
+			ol
+				+homeworkb
+			h3 Homework after deadline:
+			ol
+				+homeworka

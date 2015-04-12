@@ -1,0 +1,4 @@
+1. 后台代码很多并未实现
+2. 对于上交的作业的数据模型，在src/models/homework.ls中
+3. src/homework/createHomework.ls中处理教师新建作业，不能运行
+4. src/views 中的student.jade 和 teacher.jade是用， 最后写到了home.jade中
