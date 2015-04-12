@@ -1,0 +1,62 @@
+extends layout
+
+block content
+	nav.navbar.navbar-default
+		.container-fluid
+			.navbar-header
+				button.navbar-toggle.collapsed(type="button", data-toggle="collapse", data-target="#bs-example-navbar-collapse-1")
+					span.sr-only Toggle navigation
+					span.icon-bar
+					span.icon-bar
+					span.icon-bar
+				a.navbar-brand(href="/") MyHomework
+			#bs-example-navbar-collapse-1.collapse.navbar-collapse
+				ul.nav.navbar-nav
+					li
+						a(href="/allhomework") All->
+					li
+						a(href="/assignmentdetail?id=#{assignment._id}")
+							| #{assignment.title}->
+							
+					li.active
+						a(href="#")
+							| Upload
+							span.sr-only (current)
+				ul.nav.navbar-nav.navbar-right
+					li
+						a#getid(href="#", temp="#{assignment._id}") wellcome,
+					li.dropdown
+						a.dropdown-toggle(href="#", data-toggle="dropdown", role="button", aria-expanded="false")
+							| #{user.firstName}
+							span.caret
+						ul.dropdown-menu(role="menu")
+							li
+								a(href="/home") My Info
+							li
+								a(href="/signout") Log Out
+
+	.container
+		.col-md-12
+			h1.text-center.margin-bottom-15.addmarginbottom Upload your homework
+			form.form-horizontal.templatemo-contact-form-2.templatemo-container(role="form", action="/uploadhomework?id=#{assignment._id}", method="post")
+				.row
+					.col-md-12
+						.form-group
+							.col-sm-12
+								.templatemo-input-icon-container
+									|Title:
+									input#title.form-control(name="title", type="title", placeholder="Title",required)
+						.form-group
+							.col-sm-12
+								.templatemo-input-icon-container
+									|Homework Name:
+									input#disabledInput.form-control(name="assignmentname", type="title", value="#{assignment.title}", disabled="")
+						.form-group
+							.col-sm-12
+								.templatemo-input-icon-container
+									|Details:
+									textarea#details.form-control(name="details", rows="10", cols="50", placeholder="Details",required)
+	
+				.form-group
+					.col-md-12
+						input.btn.btn-warning.center-block(type="submit", value="Upload")

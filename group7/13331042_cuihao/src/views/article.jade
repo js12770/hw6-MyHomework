@@ -1,0 +1,62 @@
+extends layout
+
+block content
+  nav.navbar.navbar-default
+    .container-fluid
+      .navbar-header
+        button.navbar-toggle.collapsed(type="button", data-toggle="collapse", data-target="#bs-example-navbar-collapse-1")
+          span.sr-only Toggle navigation
+          span.icon-bar
+          span.icon-bar
+          span.icon-bar
+        a.navbar-brand(href="/") MyHomework
+      #bs-example-navbar-collapse-1.collapse.navbar-collapse
+        ul.nav.navbar-nav
+          li
+            a(href="/allhomework") All->
+          li
+            a(href="/assignmentdetail?id=#{assignment._id}")
+              | #{assignment.title}->
+              
+          li.active
+            a(href="#")
+              | #{homework.title}
+              span.sr-only (current)
+        ul.nav.navbar-nav.navbar-right
+          li
+            a#getid(href="#", temp="#{homework._id}") wellcome,
+          li.dropdown
+            a.dropdown-toggle(href="#", data-toggle="dropdown", role="button", aria-expanded="false")
+              | #{user.firstName}
+              span.caret
+            ul.dropdown-menu(role="menu")
+              li
+                a(href="/home") My Info
+              li
+                a(href="/signout") Log Out
+  div.container.center-block.templatemo-form-list-container
+    div.col-md-12
+      .panel.panel-default
+        .panel-heading
+          h1#title.panel-title.resetsize #{homework.title}
+        .panel-body.addminheight
+          p.premessage last edited by @#{homework.author}.
+          h2 Answer
+          p #{homework.details}
+      .alert.alert-info(role="alert")
+        strong Grade:
+        strong#score1(deadline="#{assignment.deadline}").addmargin #{homework.score}
+        if user.identity == 'teacher' && assignment.author == user.username
+          button#thebutton.addmargin.btn.btn-default(type="button", data-toggle="modal", data-target=".bs-example-modal-sm") 评分
+          strong#moremessage 
+  .modal.fade.bs-example-modal-sm(tabindex="-1", role="dialog", aria-labelledby="mySmallModalLabel", aria-hidden="true")
+    .modal-dialog.modal-sm
+      .modal-content
+        .modal-header
+          button.close(type="button", data-dismiss="modal", aria-label="Close")
+            span(aria-hidden="true") &#215;
+          h4.modal-title 评分
+        .modal-body
+          input#score(type="text", placeholder="#{homework.score}")
+        .modal-footer
+          button#changescore.btn.btn-primary(type="button", data-dismiss="modal") Ok
