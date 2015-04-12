@@ -1,0 +1,16 @@
+extends layout
+
+block content
+    div.container
+        div.row
+            div.col-sm-6.col-md-4.col-md-offset-4
+                h1.text-center.login-title Answer a question  
+                    div.account-wall
+                        p.text-left Title: #{collection.title}
+                        p.text-left Requirements: #{collection.requirements}
+                        p.text-left Deadline: #{collection.deadline}
+                        p.text-left Update the requirements:
+                        form(class='form-signin', action='/update/#{collection._id}/#{collection.title}', method='POST')
+                            textarea(row='10',col='20' name='content' class='form-control', placeholder='Change',required, autofocus)
+                            button(class='btn btn-lg btn-primary btn-block', type='submit') Submit
+                    a(href='/home', class='text-center new-account') Home
