@@ -21,9 +21,10 @@ app.use passport.initialize!
 app.use passport.session!
 app.use flash!
 
+homework = require './homework/init'
 initPassport = require './passport/init'
 initPassport passport
-routes = (require './routes/index') passport
+routes = (require './routes/index') passport, homework
 app.use '/', routes
 
 app.use (req, res, next) ->

@@ -1,9 +1,9 @@
-require! ['express', '../homework/homework']
+require! ['express']
 router = express.Router! 
 
 is-authenticated = (req, res, next)-> if req.is-authenticated! then next! else res.redirect '/'
 
-module.exports = (passport)->
+module.exports = (passport, homework)->
   router.get '/', (req, res)!-> res.render 'index', message: req.flash 'message'
 
   router.post '/login', passport.authenticate 'login', {
