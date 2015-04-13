@@ -1,0 +1,23 @@
+{
+  "name": "myHomework",
+  "version": "0.0.0",
+  "homepage": "https://github.com/lijj47/hw6-MyHomework",
+  "authors": [
+    "李俊杰 <wohexiaow@gmail.com>"
+  ],
+  "description": "homework system",
+  "keywords": [
+    "homework"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "semantic": "~1.11.6"
+  }
+}
