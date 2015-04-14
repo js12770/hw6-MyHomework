@@ -1,0 +1,33 @@
+extends layout
+
+block content
+  div.container
+    div.col-sm-6.col-md-4.col-md-offset-4
+      #user
+        h1.text-center.login-title Welcome #{user.firstName}. Check your details below:
+          div.signup-wall
+            ul.user-details
+              li Username ---> #{user.username}
+                li Email    ---> #{user.email}
+                li First Name ---> #{user.firstName} 
+                li Last Name ---> #{user.lastName}
+                li Is Teacher ---> #{user.isTeacher}
+                li Is Student ---> #{user.isStudent}
+            a(href='/signout', class='text-center new-account') Sign Out
+
+    #user
+    if user.isTeacher
+      div.col-sm-6.col-md-4.col-md-offset-4
+        h1.text-center.login-title Your Classes
+          div
+            table.table.table-hover
+              thead
+                tr
+                  th.text-center classname
+                  th.text-center time
+              tbody
+                #classes
+                  for class_ in classes
+                    tr(href=class_.className)
+                      td= class_.className 
+                      td= class_.time 
