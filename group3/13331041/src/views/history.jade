@@ -10,6 +10,7 @@ html
     #user
     #homework
     #date
+    #time
       if user.state == 'teacher'
         nav(class='navbar navbar-inverse navbar-fixed')
           div(class='container')
@@ -53,9 +54,11 @@ html
                           td #{i}
                           td #{hw.course}
                           td #{hw.homework}
-                          td #{hw.deadline}
+                          td #{hw.deadline} #{hw.time}
                           td
                             - if (date > hw.deadline)
+                              a(href = '/outofdate?id=#{hw._id}') Out of Date
+                            - else if (date >= hw.deadline&&hw.time < time)
                               a(href = '/outofdate?id=#{hw._id}') Out of Date
                             - else
                               a(href='/homework?id=#{hw._id}') change
@@ -103,10 +106,12 @@ html
                         td #{i}
                         td #{hw.course}
                         td #{hw.homework}
-                        td #{hw.deadline}
+                        td #{hw.deadline} #{hw.time}
                         td
                           - if (date > hw.deadline)
-                            a(href='/outofdate?id=#{hw._id}') outofdate
+                            a(href='/outofdate?id=#{hw._id}') out of date
+                          - else if (date >= hw.deadline&&hw.time < time)
+                            a(href='/outofdate?id=#{hw._id}') out of date
                           - else                    
                             a(href='/submit?id=#{hw._id}') submit
                       - i = i+1
