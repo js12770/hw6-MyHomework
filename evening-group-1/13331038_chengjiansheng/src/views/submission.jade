@@ -2,6 +2,8 @@ extends layout
 
 block content
   .container
+    p.float.right welcome #{user.identity}: #{user.username}
+  .container
     .ui.pointing.menu
       a.item(href='/homework')
         i.home.icon
@@ -33,16 +35,25 @@ block content
         label uploadDate
         p #{sub.uploadDate}
       .ui.vertical.segment
+        label deadline
+        p #{sub.homeworkDeadline}
+      .ui.vertical.segment
         label content
         p #{sub.content}
+
 
     if user.identity == 'teacher'
       form(class='ui grid', action='/modify', method='POST')
         .column
           .ui.fluid.form.segment
             .one.fields
-              .field
-                label Grade
-                input(type="hidden", name='sub_id', value='#{sub._id}')
-                input.one(type="text", placeholder="", name='grade')
-                button(class = 'ui blue submit button', type='submit') Submit A Grade
+              if now < sub.homeworkDeadline
+                .field
+                  label Grade
+                  pre Unreach deadline
+              else
+                .field
+                  label Grade
+                  input(type="hidden", name='sub_id', value='#{sub._id}')
+                  input.one(type="text", placeholder="", name='grade')
+                  button(class = 'ui blue submit button', type='submit') Submit A Grade
