@@ -7,10 +7,12 @@ block content
         div.container
             div.navbar-header
                 a(href='#',class='navbar-brand')
-                    - if (identity == 'teacher')
-                        p you are a teacher
-                    - else
-                        p you are a student
+                    ul.nav.navbar-nav
+                        li
+                        - if (identity == 'teacher')
+                            a(href='/home/',style="font-size:20px;color:white") you are a teacher
+                        - else
+                            a(href='/home/',style="font-size:20px;color:white") you are a student
             div(id='navbar',class='navbar-collapse collapse')
                 ul.nav.navbar-nav
                     li

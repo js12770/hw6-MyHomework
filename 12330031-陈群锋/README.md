@@ -8,7 +8,11 @@ based on http://code.tutsplus.com/tutorials/authenticating-nodejs-applications-w
 3. npm install
 4. grunt watch
 
-所需要的模块已经安装在node_modeles里面
-1、开启mongodb
-2、在本目录下grunt watch即可
+
+本次作业使用了一个文件上传模块，为multiparty
+在使用之前需要 npm install multiparty，若安装不成功可使用淘宝镜像
+
+使用过程，需要自己注册老师和学生用户，只允许注册一个老师。
+identity字段：为学生时需要为 student
+			  为老师时需要为 teacher
 

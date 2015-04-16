@@ -86,3 +86,9 @@ h1.error-message{
 ul.user-details{
     list-style: none;
 }
+.remark{
+    height: 32px;
+    border-radius: 5px;
+    border: 1px solid #e6e6e6;
+    margin-left: 100px;
+}

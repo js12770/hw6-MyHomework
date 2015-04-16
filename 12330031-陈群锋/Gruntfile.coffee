@@ -32,7 +32,14 @@ module.exports = (grunt) ->
         dot: true
         files:
           src: [
-            "bin/*"
+            "bin/models"
+            "bin/passport"
+            "bin/public/js"
+            "bin/public/stylesheets"
+            "bin/routes"
+            "bin/views"
+            "bin/db.js"
+            "bin/server.js"
             ".temp"
           ]
 
