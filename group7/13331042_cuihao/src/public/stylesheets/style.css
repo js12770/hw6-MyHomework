@@ -11,6 +11,9 @@ a {
 .addlinehei {
     line-height: 2.5
 }
+.resetmargin {
+    margin: 20px;
+}
 .addminheight {
     min-height: 300px;
     font-size: 16px;

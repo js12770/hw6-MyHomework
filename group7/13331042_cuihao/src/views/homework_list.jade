@@ -31,29 +31,36 @@ block content
 
 	div.container.center-block.templatemo-form-list-container.templatemo-container
 		div.col-md-12
-			table.table.table-striped.table-hover
-				thead
-					tr
-						th #
-						th Homework
-						th Deadline
-						th Author
-						th.text-right 
-				tbody
-					-	for (var i = 0; i < allassignment.length; i++) {
+			if allassignment.length
+				table.table.table-striped.table-hover
+					thead
 						tr
-							td #{i+1}
-							td #{allassignment[i].title}
-							td #{allassignment[i].deadline}
-							td #{allassignment[i].author}
-							td.text-right
-								a.btn.btn-info(href="assignmentdetail/?id=#{allassignment[i]._id}")
-									i view
-					-	}
+							th #
+							th Homework
+							th Deadline
+							th Author
+							th.text-right 
+					
+					
+					tbody
+						-	for (var i = 0; i < allassignment.length; i++) {
+							tr
+								td #{i+1}
+								td #{allassignment[i].title}
+								td #{allassignment[i].deadline}
+								td #{allassignment[i].author}
+								td.text-right
+									a.btn.btn-info(href="assignmentdetail/?id=#{allassignment[i]._id}")
+										i view
+						-	}
+			else
+				.alert.alert-info(role="alert")
+					|There's no homework yet.
+ 
 					
 			if user.identity == 'teacher'
 				.alert.alert-success(role="alert")
-					strong You can also publish a new homework->
+					strong You can publish a new homework->
 					a.btn.btn-default.addmargin(href="/addassignment", role="button") Create
 
 					
