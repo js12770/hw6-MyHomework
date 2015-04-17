@@ -89,11 +89,11 @@ ul.user-details{
 div.homework-box {
     border: 1px solid #ccc;
     border-radius: 4px;
-    padding: 5px 10px 4px 3px;
+    padding: 5px 10px 4px 5px;
     margin-top: 30px;
     margin-bottom: 30px;
     text-align: left;
-    font-size: 12px;
+    font-size: 14px;
 }
 
 span.deadline {
@@ -107,4 +107,72 @@ span.deadline {
 
 #homework-content {
     margin-top: 10px;
+}
+
+.edit {
+    height: 22px;
+    margin-top: 10px;
+    padding-top: 0px!important;
+    padding-bottom: 0px!important;
+    display: none!important;
+}
+
+.show-submit {
+    height: 22px;
+    margin-top: 10px;
+    padding-top: 0px!important;
+    padding-bottom: 0px!important;
+    display: none!important;
+}
+
+.submit-box-stu {
+    display: none;
+}
+
+.alert-format {
+    color: red;
+    font-size: 10px;
+    float: left;
+}
+
+.alert-req {
+    color: red;
+    font-size: 10px;
+    float: left;
+}
+
+.answer {
+    display: inherit;
+}
+
+.show-change {
+    height: 22px;
+    margin-top: 10px;
+    padding-top: 0px!important;
+    padding-bottom: 0px!important;
+    display: none!important;
+}
+
+.student-answers {
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    padding: 5px 10px 4px 5px;
+    margin: 10px 10px 10px 5px;
+}
+
+.student-name {
+    font-weight: bold;
+    margin-bottom: 3px;
+    color: black;
+}
+
+.grade {
+    display: none!important;
+}
+
+.grading {
+    height: 22px;
+    margin-top: 10px;
+    padding-top: 0px!important;
+    padding-bottom: 0px!important;
 }
