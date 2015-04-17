@@ -1,0 +1,15 @@
+extends layout
+
+block content
+  #login-container
+    form.ui.login.form.segment(action="/login", method="POST")
+      .ui.error.message
+      .six.wide.required.field
+        label Username
+        input(type='text', name="username")
+      .six.wide.required.field
+        label Password
+        input(type='password', name="password")
+      .ui.login.submit.button(type="submit") Log in
+      //- .inline.field
+      a(href="/signup") Do not have an account yet? Click me!

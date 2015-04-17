@@ -1,0 +1,15 @@
+doctype html
+html
+  head
+    title= title
+    link(rel='stylesheet', href='/stylesheets/semantic.min.css')
+    link(rel='stylesheet', href='/stylesheets/style.css')
+    script(type="application/javascript", src="/javascripts/jquery.min.js")
+    script(type="application/javascript", src="/javascripts/semantic.min.js")
+    script(type="application/javascript", src="/javascripts/myhw.js")
+  body
+    include ./header
+    #main-body-container
+      block content
+    include ./footer
+    script(type="application/javascript", src="http://localhost:35729/livereload.js")
