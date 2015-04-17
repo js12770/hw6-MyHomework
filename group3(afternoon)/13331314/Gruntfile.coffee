@@ -3,7 +3,7 @@ module.exports = (grunt) ->
   path = require('path')
   pkg = grunt.file.readJSON("package.json")
 
-  DEBUG = false # 添加测试所需代码，发布时应该为false
+  DEBUG = true # 添加测试所需代码，发布时应该为false
 
   grunt.initConfig 
     pkg: pkg

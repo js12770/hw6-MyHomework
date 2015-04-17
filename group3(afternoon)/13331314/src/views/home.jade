@@ -5,11 +5,35 @@ block content
 		div.row
 			div.col-sm-6.col-md-4.col-md-offset-4
 				#user
-					h1.text-center.login-title Welcome #{user.firstName}. Check your details below:
-						div.signup-wall
-							ul.user-details
-								li Username ---> #{user.username}
-								li Email    ---> #{user.email}
-								li First Name ---> #{user.firstName} 
-								li Last Name ---> #{user.lastName}
-						a(href='/signout', class='text-center new-account') Sign Out
+					if user.role == 'student'
+						h1.text-center.login-title Welcome #{user.firstName} , hard work is important!
+					else
+						h1.text-center.login-title Hello Professor #{user.lastName}
+
+					div.signup-wall
+						if user.role == 'student'
+							div.panel-default
+								div.panel-heading Homework Detail
+								div.panel-body
+									table.table
+										thead
+											tr
+												th Homework
+												th Deadline
+												th Submit
+										tbody
+											for requirement in requirements
+												tr
+													td #{requirement.question}
+													td #{requirement.deadline}													 
+													td 
+														a(class='btn btn-info' href='/homework?hid=#{requirement._id}') Detail
+
+
+						if user.role == 'teacher'
+							a(class='btn btn-lg btn-info btn-block' href='/publish') Create Homework
+							a(class='btn btn-lg btn-info btn-block' href='/management') Manage All Requirements
+							a(class='btn btn-lg btn-info btn-block' href='/grade') View All Submit
+						
+
+					a(href='/signout', class='text-center new-account') Sign Out

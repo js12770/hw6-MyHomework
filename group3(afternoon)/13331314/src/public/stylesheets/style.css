@@ -86,3 +86,13 @@ h1.error-message{
 ul.user-details{
     list-style: none;
 }
+
+.homework {
+    list-style:none;
+}
+
+.homeworkdetail {
+    text-align: left;
+    font-size: 10pt;
+    margin: 10px;
+}
