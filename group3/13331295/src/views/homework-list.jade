@@ -7,12 +7,18 @@ block content
         div.homework-info-wall
           each homework in homeworks
             div.homework-info
-              |#{homework.homeworkName} given by #{homework.teacherName}
+              |#{homework.teacherName}老师布置的作业：#{homework.homeworkName}
               br
-              |最近上传: hw1_v0.rar
-              br
-              |上传作业：
-              form.homework-upload-form(method='post' action='/homework-list')
-                input.form-control(name='homework' type='file' enctype='multipart/form-data' placeholder='Upload your homework here')
-                button.homework-upload-button(type='submit') 上传
+              - if(date > homework.homeworkDeadline)
+                  |(已过截至日期)
+                  br
+                  each uphomework in uphomeworks
+                    if (uphomework.studentName == studentName && uphomework.uphomeworkName == homework.homeworkName)
+                      if (uphomework.score == -1)
+                        |您的分数为：还未批改
+                      else
+                        |您的分数为：#{uphomework.score}
+              - else
+                  a(href='/upload?id=#{homework._id}')
+                    button 上传作业
         a(href='/home' class='text-center new-account') Back to home
