@@ -53,9 +53,12 @@ html
                 label.control-label(for='input01') Author
                 .controls
                   input.input-xlarge(type='text', name = 'author', value = '#{user.username}')
-                label.control-label(for='input01') Deadline
+                label.control-label(for='input01') Deadline Date
                 .controls
                   input(type='date', name = 'deadline')
+                label.control-label(for='input01') Deadline Time
+                .controls
+                  input(type = 'time', name = 'time')
               .control-group
                 .controls
                   button.btn.btn-success.submit Create

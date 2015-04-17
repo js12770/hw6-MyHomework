@@ -5,5 +5,6 @@ module.exports = mongoose.model 'Homework', {
 	deadline  :  String,
 	course    :  String,
 	homework  :  String,
-	author    :  String
+	author    :  String,
+	time      :  String
 }

@@ -10,6 +10,7 @@ html
     #user
     #homework
     #date
+    #time
       if user.state == 'teacher'
         nav(class='navbar navbar-inverse navbar-fixed')
           div(class='container')
@@ -53,9 +54,11 @@ html
                           td #{i}
                           td #{hw.course}
                           td #{hw.homework}
-                          td #{hw.deadline}
+                          td #{hw.deadline} #{hw.time}
                           td
                             - if(date>hw.deadline)
+                              a(href='/view?id=#{hw_id}') mark
+                            - else if (date == hw.deadline&&time < hw.time)
                               a(href='/view?id=#{hw_id}') mark
                             - else
                               a(href='/view?id=#{hw._id}') View
@@ -103,9 +106,11 @@ html
                         td #{i}
                         td #{hw.course}
                         td #{hw.homework}
-                        td #{hw.deadline}
+                        td #{hw.deadline} #{hw.time}
                         td
                           - if ('#{date}' < '#{hw.deadline}')
                             a(href='/resubmit?id=#{hw._id}') Change
+                          - else if (date == hw.deadline&&time < hw.time)
+                            a(href='/viewmark?id=#{hw._id}') View Mark
                           - else
                             a(href='/viewmark?id=#{hw._id}') View Mark
