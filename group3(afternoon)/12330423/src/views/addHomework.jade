@@ -1,3 +1,4 @@
+
 extends layout
 
 block content
@@ -15,20 +16,13 @@ block content
                 li Is Student ---> #{user.isStudent}
             a(href='/signout', class='text-center new-account') Sign Out
 
-    #user
-    if user.isTeacher
-      div.col-sm-6.col-md-4.col-md-offset-4
-        h1.text-center.login-title Your Classes
-          div
-            table.table.table-hover
-              thead
-                tr
-                  th.text-center classname
-                  th.text-center time
-              tbody
-                #classes
-                  for class_ in classes
-                    tr(href=class_.className)
-                      td
-                        a(href='/class/' + class_.className) #{class_.className}
-                      td= class_.time 
+        h1.text-center.login-title Create A New Class
+          div.signup-wall
+            form(class='form-signin', action='/CreateNewClass', method='POST')
+              input(type='text', name='classname', class='form-control', placeholder='Class Name',required, autofocus)
+              input(type='text', name='time', class='form-control nomargin', placeholder='Class Time', required)
+              button(class='btn btn-lg btn-primary btn-block', type='submit') Sumbit
+              span.clearfix
+                #message
+                  if message
+                    h1.text-center.error-message #{message}

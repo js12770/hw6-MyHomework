@@ -26,8 +26,8 @@ module.exports = (passport)->
   router.post '/CreateNewClass', is-authenticated, (req, res)!->
     (error, class_) <- Class.find-one {className: req.param 'classname'}
     return (console.log 'Error in add new class: ', error ; done error) if error
-    return (console.log 'Class already exists!') if class_
-    return (console.log 'You are not a teacher!') if req.user.isStudent
+    return (console.log 'Class already exists!'; res.redirect '/home') if class_
+    return (console.log 'You are not a teacher!'; res.redirect '/home') if req.user.isStudent
 
     new-class = new Class {
       className: req.param 'classname'
@@ -46,3 +46,15 @@ module.exports = (passport)->
     (error, class_) <- Class.find {teacher: req.user.username}
     console.log class_
     res.render 'allClasses', user: req.user, classes: class_
+
+  router.get '/class/:classname', is-authenticated, (req, res)!->
+    console.log(req.params.classname)
+    (error, class_) <- Class.find-one {className: req.params.classname}
+    console.log class_
+    res.render 'viewClass', user: req.user, class_: class_
+
+  router.get 'class/:classname/addHomework', is-authenticated, (req, res)!->
+    console.log(req.params.classname)
+    (error, class_) <- Class.find-one {className: req.params.classname}
+    console.log 'adding homework'
+    res.render 'addHomework', user: req.user, class_: class_
