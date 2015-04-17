@@ -1,0 +1,25 @@
+extends layout
+
+block content
+	div.container
+		div.row
+			div.col-sm-4.left
+				#user
+					div.signup-wall
+						ul.user-details
+							li Username ---> #{user.username}
+							li Email    ---> #{user.email}
+							li First Name ---> #{user.firstName} 
+							li Last Name ---> #{user.lastName}
+							li profession ---> #{user.profession}
+					a(href='/signout', class='text-center new-account') Sign Out
+			if user.profession == "teacher"
+				include ./teacher.jade
+			#docs
+			#items
+			if user.profession == "teacher"
+				include ./teacherTable.jade
+			else
+				include ./studentTable.jade
+
+
