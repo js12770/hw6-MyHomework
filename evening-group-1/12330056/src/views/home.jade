@@ -17,7 +17,7 @@ block content
 					if (user.isTeacher)
 						form(class='form-signin', action='/assign', method='POST')
 							input(type='text', name='question', class='form-control', placeholder='question', required, autofocus)
-							input(type='text', name='deadline', class='form-control', placeholder='format: yyyy,mm,dd,hh,mm,ss', required)
+							input(type='text', name='deadline', class='form-control', placeholder='Deadline(YYYY/MM/DD HH:MM:SS)', required)
 							button(class='btn btn-lg btn-primary btn-block', type='submit') Assign
 							span.clearfix
 					#message
@@ -32,7 +32,7 @@ block content
 							if user.isTeacher
 								form(class='form-signin', action='/changedeadline', method='POST')
 									input(type='text', name='assignId', class='form-control', placeholder='assignId',required, autofocus)
-									input(type='text', name='deadline', class='form-control', placeholder='deadline',required)
+									input(type='text', name='deadline', class='form-control', placeholder='New Deadline(YYYY/MM/DD HH:MM:SS)',required)
 									button(class='btn btn-lg btn-primary btn-block', type='submit') changeDeadline
 									span.clearfix
 							else
