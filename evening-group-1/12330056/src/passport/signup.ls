@@ -11,7 +11,7 @@ module.exports = (passport)!-> passport.use 'signup',  new LocalStrategy pass-re
   if user
     console.log msg = "User: #{username} already exists"
     done null, false, req.flash 'message', msg
-  else if role isnt 't' and role isnt 's' and role isnt 'T' and role isnt ''S
+  else if role isnt 't' and role isnt 's' and role isnt 'T' and role isnt 'S'
     console.log msg = "Invalid Role"
     done null, false, req.flash 'message', msg
   else

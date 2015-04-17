@@ -13,33 +13,34 @@ block content
 								li Email    ---> #{user.email}
 								li First Name ---> #{user.firstName} 
 								li Last Name ---> #{user.lastName}
+						a(href='/home', class='text-center new-account') Refresh
 						a(href='/signout', class='text-center new-account') Sign Out
-					if (user.isTeacher)
+					if user.isTeacher
 						form(class='form-signin', action='/assign', method='POST')
-							input(type='text', name='question', class='form-control', placeholder='question', required, autofocus)
+							input(type='text', name='content', class='form-control', placeholder='Question', required, autofocus)
 							input(type='text', name='deadline', class='form-control', placeholder='Deadline(YYYY/MM/DD HH:MM:SS)', required)
 							button(class='btn btn-lg btn-primary btn-block', type='submit') Assign
 							span.clearfix
 					#message
 						if message
 							h1.text-center.error-message #{message}
-					h1.text-center.login-title Assignment
+					h1.text-center.login-title Assignments
 						div.signup-wall
 							ul.user-details
 								if assignments
 									each assignment in assignments
 										li #{assignment}
 							if user.isTeacher
-								form(class='form-signin', action='/changedeadline', method='POST')
-									input(type='text', name='assignId', class='form-control', placeholder='assignId',required, autofocus)
-									input(type='text', name='deadline', class='form-control', placeholder='New Deadline(YYYY/MM/DD HH:MM:SS)',required)
-									button(class='btn btn-lg btn-primary btn-block', type='submit') changeDeadline
+								form(class='form-signin', action='/updateDeadline', method='POST')
+									input(type='text', name='assignId', class='form-control', placeholder='Assign Id',required, autofocus)
+									input(type='text', name='deadline', class='form-control', placeholder='New deadline(YYYY/MM/DD HH:MM:SS)',required)
+									button(class='btn btn-lg btn-primary btn-block', type='submit') Update Deadline
 									span.clearfix
 							else
 								form(class='form-signin', action='/submit', method='POST')
-									input(type='text', name='assignId', class='form-control', placeholder='assignId',required, autofocus)
-									input(type='text', name='content', class='form-control', placeholder='content', required)
-									button(class='btn btn-lg btn-primary btn-block', type='submit') submit
+									input(type='text', name='assignId', class='form-control', placeholder='Assign Id',required, autofocus)
+									input(type='text', name='content', class='form-control', placeholder='Content', required)
+									button(class='btn btn-lg btn-primary btn-block', type='submit') Submit
 									span.clearfix
 					h1.text-center.login-title Submission
 						div.signup-wall
@@ -49,8 +50,8 @@ block content
 										li #{submission}
 								if user.isTeacher
 									form(class='form-signin', action='/grade', method='POST')
-										input(type='text', name='assgnId', class='form-control', placeholder='assignId', required, autofocus)
-										input(type='text', name='studentName', class='form-control', placeholder='student', required)
+										input(type='text', name='assgnId', class='form-control', placeholder='AssignId', required, autofocus)
+										input(type='text', name='studentName', class='form-control', placeholder='Student', required)
 										input(type='text', name='score', class='form-control', placeholder='score', required)
-										button(class='btn btn-lg btn-primary btn-block', type='submit') grade
+										button(class='btn btn-lg btn-primary btn-block', type='submit') Grade
 										span.clearfix

@@ -22,12 +22,13 @@ module.exports = (passport)->
     res.redirect '/'
 
   router.get '/home', is-authenticated, (req, res)!->
-    Homework.find {isQuestion: true}, (err, assignments)->
-        if req.user.isTeacher
+    if req.user.isTeacher
+        Homework.find {author: req.user.username, isQuestion: true}, (err, assignments)->
             Homework.find {isQuestion: false}, (err, submissions)->
                 res.render 'home', user: req.user, assignments: assignments, submissions: submissions
-        else
-            Homework.find {author: req.user.username}, (err, submissions)->
+    else
+        Homework.find {isQuestion: true}, (err, assignments)->
+            Homework.find {author: req.user.username, isQuestion: false}, (err, submissions)->
                 res.render 'home', user: req.user, assignments: assignments, submissions: submissions
 
   router.post '/assign', is-authenticated, (req, res)!->
@@ -35,7 +36,7 @@ module.exports = (passport)->
       console.log msg = "Only teacher has the permission to assign"
       res.render 'home', user: req.user, message: msg
     else
-        Homework.count {}, (err, count)->
+        Homework.count {isQuestion: true}, (err, count)->
             new-homework = new Homework {
                 id: count
                 content: req.param 'content'
@@ -45,29 +46,29 @@ module.exports = (passport)->
             }
             new-homework.save (error)->
               if error
-                console.log "Error during saving homework: ", error
+                console.log "Error during saving homework ", error
                 throw error
               else
                 console.log msg = "Assign successfully"
                 res.redirect '/home'
 
-  router.post '/changedeadline', is-authenticated, (req, res)!->
+  router.post '/updateDeadline', is-authenticated, (req, res)!->
     if !req.user.isTeacher
-      console.log msg = "Only teacher has the permission to change deadline"
+      console.log msg = "Only teacher has the permission to update deadline"
       res.render 'home', user: req.user, message: msg
     else
-        Homework.findOne {id: req.param('assignId')}, (err, assignment)->
+        Homework.findOne {id: parseInt(req.param('assignId')), author: req.user.username, isQuestion:true}, (err, assignment)->
             if !assignment
-                console.log msg = "Invalid Id"
+                console.log msg = "Invalid Id or permission deny"
                 res.render 'home', user: req.user, message: msg
             else
                 assignment.deadline = new Date(req.param('deadline'))
                 assignment.save (error)->
                   if error
-                    console.log "Error during changing deadline: ", error
+                    console.log "Error during updating deadline: ", error
                     throw error
                   else
-                    console.log msg = "Modify successfully"
+                    console.log msg = "Update successfully"
                     res.redirect '/home'
 
   router.post '/submit', is-authenticated, (req, res)->
@@ -75,38 +76,36 @@ module.exports = (passport)->
       console.log msg = "Only student has permission to submit"
       res.render 'home', user: req.user, message: msg
     else
-        Homework.findOne {id: req.param('assignId')}, (err, homework)->
+        Homework.findOne {id: parseInt(req.param('assignId')), isQuestion:true}, (err, homework)->
             if !homework
-                console.log msg = "invalid id"
+                console.log msg = "Invalid id"
                 res.render 'home', user: req.user, message: msg
             else
                 if homework.deadline > new Date()
-                    Homework.count {}, (err, count)->
-                        new-homework = new Homework {
-                            id: parseInt(req.param('assignId')) * -1
-                            content: req.param 'content'
-                            author: req.user.username
-                            isQuestion: false
-                        }
-                        new-homework.save (error)->
-                            if error
+                    console.log "Ready to submit"
+                    Homework.findOneAndUpdate {id: parseInt(req.param('assignId')), author: req.user.username, isQuestion: false}, {
+                        id: parseInt(req.param 'assignId')
+                        content: req.param('content')
+                        author: req.user.username
+                        isQuestion: false
+                    }, {upsert: true}, (err, submission) ->
+                            if err
                                 console.log "Error in saving hw: ", error
-                                throw error
-                            else
-                                console.log msg = "Submit successfully"
-                                res.redirect '/home'
+                            throw error
+                    console.log msg = "Submit successfully"
+                    res.redirect '/home'
                 else
-                    console.log msg = "Deadline passed"
-                    res.render 'home', user: req.user, message: msg
+                        console.log msg = "Deadline passed"
+                        res.render 'home', user: req.user, message: msg
 
   router.post '/grade', is-authenticated, (req, res)!->
     if !req.user.isTeacher
       console.log msg = "Only teacher has the permission to grade"
       res.render 'home', user: req.user, message: msg
     else
-        Homework.findOne {id: parseInt(req.param('assignId')) * -1}, (err, homework)->
+        Homework.findOne {id: parseInt(req.param('assignId')), isQuestion:true }, (err, homework)->
             if homework.deadline < new Date()
-                Homework.findOne {id: req.param('assignId'), author: req.param('studentName')}, (err, homework)->
+                Homework.findOne {id: parseInt(req.param('assignId')), author: req.param('studentName'), isQuestion: false}, (err, homework)->
                     if !homework
                         console.log msg = "Invalid id or student name"
                         res.render 'home', user: req.user, message: msg
