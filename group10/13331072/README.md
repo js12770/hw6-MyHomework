@@ -1,9 +1,13 @@
 # Tested on Chrome 
 
 1.install MonogoDB
+
 2.run mongod (on default port 27017)
+
 3.npm install
+
 4.grunt watch
+
 5.localhost:5000
 
 有问题请联系qq:285425897
@@ -13,8 +17,11 @@
 1.角色: 学生，老师。 Get
 
 2.访问管理：Get
+
 	a.只有选定了本课程老师和学生才能够访问使用本系统。
+
 	b.老师可以看到所有的作业要求和所有学生提交的作业。
+
 	c.学生能看到所有的作业要求，但只能够看到自己的作业。
 
 3.发布作业要求：老师可以发布作业要求，也可以修改一个已发布但是尚未截止的作业要求。GET
