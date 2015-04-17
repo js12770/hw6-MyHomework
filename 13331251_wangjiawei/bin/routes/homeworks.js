@@ -29,101 +29,242 @@
   module.exports = router;
   router.get('/', isAuthenticated, function(req, res){
     var course_id;
-    course_id = req.param('course');
+    course_id = req.query.course;
+    console.log(course_id);
+    console.log('homework home');
     Course.findOne({
       _id: course_id
     }, function(err, course){
       var homeworks;
       console.log(course);
-      homeworks = Homework.find({}).where("_id")['in'](course.homeworkId).exec(function(err, homeworks){
+      homeworks = Homework.find({
+        courseId: course._id
+      }, function(err, homeworks){
         console.log(homeworks);
         res.render('homeworkList', {
           homeworks: homeworks,
-          user: req.user
+          user: req.user,
+          course: course
         });
       });
     });
   });
-  router.get('/:homeworkId', isAuthenticated, function(req, res){
-    var user, homework;
+  router.get('/detail/:homeworkId', isAuthenticated, function(req, res){
+    var user;
     user = req.user;
-    homework = Homework.findOne({
-      id: homeworkId
-    });
-    res.render('homeworkDetail', {
-      homework: homework,
-      user: user
-    });
-  });
-  router.get('/create', isAuthenticated, isTeacher, function(req, res){
-    return render('createHomework');
-  });
-  router.get('/create', isAuthenticated, isTeacher, function(req, res){
-    return Homework.findOne({
-      name: req.params.name
+    console.log(user);
+    Homework.findOne({
+      _id: req.params.homeworkId
     }, function(err, homework){
-      var newHomework;
-      if (homework) {
-        res.write("This homework has existed!");
+      if (err) {
+        console.log('Failed to find the homework');
+      }
+      if (user.character === 'teacher') {
+        Content.find({
+          homeworkId: homework._id
+        }, function(err, contents){
+          if (err) {
+            console.log('No contents');
+          }
+          res.render('homeworkDetail', {
+            contents: contents,
+            user: user,
+            homework: homework
+          });
+        });
       } else {
-        newHomework = new Homework({
-          name: req.params.name,
-          content: req.params.content
+        console.log('homework is');
+        console.log(homework._id);
+        console.log(user._id);
+        Content.findOne({
+          homeworkId: homework._id,
+          writerId: user._id
+        }, function(err, content){
+          res.render('homeworkDetail', {
+            content: content,
+            user: user,
+            homework: homework
+          });
         });
       }
     });
   });
-  router.get('/:homeworkId/edit', isAuthenticated, isTeacher, function(req, res){
-    if (!homework) {
-      res.write('The homework doesn'.t(exist()['res.end!elseres.render '].editHomework[', homework:homework, user:userrouter.get "/:homeworkId/check", is-authenticated, is-teacher, (req, res)->contents = Content.find {homework-id:req.params.homework-id}res.render '].homeworkContentList[', contents:contentsrouter.get "/:homeworkId/enscore", is-authenticated, is-teacher, (req, res)->content = Content.find-one {id: req.params.content-id}res.render '].enscoreHomework[', content:contentrouter.post "/:homeworkId/enscore", is-authenticated, is-teacher, (req, res)->content = Content.find-one {id: req.params.homework-id}router.post "/:homeworkId/edit", is-authenticated, is-teacher, (req, res)->homework = Homework.find-one {id: homeworkId}if not homeworkres.write '].The(homework(doesn['t exist!']))));
-      return res.end();
-    } else {
-      homework.deadline = req.param('deadline');
-      homework.instruction = req.param('instruction');
-      homework.name = req.param('name');
-      return homeworks.save();
-    }
+  router.get('/create', isAuthenticated, isTeacher, function(req, res){
+    var courseId;
+    courseId = req.query.courseId;
+    console.log(courseId);
+    return res.render('createHomework', {
+      courseId: courseId
+    });
   });
-  router.get('/:homeworkId/write', isAuthenticated, isStudent, function(req, res){
-    var content, course;
-    content = Content.findOne({
-      writerId: req.user.id,
-      homeworkId: req.params.homeworkId
+  router.post('/create/:courseId', isAuthenticated, isTeacher, function(req, res){
+    var courseId;
+    courseId = req.param.courseId;
+    return Homework.findOne({
+      name: req.params.name
+    }, function(err, homework){
+      var newHomework;
+      console.log(req.params.courseId + "...");
+      if (homework) {
+        res.write("This homework has existed!");
+      } else {
+        newHomework = new Homework({
+          name: req.param('name'),
+          deadline: req.param('deadline'),
+          content: req.param('content'),
+          courseId: req.params.courseId
+        });
+        newHomework.save();
+        res.redirect('/courses');
+      }
     });
-    course = Course.findOne({
-      id: req.params.id
+  });
+  router.get('/content/:contentId', isAuthenticated, isTeacher, function(req, res){
+    return Content.findOne({
+      _id: req.params.contentId
+    }, function(err, content){
+      if (!content) {
+        res.write('The homework doesn\'t exist!');
+        res.end();
+      } else {
+        res.render('homeworkContent', {
+          content: content,
+          user: req.user
+        });
+      }
     });
-    if (!content) {
-      content = new Content({
-        courseId: req.params.id,
-        homeworkId: req.params.homeworkId,
-        content: '',
-        writerId: 'req.user.id'
+  });
+  router.post("/enscore/:contentId", isAuthenticated, isTeacher, function(req, res){
+    return Content.findOne({
+      _id: req.params.contentId
+    }, function(err, content){
+      if (!content) {
+        res.write('The homework doesn\'t exist!');
+        res.end();
+      } else {
+        Homework.findOne({
+          _id: content.homeworkId
+        }, function(err, homework){
+          var nowDate;
+          if ((nowDate = new Date()) < homework.deadline) {
+            res.write('It\' s not time to enscore!');
+            res.end();
+            return;
+          }
+          content.score = req.param('score');
+          content.save();
+          res.redirect('/home');
+        });
+      }
+    });
+  });
+  router.get("/edit/:homeworkId", isAuthenticated, isTeacher, function(req, res){
+    return Homework.findOne({
+      _id: req.params.homeworkId
+    }, function(err, homework){
+      var nowDate;
+      if (!homework) {
+        res.write('The homework doesn\'t exist!');
+        res.end();
+      } else {
+        nowDate = new Date();
+        if (nowDate >= homework.deadline) {
+          res.write('The deadline has passed!');
+          res.end();
+        } else {
+          res.render('editHomework', {
+            user: req.user,
+            homework: homework
+          });
+        }
+      }
+    });
+  });
+  router.post("/edit/:homeworkId", isAuthenticated, isTeacher, function(req, res){
+    return Homework.findOne({
+      _id: req.params.homeworkId
+    }, function(err, homework){
+      if (!homework) {
+        res.write('The homework doesn\'t exist!');
+        res.end();
+      } else {
+        if (nowDate >= homework.deadline) {
+          res.write('The deadline has passed!');
+          res.end();
+        } else {
+          homework.deadline = req.param('deadline');
+          homework.instruction = req.param('instruction');
+          homework.name = req.param('name');
+          homework.save();
+          res.redirect('/home');
+        }
+      }
+    });
+  });
+  router.get("/write/:contentId", isAuthenticated, isStudent, function(req, res){
+    console.log(req.user);
+    return Content.findOne({
+      writerId: req.user._id,
+      _id: req.params.contentId
+    }, function(err, content){
+      if (!content) {
+        content = new Content({
+          homeworkId: req.query.homework,
+          content: '',
+          writerId: req.user._id,
+          score: 'unscored'
+        });
+        console.log('A new content');
+        content.save();
+      }
+      Homework.findOne({
+        _id: content.homeworkId
+      }, function(err, homework){
+        var nowDate;
+        if ((nowDate = new Date()) >= homework.deadline) {
+          res.write('The deadline has passed!');
+          res.end();
+          return;
+        }
+        Course.findOne({
+          _id: homework.courseId
+        }, function(err, course){
+          res.render('writeHomework', {
+            user: req.user,
+            courseName: course.name,
+            content: content
+          });
+        });
       });
-      content.save();
-    }
-    return res.render('writeHomework', {
-      user: user != null
-        ? user
-        : req.user,
-      courseName: courseName != null
-        ? courseName
-        : course.name,
-      content: content != null ? content : content
     });
   });
-  router.post('/:homeworkId/write', isAuthenticated, isStudent, function(req, res){
-    var content;
-    content = Content.findOne({
-      writerId: req.user.id,
-      homeworkId: req.params.homeworkId
+  router.post('/write/:contentId', isAuthenticated, isStudent, function(req, res){
+    var user;
+    console.log(req.user);
+    console.log('no');
+    user = req.user;
+    return Content.findOne({
+      writerId: req.user._id,
+      _id: req.params.contentId
+    }, function(err, content){
+      if (!content) {
+        res.write('Error');
+        res.end();
+      } else {
+        Homework.findOne({
+          _id: content.homeworkId
+        }, function(err, homework){
+          var nowDate;
+          if ((nowDate = new Date()) >= homework.deadline) {
+            res.write('The deadline has passed!');
+            res.end();
+            return;
+          }
+          content.content = req.param('content');
+          content.save();
+          res.redirect('/home');
+        });
+      }
     });
-    if (!content) {
-      res.write('Error');
-      return res.end();
-    } else {
-      content.content = req.params('content');
-      return content.save();
-    }
   });
 }).call(this);
