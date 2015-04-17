@@ -1,0 +1,24 @@
+extends layout
+
+block content
+  div.container
+    div.row
+      div.col-sm-6.col-md-4.col-md-offset-4
+        div.homework-info-wall
+          each homework in homeworks
+            div.homework-info
+              |#{homework.teacherName}老师布置的作业：#{homework.homeworkName}
+              br
+              - if(date > homework.homeworkDeadline)
+                  |(已过截至日期)
+                  br
+                  each uphomework in uphomeworks
+                    if (uphomework.studentName == studentName && uphomework.uphomeworkName == homework.homeworkName)
+                      if (uphomework.score == -1)
+                        |您的分数为：还未批改
+                      else
+                        |您的分数为：#{uphomework.score}
+              - else
+                  a(href='/upload?id=#{homework._id}')
+                    button 上传作业
+        a(href='/home' class='text-center new-account') Back to home

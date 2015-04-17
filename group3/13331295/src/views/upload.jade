@@ -1,0 +1,21 @@
+extends layout
+
+block content
+  div.container
+    div.row
+      div.col-sm-6.col-md-4.col-md-offset-4
+        div.homework-info-wall
+          | #{homework.homeworkName}
+          br
+          if (lastest == NULL)
+            |最近上传: 无上传记录
+          else
+            |最近上传: #{lastest.uphomeworkName} 上传于：#{lastest.date}
+          br
+          |上传作业：
+          form.homework-upload-form(method='post', action='/upload', enctype='multipart/form-data')
+            input(type='hidden', name='homeworkId', value='#{homework._id}')
+            input(type='hidden', name='homeworkName', value='#{homework.homeworkName}')
+            input.form-control(name='uphomework' type='file' required)
+            button.homework-upload-button(type='submit') 上传
+        a(href='/homework-list', class='text-center new-account') Back

@@ -1,0 +1,16 @@
+extends layout
+
+block content
+  div.container
+    div.row
+      div.col-sm-6.col-md-4.col-md-offset-4
+        div.homework-create-wall
+          form.homework-create-form(method='post')
+            div.homework-create-block
+              input.homework-create-name(type ='text' name='new-homework' placeholder='Enter Homework Name' required)
+              br
+              |Deadline:
+              input.homework-deadline(name='homework-deadline-date' type='date' required)
+              textarea.homework-create-demand(name='new-homework-demand' placeholder='Enter homework Demand' required maxlength=100)
+            button.course-create-btn(type='submit') Create
+        a(href='/home' class='text-center new-account') Back to Home

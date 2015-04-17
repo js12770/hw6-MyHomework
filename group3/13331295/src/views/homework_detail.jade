@@ -1,0 +1,33 @@
+extends layout
+
+block content
+  div.container
+    div.row
+      div.col-sm-6.col-md-4.col-md-offset-4
+        .homework-display-wall
+          |#{homework.homeworkName}的提交情况:
+          if (date > homework.homeworkDeadline)
+            |（已截止）
+          else
+            |（作业未截止）
+          br
+          if (uphomeworks.length == 0)
+            |此作业没有学生上传作业
+          else
+            each item in uphomeworks
+              .homework-detail
+                |上传学生：#{item.studentName}
+                br
+                a(href='/uploads/#{item.uphomeworkName}#{item.uphomeworkid}/#{item.uphomeworkName}#{item.studentName}.#{item.extend}') 作业详情
+                br
+                if (item.score != -1)
+                  |分数：#{item.score}
+                if (date > homework.homeworkDeadline)
+                  form.score-form(method='post' action='/homework_detail')
+                    input(type='hidden' name='homework-corrected-student' value='#{item.studentName}')
+                    input(type='hidden' name='homework-corrected-id' value='#{item.uphomeworkid}')
+                    input.score-given(type='number' name='score' min='0' max='100' required)
+                    button.score-btn(type='submit') Correct
+                br
+                br
+        a(href='/view_all_homework' class='text-center new-account') Back
