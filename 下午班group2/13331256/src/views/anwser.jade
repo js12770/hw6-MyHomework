@@ -7,10 +7,27 @@ block content
 				span.h4 Hello #{user.firstName}.
 			div.col-sm-6.col-md-2.col-md-offset-8
 				a(href='/signout', class='text-center new-account') Sign Out
+		-var ans = "No answer yet"
+		-var up = ""
+		-var assess = false
+		each val in user.problem
+			if val.id.toString() == homework._id.toString()
+				-ans = val.anwser
+				-up = "update"
+				-assess = val.assess
 		div.row
 			div.col-sm-12.col-md-6.col-md-offset-3
 				div.h3 #{homework.title}
-				form(class='form-signin', action="/anwser/#{homework._id}", method='POST')
-					input(type='text', name='anwser', class='form-control', placeholder='Your anwser',required, autofocus)
-					button(class='btn btn-lg btn-primary btn-block', type='submit') Register
-					span.clearfix
+				div.h4 #{homework.description}
+				if assess
+					div.h4 assess: #{assess}
+				form(class='form-signin', action="/anwser#{up}/#{homework._id}", method='POST')
+					if homework.deadline > new Date()
+						input(type='text', name='anwser', class='form-control', placeholder='#{ans}', required, autofocus)
+						button(class='btn btn-lg btn-primary btn-block', type='submit') Register
+						span.clearfix
+					else
+						div.h3 The deadline had passed, you can't modefied your answer anymore.
+						<input type='text' name='anwser' class='form-control' placeholder='#{ans}' required autofocus disabled>
+						button(class='btn btn-lg btn-default btn-block', type='submit', disabled='disabled') Register
+						span.clearfix

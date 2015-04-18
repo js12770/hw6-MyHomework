@@ -10,12 +10,20 @@ block content
 		div.row
 			div.col-sm-12.col-md-6.col-md-offset-3
 				div.h3 #{homework.title}
+				div.h3 Deadline: #{homework.deadline}
+				div.h3 Description: #{homework.description}
 				if user.presence === 'teacher'
+					div.h5
+						a(href="/changetime/#{homework._id}") change #{homework.title}'s deadline or description->
 					div.h5 Here are the students' answers:
-					ul
+						ul
 						if homework.anwser.length !== 0
 							each val in homework.anwser
 								li #{val.name}: #{val.anwser}
+								if homework.deadline <= new Date()
+									if val.assess
+										div assess: #{val.assess}
+									a(href='/homework/#{homework._id}/#{val.id}') assess this answer->
 						else
 							li There are still not any students.
 				else
@@ -27,6 +35,9 @@ block content
 								if val.id.toString() == homework._id.toString()
 									li
 										div #{val.anwser}
+										if val.assess
+											div #{val.assess}
+										a(href="/anwser/#{homework._id}") change your anwser->
 										-a = false
 							if a
 								You haven't answer this problem. To answer:
