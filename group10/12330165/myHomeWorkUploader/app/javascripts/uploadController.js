@@ -15,7 +15,6 @@ $(document).ready(function() {
             $('progress').attr({value: e.loaded, max: e.total});
         }
     }
-
     $('#submit-button').click(function() {
         var formData = new FormData($('form')[0]);
         var obj = $('select option:selected');

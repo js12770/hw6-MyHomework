@@ -7,35 +7,8 @@ var router = express.Router();
 var StudentController = require('../controllers/studentController');
 var HomeworkController = require('../controllers/homeworkController');
 
-router.get('/', function(req, res) {
-    res.render('index');
-});
-
-router.get('/students', function(req, res) {
-    res.render('studentList');
-});
-
 router.get('/getAllStudents', StudentController.rGetAllStudents);
 
-router.get('/upload', function(req, res) {
-    res.render('uploader');
-});
-
-router.get('/allhomework', function(req, res) {
-    res.render('allhomework');
-});
-
-router.get('/status', function(req, res) {
-    res.render('status');
-});
-
-router.get('/submitHW', function(req, res) {
-    res.render('submitHW');
-});
-
-router.get('/homework', function(req, res) {
-    res.render('homework');
-});
 
 router.post('/checkIfUploaded', StudentController.rCheckIfUploaded);
 
