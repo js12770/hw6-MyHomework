@@ -1,0 +1,43 @@
+extends layout
+
+block content
+  - var today = new Date()
+
+  div.container
+    div user: #{user.username}
+
+    div
+        a(href='/home') Home
+
+    hr
+
+    div homework-submit-list
+
+    hr
+
+    each item in homeworkSubmitList
+      ul
+        li submitter: #{item.submitter}
+        li title: #{item.title}
+        li content: #{item.content}
+
+        if item.score !== '-1'
+            li score: #{item.score}
+        else
+            li score: Not score
+
+        if user.type === 'teacher'
+            form(action='/submitList', method='post')
+                input(type='hidden', name='belongTo', value='#{belongTo}')
+                input(type='hidden', name='submitter', value='#{item.submitter}')
+                input(type='hidden', name='deadline', value='#{deadline}')
+                input(type='text', name='score', placeholder='score')
+
+                if (today > jadeDeadline)
+                    button(type='submit') Grade
+                else
+                    button(type='submit', disabled='disabled') Grade
+
+        hr
+
+

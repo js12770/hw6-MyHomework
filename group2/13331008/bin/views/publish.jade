@@ -1,0 +1,33 @@
+extends layout
+
+block script
+  script(src='scripts/publish.js')
+
+block content
+  div.container
+    form(action='/publish', method='post')
+      if modify
+        div You are modifying a homework published
+        input(type='hidden', name='modify', value='#{modify}')
+
+      else
+        div You are publish a homework
+
+      div
+        标题:
+        input(name="title", type="text")
+
+      div
+        截止时间:
+        input(name='deadline', type='date')
+
+      div
+        描述:
+        textarea(name="description", rows="5", cols="30")
+
+      if modify
+        div
+          button(type="submit") 修改
+      else
+        div
+          button(type="submit") 发布

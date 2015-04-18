@@ -1,0 +1,23 @@
+extends layout
+
+block content
+  div.container
+    div user: #{user.username}
+
+    div
+        a(href='/home') Home
+
+    hr
+
+    div homework-submit-list
+
+    hr
+
+    each item in homeworkSubmitList
+      ul
+        li title: #{item.title}
+        li content: #{item.content}
+
+        hr
+
+

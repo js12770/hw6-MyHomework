@@ -1,0 +1,60 @@
+extends layout
+
+block content
+  - var today = new Date()
+  div.container
+    div.header
+      span.user user: #{user.username}
+
+      span.signout
+        a(href='/signout') Sign Out
+
+    if user.type === 'teacher'
+      div
+        | publish a homework:
+        span
+          a.publish(href='/publish') publish
+
+    hr
+
+    div homework-publish-list
+
+    hr
+
+    each item in homeworkPublishList
+      - var deadline = new Date(item.deadline)
+
+      ul.homeworkPublishItem
+        li publisher: #{item.publisher}
+        li title: #{item.title}
+        li description: #{item.description}
+        li deadline: #{item.deadline}
+
+        form#submit(action='submit')
+          input(type='hidden', name='belongTo', value='#{item.title}')
+          input(type='hidden', name='deadline', value='#{item.deadline}')
+
+        form#submitList(action='submitList')
+          input(type='hidden', name='belongTo', value='#{item.title}')
+          input(type='hidden', name='deadline', value='#{item.deadline}')
+
+        form#publish(action='publish')
+          input(type='hidden', name='modify', value='#{item.title}')
+
+        div.button-container
+          if (today <= deadline)
+            button(type='submit', form='submit') submit
+          else
+            button(type='submit', form='submit', disabled='true') submit
+
+          button(type='submit', form='submitList') submitList
+
+          if user.type === 'teacher'
+              if (today <= deadline)
+                button(type='submit', form='publish') modify
+              else
+                button(type='submit', form='publish', disabled='true') modify
+
+        hr
+
+

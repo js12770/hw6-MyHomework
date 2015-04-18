@@ -1,0 +1,41 @@
+extends layout
+
+block script
+  script(src='scripts/publish.js')
+
+block content
+  div.container
+    div user:#{user.username}
+    div
+      a(href='home') home
+
+    hr
+
+    form(action='/publish', method='post')
+      if belongTo
+        div You are modifying a homework published
+        input(type='hidden', name='belongTo', value='#{belongTo}')
+
+      else
+        div You are publish a homework
+
+      hr
+
+      div
+        | title:
+        input(name="title", type="text")
+
+      div
+        | deadline:
+        input(name='deadline', type='date')
+
+      div
+        | description:
+        textarea(name="description", rows="20", cols="100")
+
+      if belongTo
+        div
+          button(type="submit") modify
+      else
+        div
+          button(type="submit") publish
