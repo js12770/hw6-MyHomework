@@ -1,10 +1,14 @@
 # SE-386 Lab 06. MyHomework    
+
 ## start
+
 1. install MongoDB
 2. run mongod (on default port 27017)
 3. npm install
 4. grunt watch
+
 ## readme
+
 - 对需求的理解
     - 不分课程, 课程只有"本课程"
     - user of 2 roles: teacher & student
