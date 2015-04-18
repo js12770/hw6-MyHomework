@@ -93,7 +93,13 @@ module.exports = (passport)->
     res.render 'hwcreate'
 
   router.get '/hwsee', is-authenticated, (req, res)!-> 
+    Date nowDate = new Date()
+    nowTime = nowDate.valueOf!
     hw.find (err, collection) ->
+      for _hw in collection
+        ddlTime = _hw.hwddl.valueOf!
+        if ddlTime < nowTime
+          _hw.overddl = "1"
       res.render 'hwsee', user: req.user, collection: collection
 
   router.post '/hwcreate', (req, res) !->
@@ -102,6 +108,7 @@ module.exports = (passport)->
       hwname  : req.param 'hwname'
       hwrequest  : req.param 'hwrequest'
       hwddl  : req.param 'hwddl'
+      overddl : "0"
     }
     new-hw.save (error)->
       if error
