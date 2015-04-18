@@ -1,5 +1,7 @@
 # SE-386 Lab 06. MyHomework    
 
+based on http://code.tutsplus.com/tutorials/authenticating-nodejs-applications-with-passport--cms-21619
+
 1. 登录时可选择老师/学生
 2. 老师可以创建作业
 3. 老师可以修改自己创建的作业
