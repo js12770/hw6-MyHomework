@@ -1,0 +1,24 @@
+extends layout
+
+block content
+	div.container
+		div.row
+			div.col-sm-6.col-md-4.col-md-offset-4
+				#user
+					h1.text-center.login-title 欢迎 #{user.lastName}#{user.firstName}. 请检查您的以下信息：
+						div.signup-wall
+							ul.user-details
+								li 用户名 ---> #{user.username}
+								li 邮箱   ---> #{user.email}
+								li 名     ---> #{user.firstName} 
+								li 姓     ---> #{user.lastName}
+								if user.identity == "1"
+									li 身份 ---> 学生
+								if user.identity == "0"
+									li 身份 ---> 老师
+						if user.identity == "1"
+							a(href='/assignments', class='text-center new-account') 所有作业
+						if user.identity == "0"
+							a(href='/assign', class='text-center new-account') 发布作业
+							a(href='/assignments', class='text-center new-account') 所有作业
+						a(href='/signout', class='text-center new-account') 登出
