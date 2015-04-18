@@ -92,3 +92,7 @@ ul.user-details{
     font-size: 26px;
     margin-left: 10px;
 }
+
+.scoretext{
+    width: 7% !important;
+}

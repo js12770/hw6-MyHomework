@@ -7,58 +7,29 @@ block content
 				#user
 					h1.text-center.login-title Welcome #{user.usertype}——#{user.firstName}. 
 						div.signup-wall
-							if user.usertype == 'student'
-								p COURSE1: COURSE1
-								p Teacher: Teacher1
-								p Your Homework lasted submited at 
-								p 12:20 4/6/2015.
-								p Sumbit your Homework
-								form(action='/submit', method='POST')
-									textarea(name='homework', rows='4', cols='30')
-									button(class='btn btn-lg btn-primary btn-block', type='submit') Submit
+							ul.user-details
+								li Username ---> #{user.username}
+								li Email    ---> #{user.email}
+								li First Name ---> #{user.firstName} 
+								li Last Name ---> #{user.lastName}
+
+					if user.usertype == 'student'
+						div.signup-wall
+							ul.user-details
+								a(href='/hwsumbit', class='text-center new-account') 提交作业
+
+						div.signup-wall
+							ul.user-details
+								a(href='/hwscore', class='text-center new-account') 查看已提交作业和分数
+
+					if user.usertype == 'teacher'
+						div.signup-wall
+							ul.user-details
+								a(href='/hwpublic', class='text-center new-account') 发布作业
+
+						div.signup-wall
+							ul.user-details
+								a(href='/hwscore', class='text-center new-account') 查看已提交作业和给分数
 
 
-
-								p COURSE2: COURSE2
-								p Teacher: Teacher2
-								p Your Homework lasted submited at 
-								p 12:20 4/6/2015.
-								p Sumbit your Homework
-								form(action='/submit', method='POST')
-									textarea(name='homework', rows='4', cols='30')
-									button(class='btn btn-lg btn-primary btn-block', type='submit') Submit
-
-								p COURSE3: COURSE3
-								p Teacher: Teacher3
-								p Your Homework lasted submited at 
-								p 12:20 4/6/2015.
-								p Sumbit your Homework
-								form(action='/submit', method='POST')
-									textarea(name='homework', rows='4', cols='30')
-									button(class='btn btn-lg btn-primary btn-block', type='submit') Submit
-
-							if user.usertype == 'teacher'
-								p COURSE1: COURSE1
-
-								p Publish your class.
-								form(action='/submit', method='POST')
-									input(type='text', name='deadline' class='form-control', placeholder='Deadline',required, autofocus)
-									input(type='text', name='content' class='form-control', placeholder='content',required, autofocus)
-									button(class='btn btn-lg btn-primary btn-block', type='submit') Publish
-
-								p COURSE2: COURSE2
-
-								p Publish your class.
-								form(action='/submit', method='POST')
-									input(type='text', name='deadline' class='form-control', placeholder='Deadline',required, autofocus)
-									input(type='text', name='content' class='form-control', placeholder='content',required, autofocus)
-									button(class='btn btn-lg btn-primary btn-block', type='submit') Publish
-
-
-
-
-
-
-
-
-						a(href='/signout', class='text-center new-account') Sign Out
+					a(href='/signout', class='text-center new-account') Sign Out
