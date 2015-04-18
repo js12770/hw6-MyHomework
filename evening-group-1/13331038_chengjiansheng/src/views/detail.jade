@@ -1,6 +1,9 @@
 extends layout
 
 block content
+
+  .container
+    p.float.right welcome #{user.identity}: #{user.username}
   .container
     .ui.pointing.menu
       a(class='item' href='/homework')
@@ -17,7 +20,7 @@ block content
       if user.identity == 'student'
         a(href='/my-submissions', class='item')
           i.grid.layout.icon
-          |  My submissions
+          |  My grades
       .right.menu
         .item
           .ui.transparent.icon.input
@@ -25,35 +28,66 @@ block content
             i.search.link.icon
         a(href='/signout', class = 'ui item') Logout
 
-    form(class='ui grid', action='/submission?id=#{hw._id}&hwname=#{hw.name}', method='POST')
-      .column
-        .ui.fluid.form.segment
-          .one.fields
+    if user.identity == 'student'
+      form(class='ui grid', action='/submission?id=#{hw._id}&hwddl=#{hw.deadLine}&hwname=#{hw.name}', method='POST')
+        .column
+          .ui.fluid.form.segment
+            .one.fields
+              .field
+                label HomeworkName
+                pre #{hw.name}
+              .field
+                label Teacher
+                pre #{hw.teacherName}
+              .field
+                label StartDate
+                pre #{hw.startDate}
+              .field
+                label Deadline
+                pre #{hw.deadLine}
             .field
-              label HomeworkName
-              pre #{hw.name}
-            .field
-              label Teacher
-              pre #{hw.teacherName}
-            .field
-              label StartDate
-              pre #{hw.startDate}
-            .field
-              label Deadline
-              pre #{hw.deadLine}
-          .field
-            label Description
-            pre #{hw.description}
-          if user.identity == 'student'
-            .field
-              label Mycode
-              textarea(placeholder="coding", type="text", name='content')
-            button(class = 'ui blue submit button', type='submit') Submit HOMEWORK!
+              label Description
+              pre #{hw.description}
+            if sub
+              .field
+                label Your submission
+                pre #{sub.content}
+            else 
+              .field
+                label Your submission
+                pre 'You have not submit yet!'
+            if now < hw.deadLine
+              .field
+                label Write your homework here
+                textarea(placeholder="coding", type="text", name='content')
+              button(class = 'ui blue submit button', type='submit') Submit HOMEWORK!
+            else
+              .field
+                label warning
+                pre Deadline has pass! You are not allow to submit any more!
+                //-textarea(placeholder="coding", type="text", name='content')
             a(href='/homework', class= 'ui button') Back
 
-          //-if user.identity == 'teacher'
+    else
+      form(class='ui grid', action='/create?hwid=#{hw._id}', method='POST')
+        .column
+          .ui.fluid.form.segment
+            .one.fields
+              .field
+                label HomeworkName
+                input(type="text", placeholder="", name='name', value = '#{hw.name}') 
+              .field
+                label Teacher
+                input(type="text", placeholder="", name='name', value = '#{hw.teacherName}', disabled)
+              .field
+                label StartDate
+                input#startdate(type="text", placeholder="", name='startdate',value='#{hw.startDate}', data-date-format='yyyy-mm-dd hh:ii')
+              .field
+                label Deadline
+                input#deadline(type="text", placeholder="", name='deadline',value= '#{hw.deadLine}', data-date-format='yyyy-mm-dd hh:ii') 
             .field
-              label change
-              textarea(placeholder="coding", type="text", name='change')
-            button(class = 'ui blue submit button', type='submit') Submit Change!
+              label Description
+              textarea(placeholder="Description", type="text", name='description')
+                |#{hw.description}
+            button(class = 'ui blue submit button', type='submit') Edit!
             a(href='/homework', class= 'ui button') Back

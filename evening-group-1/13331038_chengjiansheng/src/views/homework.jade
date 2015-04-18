@@ -2,6 +2,8 @@ extends layout
 
 block content
   .container
+    p.float.right welcome #{user.identity}: #{user.username}
+  .container
     .ui.pointing.menu
       a.active.item(href='/homework')
         i.home.icon
@@ -17,7 +19,7 @@ block content
       if user.identity == 'student'
         a(href='/my-submissions', class='item')
           i.grid.layout.icon
-          |  My submissions
+          |  My grades
       .right.menu
         .item
           .ui.transparent.icon.input

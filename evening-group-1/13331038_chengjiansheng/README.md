@@ -3,10 +3,10 @@
 ## grunt watch
 ## http://localhost:5000
 
-finish the feature of:
-1.teacher create a hw and modify submissions, 
-2.student assign a hw repeatly and see their sbumission
-3.set deadlines and edit
+##THE NAME OF MONGO database changed from default to 'mongodb://localhost/my-homework-kinsang'
 
-shortcoming:
-1.function of deadline judging isn't completely fullfilled.
+###finish the feature of:
+###1.teacher create a hw and modify submissions, 
+###2.student assign a hw repeatly and see their sbumission
+###3.set deadlines and edit
+

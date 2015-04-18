@@ -17,7 +17,7 @@ block content
 					if (user.isTeacher)
 						form(class='form-signin', action='/createhomework', method='POST')
 							input(type='text', name='content', class='form-control', placeholder='content',required, autofocus)
-							input(type='text', name='deadline', class='form-control', placeholder='formate yyyy,mm,dd,hh,mm,ss',required, autofocus)
+							input(type='text', name='deadline', class='form-control', placeholder='formate yyyy,mm,dd',required, autofocus)
 							button(class='btn btn-lg btn-primary btn-block', type='submit') createHomework
 							span.clearfix
 					#message
