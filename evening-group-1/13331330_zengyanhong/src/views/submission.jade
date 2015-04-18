@@ -1,0 +1,19 @@
+extends layout
+
+block content
+	div.container
+		div.row
+			div.col-sm-6.col-md-4.col-md-offset-4
+				h1.text-center.login-title Ur Submission  
+					div.account-wall
+						each hw in tasklist
+							p
+								|task ---> #{sublist.task}
+							p
+								|handdate ---> #{sublist.handdate}
+							p
+								|detail ---> #{sublist.detail}
+							p
+								|grade ---> #{sublist.grade}
+
+						span.clearfix
