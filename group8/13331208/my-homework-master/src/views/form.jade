@@ -1,0 +1,87 @@
+extends demo
+
+block content
+	.container
+		.page-header
+			h1 Welcome #{user.username}
+			if option == 'create'
+				h3 Create New Homeworks
+			else if option == 'update'
+				h3 Update Homeworks
+			else if option == 'submit'
+				h3 Submit Homeworks
+		.row
+			.container
+				if option == 'update'
+					.panel.panel-default.hidden
+						#requirement-box.panel-body #{homework.requirement}
+					form.form-horizontal(action='/update/#{homework.name}', method='POST')
+						.form-group.textbox
+							label.col-sm-3(for='name') Homework Name
+							.col-sm-3
+								input(class='form-control', type='text', name='name', value=homework.name, readonly)
+						.form-group.textbox
+							label.col-sm-3(for='requirement') Homework Requirement
+							.col-sm-8
+								if homework.deadline < Date.now()
+									textarea#requirement-textbox(class='form-control', name='requirement', rows='15', readonly)
+								else
+									textarea#requirement-textbox(class='form-control', name='requirement', rows='15', required)
+						.form-group.textbox
+							label.col-sm-3(for='deadline') Homework Deadline
+							.col-sm-3
+								input(class='form-control', type='datetime-local', name='deadline', value=moment(homework.deadline).format("YYYY-MM-DDTHH:mm"), required)
+						.form-group
+							.col-sm-offset-3.col-sm-10
+								button(class='btn btn-lg btn-primary', type='submit') Update
+						span.clearfix
+				else if option == 'submit'
+					form.form-horizontal(enctype="multipart/form-data", action='/submit/#{homework.name}', method='POST')
+						.form-group
+							label.col-sm-3(for='name') Homework Name
+							.col-sm-3
+								input(class='form-control', type='text', name='name', value=homework.name, readonly)
+						.form-group.textbox
+							label.col-sm-3(for='commitment') Homework Commitment
+							.col-sm-8
+								textarea#requirement-textbox(class='form-control', name='commitment', autofocus, required)
+						.form-group
+							label.col-sm-3(for='deadline') Homework Deadline
+							.col-sm-3
+								input(class='form-control', type='text', name='deadline', value='Deadline: #{moment(homework.deadline).format("YYYY-MM-DD HH:mm:ss")}', disabled)
+						.form-group
+							label.col-sm-3(for='name') Homework File
+								span.left-holder
+								span.glyphicon.glyphicon-upload(aria-hidden="true")
+							.col-sm-3
+								input(class='form-control', type='file', name='upfile', required)
+						.form-group
+							.col-sm-offset-3.col-sm-10
+								if homework.deadline < Date.now()
+									button(class='btn btn-lg btn-primary', type='submit', disabled) Submit
+									span.left-holder
+									span.label.label-danger Missed deadline
+								else
+									button(class='btn btn-lg btn-primary', type='submit') Submit
+						span.clearfix
+				else if option == 'create'
+					form.form-horizontal(action='/create', method='POST')
+						.form-group.textbox
+							label.col-sm-3(for='name') Homework Name
+							.col-sm-3
+								input(class='form-control', type='text', name='name', placeholder='Homework Name', required, autofocus)
+						.form-group.textbox
+							label.col-sm-3(for='requirement') Homework Requirement
+							.col-sm-9
+								textarea(class='form-control', name='requirement', rows='10', required)
+						.form-group.textbox
+							label.col-sm-3(for='deadline') Homework Deadline
+							.col-sm-3
+								input(class='form-control', type='datetime-local', name='deadline', required)
+						.form-group
+							.col-sm-offset-3.col-sm-10
+								button(class='btn btn-lg btn-primary', type='submit') Create
+						span.clearfix
+				#message
+					if message
+						h1.text-center.error-message #{message}

@@ -1,16 +1,23 @@
-extends layout
+extends demo
 
 block content
-	div.container
-		div.row
-			div.col-sm-6.col-md-4.col-md-offset-4
-				#user
-					h1.text-center.login-title Welcome #{user.firstName}. Check your details below:
-						div.signup-wall
-							ul.user-details
-								li Username ---> #{user.username}
-								li Email    ---> #{user.email}
-								li First Name ---> #{user.firstName} 
-								li Last Name ---> #{user.lastName}
-						a(href=user.role == 'teacher'?'/teacher':'/student', class='text-center new-account') Get in Homework Management System
-						a(href='/signout', class='text-center new-account') Sign Out
+    #homefull.jumbotron
+        .top-holder
+        .container
+            h1 Welcome #{user.username}
+            h3 This is a simple Homework Management System, you can:
+            p: a.btn.btn-primary.btn-lg(href='/info', role="button") Check your information
+              span.left-holder
+              span.glyphicon.glyphicon-user(aria-hidden="true")
+            p: a.btn.btn-primary.btn-lg(href='/allhomeworks', role="button") Check all homeworks
+              span.left-holder
+              span.glyphicon.glyphicon-check(aria-hidden="true")
+            if user.role == 'teacher'
+              p
+                a.btn.btn-primary.btn-lg(href='/create', role="button") Create new homeworks
+                  span.left-holder
+                  span.glyphicon.glyphicon-plus(aria-hidden="true")
+            else if user.role == 'student'
+              p: a.btn.btn-primary.btn-lg(href='/check/#{user.username}', role="button") Check all submissions
+                span.left-holder
+                span.glyphicon.glyphicon-check(aria-hidden="true")

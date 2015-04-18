@@ -55,17 +55,29 @@ module.exports = (passport)->
 
   router.post '/post_specification', is-authenticated, (req, res) !->
     if set-user-flag req
-      new-specification = new Specification {
-        title: req.body.title
-        version: 1
-        deadline: new Date(req.body.deadline)
-        content: req.body.content
-        author: req.user.username
-      }
-      new-specification.save (error) ->
+      Specification.find-one {title: req.body.title}, (error, doc) !->
         if error
-          console.log 'Error in saving specification', error
           throw error
+        else if not doc
+          new-specification = new Specification {
+            title: req.body.title
+            version: 1
+            deadline: new Date(req.body.deadline)
+            content: req.body.content
+            author: req.user.username
+          }
+          new-specification.save (error) ->
+            if error
+              console.log 'Error in saving specification', error
+              throw error
+        else
+          Specification.update {_id: doc._id }, {$set:
+            title: req.body.title
+            version: req.body.version + 1
+            deadline: req.body.deadline
+            content: req.body.content
+          }
+
 
   router.post '/grade_homework', is-authenticated, (req, res) !->
     if not (set-user-flag req)
