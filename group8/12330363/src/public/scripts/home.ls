@@ -2,68 +2,88 @@ $ ->
   init!
 
 init = !->
-  init-new-spec!
-  init-new-hw!
   get-spec-and-render!
   get-hw-and-render!
 
-  #init-btns-edit-spec!
-  #init-btns-grade-hw!
-  #init-btns-edit-hw!
+  init-new-spec!
+  init-new-hw!
+  init-btns-grade-hw!
+
 
 init-new-spec = !->
   $ '#new-spec' .click !->
-    $ '#new-spec-input' .remove-class 'hidden'
-    $ '#new-spec' .add-class 'disabled'
+    ($ 'h4.modal-title') .text 'New Homework Specification'
+    input-rows = $ '.form-control'
+    ($ input-rows[0]) .val 'Homework title'
+    ($ input-rows[1]) .val 'Deadline (YYYY-MM-DD HH:MM:SS)'
+    $ 'textarea' .val 'Homework content here...'
+    $ '#editor' .modal 'show'
 
-  $ '#save-new-spec' .click !->
-    spec-info = ($ '#new-spec-input .form-control')
-    $.post '/post_specification',
-      title: ($ spec-info[0]) .val!,
-      deadline: ($ spec-info[1]) .val!,
-      content: ($ spec-info[2]) .val!
-    get-spec-and-render!
-    $ '#new-spec-input' .add-class 'hidden'
-    $ '#new-spec' .remove-class 'disabled'
-
-  $ '#cancel-new-spec' .click !->
-    $ '#new-spec-input' .add-class 'hidden'
-    $ '#new-spec' .remove-class 'disabled'
+  init-btn-save-specification!
 
 init-new-hw = !->
   $ '#new-hw' .click !->
-    $ '#new-hw-input' .remove-class 'hidden'
-    $ '#new-hw' .add-class 'disabled'
+    ($ 'h4.modal-title') .text 'New Homework'
+    input-rows = $ '.form-control'
+    ($ input-rows[0]) .val 'Homework title'
+    ($ input-rows[1]) .hide!
+    $ 'textarea' .val 'Homework content here...'
+    $ '#editor' .modal 'show'
 
-  $ '#save-new-hw' .click !->
-    hw-info = ($ '#new-hw-input .form-control')
-    $.post '/submit_homework',
-      title: ($ hw-info[0]) .val!,
-      content: ($ hw-info[1]) .val!
-    get-hw-and-render!
-    $ '#new-hw-input' .add-class 'hidden'
-    $ '#new-hw' .remove-class 'disabled'
-
-  $ '#cancel-new-hw' .click !->
-    $ '#new-hw-input' .add-class 'hidden'
-    $ '#new-hw' .remove-class 'disabled'
+  init-btn-save-homework!
 
 init-btns-edit-spec = !->
-  # TODO
+  for let btn, i in $ '.edit-spec'
+    ($ btn).click !->
+      # Load contents to the modal
+      tds = ($ btn .parent!) .siblings!
+      ($ 'h4.modal-title') .text 'Edit Homework Specification'
+      input-rows = $ '.form-control'
+      ($ input-rows[0]) .val ($ tds[0] .text!)
+      ($ input-rows[1]) .val ($ tds[2] .text!)
+      ($ 'textarea') .val ($ tds[4] .text!)
+      $ '#editor' .modal 'show'
+
+  init-btn-save-specification!
 
 init-btns-grade-hw = !->
-  # TODO
-
+  for let btn, i in $ '.grade-hw'
+    ($ btn).click !->
+      # Load contents to the modal
+      ($ 'h4.modal-title') .text 'Grading'
+      input-rows = $ '.form-control'
+      ($ input-rows[0]) .val 'Grade: 0 - 100'
+      ($ input-rows[1]) .hide!
+      $ 'textarea' .val ''
+      $ '#editor' .modal 'show'
+      # post grade
+      $.post '/grade_homework',
+        title: 'todo',
+        grades: ($ input-rows[0]) .val!
 
 init-btns-edit-hw = !->
-  # TODO
+  for let btn, i in $ '.edit-hw'
+    ($ btn).click !->
+      # Load contents to the modal
+      tds = ($ btn .parent!) .siblings!
+      ($ 'h4.modal-title') .text 'Edit Homework'
+      input-rows = $ '.form-control'
+      ($ input-rows[0]) .val ($ tds[0] .text!)
+      ($ input-rows[1]) .hide!
+      ($ 'textarea') .val ($ tds[4] .text!)
+      $ '#editor' .modal 'show'
 
+  init-btn-save-homework!
+
+
+# Use for simple rendering
 get-spec-and-render = !->
   $.getJSON '/get_specification', (specs) !~>
     render-string = ''
     for spec in specs
       row-string = '<tr>'
-      btn-string = '<td><button class="btn btn-sm btn-primary edit-spec">Edit</button></td>'
+      if $ '#homework' .has-class 'true'
+      then btn-string = '<td><button class="btn btn-sm btn-primary edit-spec">Edit</button></td>'
       row-string += btn-string
       for attr in [spec.title, spec.version, new Date(spec.deadline).toLocaleString!, spec.author, spec.content]
         row-string += '<td>' + attr + '</td>'
@@ -71,7 +91,9 @@ get-spec-and-render = !->
       render-string += row-string
     $ '#specification tbody' .html render-string
 
+    init-btns-edit-spec!
 
+# Use for simple rendering
 get-hw-and-render = !->
   $.getJSON '/get_homework', (hws) !~>
     render-string = ''
@@ -89,3 +111,26 @@ get-hw-and-render = !->
       render-string += row-string
     $ '#homework tbody' .html render-string
 
+    if $ '#homework' .has-class 'true'
+      init-btns-grade-hw!
+    else if $ '#homework' .has-class 'false'
+      init-btns-edit-hw!
+
+
+init-btn-save-specification = !->
+  $ '#save' .click !->
+    input-rows = $ '.form-control'
+    $.post '/post_specification',
+      title: ($ input-rows[0]) .val!,
+      deadline: new Date(($ input-rows[1]) .val!),
+      content: ($ 'textarea') .val!
+    get-spec-and-render!
+
+init-btn-save-homework = !->
+  $ '#save' .click !->
+    input-rows = $ '.form-control'
+    $.post '/submit_homework',
+      title: ($ input-rows[0]) .val!,
+      deadline: new Date(($ input-rows[1]) .val!),
+      content: ($ 'textarea') .val!
+    get-hw-and-render!
