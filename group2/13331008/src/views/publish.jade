@@ -5,29 +5,37 @@ block script
 
 block content
   div.container
+    div user:#{user.username}
+    div
+      a(href='home') home
+
+    hr
+
     form(action='/publish', method='post')
-      if modify
+      if belongTo
         div You are modifying a homework published
-        input(type='hidden', name='modify', value='#{modify}')
+        input(type='hidden', name='belongTo', value='#{belongTo}')
 
       else
         div You are publish a homework
 
+      hr
+
       div
-        标题:
+        | title:
         input(name="title", type="text")
 
       div
-        截止时间:
+        | deadline:
         input(name='deadline', type='date')
 
       div
-        描述:
-        textarea(name="description", rows="5", cols="30")
+        | description:
+        textarea(name="description", rows="20", cols="100")
 
-      if modify
+      if belongTo
         div
-          button(type="submit") 修改
+          button(type="submit") modify
       else
         div
-          button(type="submit") 发布
+          button(type="submit") publish

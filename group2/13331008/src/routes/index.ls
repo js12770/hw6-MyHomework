@@ -1,4 +1,4 @@
-require! ['express', '../db']
+require! ['express', '../controller']
 router = express.Router!
 
 is-authenticated = (req, res, next)-> if req.is-authenticated! then next! else res.redirect '/'
@@ -17,67 +17,36 @@ module.exports = (passport)->
   }
 
   router.get '/home', is-authenticated, (req, res)!->
-    # res.render 'home', user: req.user
-
-    # console.log 'after-render-------------------------------------'
-
-    try
-      db.show-homework-publish req, res
-    catch err
-      console.log err
+    controller.show-homework-publish req, res
 
   router.get '/signout', (req, res)!->
     req.logout!
     res.redirect '/'
 
   router.get '/publish', is-authenticated, (req, res)!->
-    console.log 'test-modify---------------------'
-    console.log req.query.modify
-
     if req.query.modify
-      res.render 'publish', user: req.user, modify: req.query.modify
+      res.render 'publish', user: req.user, belong-to: req.query.modify
     else
-      console.log 'test-else---------------'
       res.render 'publish', user: req.user
 
   router.post '/publish', (req, res)!->
-    console.log '--------------------here-------------------------'
-    console.log req.body
-    console.log '--------------------here-------------------------'
-
-    if req.body.modify
-      console.log 'modify-branch--------------'
-      try
-        db.modify req.body
-      catch error
+    if req.body.belong-to
+      controller.modify req, res
     else
-      try
-        db.publish req.body, req.user.username
-      catch err
-        console.log err
+      controller.publish req, res
 
     res.redirect '/home'
 
-  router.get '/submitList', is-authenticated, (req,res)!->
-    try
-      db.show-homework-submit req, res
-    catch err
-      console.log err
+  router.get '/submitList', is-authenticated, (req, res)!->
+    controller.show-homework-submit req, res
+
+  router.post '/submitList', is-authenticated, (req, res)!->
+    controller.grade-homework-submit req, res
+    res.redirect '/submitList?belongTo=' + req.body.belong-to + '&deadline=' + req.body.deadline
 
   router.get '/submit', is-authenticated, (req, res)!->
-    console.log 'in-get-submit-------------------'
-    console.log req.user
-    console.log req.query.belong-to
-    res.render 'submit', user: req.user, belong-to: req.query.belong-to
+    res.render 'submit', user: req.user, belong-to: req.query.belong-to, deadline: req.query.deadline
 
   router.post '/submit', is-authenticated, (req, res)!->
-    console.log '--------------------submit-------------------------'
-    console.log req.body
-    console.log '--------------------submit-------------------------'
-
-    try
-      db.submit req.body, req.user.username
-    catch err
-      console.log err
-
-    res.redirect '/submitList'
+    controller.submit req, res
+    res.redirect '/submitList?belongTo=' + req.body.belong-to + '&deadline=' + req.body.deadline

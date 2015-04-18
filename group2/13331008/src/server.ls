@@ -4,24 +4,6 @@ flash = require 'connect-flash'
 favicon = require 'static-favicon'
 mongoose.connect db.url
 
-homework-publish-schema-options =
-  title: String
-  description: String
-  deadline: String
-  publisher: String
-
-homework-publish-schema = mongoose.Schema homework-publish-schema-options
-Homework-publish = mongoose.model('HomeworkPublish', homework-publish-schema);
-
-homework-submit-schema-options =
-  title: String
-  content: String
-  belong-to: String
-  submitter: String
-
-homework-submit-schema = mongoose.Schema homework-submit-schema-options
-Homework-submit = mongoose.model('HomeworkSubmit', homework-submit-schema);
-
 app = express!
 server = http.create-server app
 
