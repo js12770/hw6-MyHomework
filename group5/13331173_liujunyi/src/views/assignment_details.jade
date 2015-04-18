@@ -1,0 +1,19 @@
+extends layout
+
+block content
+    div.container
+        form.form-horizontal.create-form(role="form", action='/change/#{assignment._id}', method='POST')
+            fieldset
+                legend View or Change the assignment
+                div.control-group
+                    div.controls
+                        h4.create-mar Title:#{assignment.title}
+                div.control-group
+                    div.controls
+                        input.create-mar(type="text", name="deadline", placeholder="#{assignment.deadline}")
+                    div.controls
+                        textarea.create-mar(rows="10", cols="50", name="details", placeholder="#{assignment.details}")
+                div.control-group
+                    div.controls
+                        input.btn.btn-primary.create-mar(type="submit", value="Save")
+        a.btn.btn-primary(href='/homeworklist', class='text-center new-account') Back to homeworklist
