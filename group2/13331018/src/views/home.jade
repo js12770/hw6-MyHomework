@@ -22,7 +22,11 @@ block content
 							div.signup-wall
 								ul.user-details
 									li 作业要求 ：< #{obj.demand} >
-									li 截止时间 ：< #{obj.endtime} >
+									li 截止时间 ：< #{obj.endtime.toLocaleString()} >
+									form(class='form-signin', action='/home', method='POST')
+										button(class='btn btn-lg btn-primary btn-block', type='submit') 修改截止时间
+										if obj.endtime > new Date()
+											button(class='btn btn-lg btn-primary btn-block', type='submit') 修改作业要求
 								ul.user-details
 									span 提交的作业：
 									each student in obj.finishedstudent

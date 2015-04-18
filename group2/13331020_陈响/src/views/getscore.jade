@@ -1,0 +1,19 @@
+extends layout
+
+block content
+	h1 Homework:
+		each item in HwSubmit
+			form(action='/hwscore', method='POST')
+				h4 homework id: #{item.hwid}</br>
+				input(type="text", name="hwid", value="#{item.hwid}", style="display:none")
+				h4 requirement: #{item.content}</br>
+				h4 submit student: #{item.student}</br>
+				input(type="text", name="student", value="#{item.student}", style="display:none")
+				h4 submit time: #{item.submittime}</br>
+				h4 score: #{item.score}</br>
+				if user.identity == 'teacher'
+					textarea(rows='1', name='score', class='form-control scoretext' placeholder='score', required)
+					button(type='submit') submit
+				hr
+
+	a(href='/home', class='text-center new-account') back to home page

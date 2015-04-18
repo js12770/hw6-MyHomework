@@ -1,0 +1,22 @@
+extends layout
+
+block content
+	h1 Homework:
+		each item in HwPublish
+			h4 homework id: #{item.hwid}</br>
+			h4 requirement: #{item.requirement}</br>
+			h4 deadline: #{item.deadline}</br>
+			hr
+
+	br
+	hr
+	form(action='/hwpublish', method='POST')
+		h4 publish homework
+		|course
+		textarea(rows='1', name='hwid', class='form-control' placeholder='homework id', required)
+		|Deadline 
+		input(type='date' name='deadline', required)
+		textarea(rows='6', name='requirement', class='form-control' placeholder='requirement', required)
+		button( type='submit') publish
+
+	a(href='/home', class='text-center new-account') back to home page

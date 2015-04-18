@@ -4,6 +4,7 @@ flash = require 'connect-flash'
 favicon = require 'static-favicon'
 mongoose.connect db.url
 
+
 app = express!
 server = http.create-server app
 
