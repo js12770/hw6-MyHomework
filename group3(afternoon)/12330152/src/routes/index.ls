@@ -57,7 +57,7 @@ module.exports = (passport)->
           is-teacher: req.user.role == 'teacher'
           homeworks: homeworks
 
-  router.get '/homework/:homework-id', is-authenticated, (req, res)!->
+  router.get '/homework/:homeworkId', is-authenticated, (req, res)!->
     homework-id = req.params.homework-id
     # check homework
     Homework.find-by-id homework-id, (err, homework)!->
@@ -133,7 +133,7 @@ module.exports = (passport)->
  
   # submit a homework
   router.post '/s-submit/:homeworkId/:username', is-authenticated-post, (req, res)!->
-    #params
+    # params
     homework-id = req.params.homework-id
     req-username= req.params.username
     user = req.user
@@ -147,6 +147,9 @@ module.exports = (passport)->
           e5 res
         # homework not exists
         else if not homework
+          e4 res
+        # out of deadline
+        else if homework.deadline < new Date!
           e4 res
         else
           # init a multer middleware
@@ -162,14 +165,17 @@ module.exports = (passport)->
               else
                 true
             on-file-upload-complete: (file, req, res)!->
-              submits = homework.submits.toObject!
               new-submit = true
-              # check if new submit
-              for submit in submits
-                # not new submit
-                if submit.username == username
-                  new-submit = false
-                  submit.date = new Date!
+              submits = homework.submits.toObject!
+              if submits.push
+                # check if new submit
+                for submit in submits
+                  # not new submit
+                  if submit.username == username
+                    new-submit = false
+                    submit.date = new Date!
+              else
+                submits = []
               # new submit
               if new-submit
                 submits.push do
@@ -214,6 +220,9 @@ module.exports = (passport)->
           e5 res
         # homework not exists
         else if not homework
+          e4 res
+        # not out of deadline
+        else if homework.deadline > new Date!
           e4 res
         else
           submits = homework.submits.toObject!

@@ -5,6 +5,8 @@ module.exports = (grunt) ->
 
   DEBUG = true # 添加测试所需代码，发布时应该为false
 
+  grunt.option 'stack', true
+
   grunt.initConfig 
     pkg: pkg
     meta:

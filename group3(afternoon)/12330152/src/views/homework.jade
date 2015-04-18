@@ -17,9 +17,12 @@ block content
     label Deadline
     div#deadline #{homework.deadline}
     if isTeacher
-      div You can 
-        a(href='/edit-homework/' + homework._id) Edit 
-        | this homework
+      if !outOfDeadline
+        div You can 
+          a(href='/edit-homework/' + homework._id) Edit 
+          | this homework
+      else
+        div Out of deadline.
       label Submits
       div#submits
         if homework.submits
