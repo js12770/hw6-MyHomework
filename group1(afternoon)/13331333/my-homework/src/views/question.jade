@@ -1,0 +1,19 @@
+extends layout
+
+block content
+    div.container
+        div.row
+            div.col-sm-6.col-md-4.col-md-offset-4
+                h1.text-center.login-title Questions:
+                    div.account-wall
+                        each item in collection
+                            p.text-left Teacher: #{item.teacher_name}
+                            p.text-left Title: #{item.title}
+                            p.text-left Requirements: #{item.requirements}
+                            p.text-left Deadline: #{item.deadline}
+                            if user.identity == 'teacher'
+                                a(href='/update/#{item._id}' class='text-left') change this question
+                            else
+                                a(href='/answer/#{item._id}' class='text-left') answer this question
+                            p.text-success -------------------------------------------------
+                    a(href='/home', class='text-center new-account') Home
