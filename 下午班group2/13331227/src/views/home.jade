@@ -1,0 +1,41 @@
+extends layout
+
+block content
+    link(rel='stylesheet', href='/stylesheets/home.css')
+    script(type='application/javascript', src='/javascripts/search.js')
+    nav.navbar.navbar.navbar-fixed-top
+        .container-fluid
+            .navbar-header
+                button(type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar")
+                    span.sr-only Toggle navigation 
+                    span.icon-bar
+                    span.icon-bar
+                a.navbar-brand(href='/home') 
+                    span.glyphicon.glyphicon-home
+                    |   #{user.username}
+            #navbar.navbar-collapse.collapse
+                ul.nav.navbar-nav.navbar-right
+                    li: a(href='/user')
+                        i(class="glyphicon glyphicon-user" title="user information")
+                    li: a.btn(href='/setting/#{user.username}', role='button', data-toggle='modal')
+                        i(class="glyphicon glyphicon-cog" title="setting")
+                    li: a.btn(href='/help', role='button', data-toggle='modal')
+                        i(class="glyphicon glyphicon-question-sign" title="help")
+                    li: a(href='/signout')
+                        i(class="glyphicon glyphicon-log-out" title="signout")
+                form.navbar-form.navbar-left.form-search
+                    input#appendedInputButtons.search-query.span2(type="text" class="form-control" placeholder="Search...")
+                    button#searchbutton.btn(type='button') Search
+    
+    .container-fluid
+        .row
+            block main-container
+
+        //#myModal.modal.hide.fade(style='display: none;', tabindex='-1', role='dialog', aria-labelledby='myModalLabel', aria-hidden='true')
+            .modal-header
+            button.close(type='button', data-dismiss='modal', aria-hidden='true') ×
+            h3#myModalLabel 修改个人信息
+            .modal-body
+            .modal-footer
+            button.btn(data-dismiss='modal') 关闭
+            button.btn.btn-primary 保存更改

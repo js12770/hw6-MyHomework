@@ -1,0 +1,22 @@
+extends teacher
+
+block sub-container
+    h1.page-header #{homework.title}
+    div.thumbnail
+        .table-responsive
+            table.table.table-striped
+                thead
+                    tr
+                        th 姓名
+                        th 学号
+                        th 作业
+                        th 分数
+                tbody
+                    form(method='post')
+                        each one in homework['students']
+                            tr
+                                td #{one.name}
+                                td #{one.id}
+                                td: a(href='/download/#{one.path}') #{one.path}
+                                td: input.form-control(type='text' name='scores' value='#{one.score}')
+    button.btn.btn-primary(type='submit' style='margin-left:20px') 提交

@@ -1,0 +1,10 @@
+extends home
+
+block main-container
+    script(type='text/javascript', src='/javascripts/student.js')
+    .span3.bs-docs-sidebar
+        ul.nav.nav-list.bs-docs-sidenav.affix
+            li: a(href='/home') My Homework
+
+    .col-sm-9.col-sm-offset-3.col-md-10.col-md-offset-2.main
+        block sub-container
