@@ -1,0 +1,65 @@
+extends layout
+
+block content
+    div.container
+        div.row
+            div.col-sm-6.col-md-4.col-md-offset-4
+                #user
+                    h1.text-center.login-title Welcome #{user.firstName}. Check your details below:
+                        div.signup-wall
+                            ul.user-details
+                                li isTeacher ---> #{user.isTeacher}
+                                li Username ---> #{user.username}
+                                li Email    ---> #{user.email}
+                                li First Name ---> #{user.firstName} 
+                                li Last Name ---> #{user.lastName}
+                        a(href='/signout', class='text-center new-account') Sign Out
+                    if (user.isTeacher)
+                        form(class='form-signin', action='/createhomework', method='POST')
+                            textarea(type='text', name='content', class='form-control', placeholder='要求',id='t_a', required, autofocus)
+                            input(type='text', name='deadline', class='form-control', placeholder='必须： yyyy,mm,dd',required, autofocus)
+                            button(class='btn btn-lg btn-primary btn-block', type='submit') 创建作业
+                            span.clearfix
+                    #message
+                        if message
+                            h1.text-center.error-message #{message}
+                    h1.text-center.login-title 作业
+                        div.signup-wall
+                            ul.user-details
+                                    if homeworks
+                                        each homework in homeworks
+                                            li 
+                                                p 要求：#{homework.id}
+                                            li 
+                                                p 要求：#{homework.content}
+                                            li  
+                                                p deadline:#{homework.deadline}
+
+
+                                                    if user.isTeacher
+                                                        form(class='form-signin', action='/changedeadline', method='POST')
+                                                            input(type='text', name='id', class='form-control', placeholder='homework id',required, autofocus)
+                                                            input(type='text', name='deadline', class='form-control', placeholder='deadline',required, autofocus)
+                                                            button(class='btn btn-lg btn-primary btn-block', type='submit') 修改deadline
+                                                            span.clearfix
+                                                    else
+                                                        form(class='form-signin', action='/handinhomework', method='POST')
+                                                            input(type='text', name='id', class='form-control', placeholder='homework id',required, autofocus)
+                                                            textarea(type='text', name='content', class='form-control', placeholder='内容',required, autofocus,id='t_a')
+                                                            button(class='btn btn-lg btn-primary btn-block', type='submit' id='bbtt') 提交作业
+                                                            span.clearfix
+                    h1.text-center.login-title 已提交的作业
+                        div.signup-wall
+                            ul.user-details
+                                    if handedinhomeworks
+                                        each handedinhomework in handedinhomeworks
+                                            li #{handedinhomework.id}
+                                            li #{handedinhomework.content}
+                                            li #{handedinhomework.author}
+                                                    if user.isTeacher 
+                                                        form(class='form-signin', action='/givescore', method='POST')
+                                                            input(type='text', name='id', class='form-control', placeholder='homework id',required, autofocus)
+                                                            input(type='text', name='studentname', class='form-control', placeholder='student name',required, autofocus)
+                                                            input(type='text', name='score', class='form-control', placeholder='score',required, autofocus)
+                                                            button(class='btn btn-lg btn-primary btn-block', type='submit') 给分
+                                                            span.clearfix
