@@ -14,17 +14,13 @@ create-form-and-show = ->
 add-add-homework-button = ->
   $ '#AddHomework' .click ->
     create-add-homework-form-and-show!
-    active-deadline-frame!
 
 create-add-homework-form-and-show = ->
-  $ '#show' .add-class 'well' .html "<form role=\'form\' action=\'\/addhomework\' method=\'post\' style=\'margin: 5em\'><div class=\'form-group\'><label>课程名<input type=\'text\' name=\'coursename\' placeholder=\'请输入课程名\' class=\'form-control\'><\/label><\/div><div class=\'form-group\'><label>作业名<input type=\'text\' name=\'requirementname\' placeholder=\'请输入作业名\' class=\'form-control\'><\/label><\/div><div class=\'form-group\'><label>截止时间<br/><input id=\'datepicker\' type=\'text\' style=\'size: 30\' name=\'deadline\' placeholder=\'时间日期\'><\/label><\/div><div class=\'form-group\'><label>作业要求<input type=\'text\' name=\'requirementcontent\' placeholder=\'请输入作业要求\' class=\'form-control\'><\/label><\/div><button type=\'submit\' class=\'btn btn-default\'>提交<\/button></form>"
+  $ '#show' .add-class 'well' .html "<form role=\'form\' action=\'\/addhomework\' method=\'post\' style=\'margin: 5em\'><div class=\'form-group\'><label>课程名<input type=\'text\' name=\'coursename\' placeholder=\'请输入课程名\' class=\'form-control\'><\/label><\/div><div class=\'form-group\'><label>作业名<input type=\'text\' name=\'requirementname\' placeholder=\'请输入作业名\' class=\'form-control\'><\/label><\/div><div class=\'form-group\'><label>截止时间<br/><input type=\'datetime-local\' style=\'size: 30\' name=\'deadline\'><\/label><\/div><div class=\'form-group\'><label>作业要求<textarea rows=\'5\' cols=\'100%\' name=\'requirementcontent\' placeholder=\'请输入作业要求\' class=\'form-control\'\/><\/label><\/div><button type=\'submit\' class=\'btn btn-default\'>提交<\/button></form>"
   console.log ($ '#show' .html)
 
 add-submit-homework-button = ->
   $ '#SubmitHomework' .click -> create-submit-homework-form-and-show!
 
 create-submit-homework-form-and-show = ->
-  $ '#show' .add-class 'well' .html "<form role=\'form\' action=\'\/submithomework\' method=\'post\' style=\'margin: 5em auto\'><div class=\'form-group\'><label>课程名<input type=\'text\' name=\'coursename\' placeholder=\'请输入课程名\' class=\'form-control\'><\/label><\/div><div class=\'form-group\'><label>作业名<input type=\'text\' name=\'requirementname\' placeholder=\'请输入作业名\' class=\'form-control\'><\/label><\/div><div class=\'form-group\'><label>你的作业<input type=\'text\' name=\'content\' placeholder=\'请输入你的作业\' class=\'form-control\'><\/label><\/div><button type=\'submit\' class=\'btn btn-default\'>提交<\/button><\/form>"
-
-active-deadline-frame = ->
-  $ '#datepicker' .datepicker {'showButtonPanel': true}
+  $ '#show' .add-class 'well' .html "<form role=\'form\' action=\'\/submithomework\' method=\'post\' style=\'margin: 5em auto\'><div class=\'form-group\'><label>课程名<input type=\'text\' name=\'coursename\' placeholder=\'请输入课程名\' class=\'form-control\'><\/label><\/div><div class=\'form-group\'><label>作业名<input type=\'text\' name=\'requirementname\' placeholder=\'请输入作业名\' class=\'form-control\'><\/label><\/div><div class=\'form-group\'><label>你的作业<textarea rows=\'5\' cols=\'100%\'name=\'content\' placeholder=\'请输入你的作业\' class=\'form-control\'\/><\/label><\/div><button type=\'submit\' class=\'btn btn-default\'>提交<\/button><\/form>"
