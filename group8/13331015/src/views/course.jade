@@ -1,0 +1,17 @@
+extends layout
+
+block content
+  nav.navbar.navbar-default.navbar-fixed-top
+    div.container-fluid.col-sm-offset-1.col-sm-8.col-md-offset-1.col-md-8
+      div.collapse.navbar-collapse
+        ul.nav.navbar-nav
+          - var role = 'Professor'
+          if data.user.role == 'student'
+            - role = 'Student'
+          li
+            a Welcome！ #{role} #{data.user.username} ！
+          li.active
+            a(href="/home") home page
+          li
+            a(href="/signout") layout
+
