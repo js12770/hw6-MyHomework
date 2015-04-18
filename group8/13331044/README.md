@@ -10,4 +10,4 @@ author:dengailin
 3. npm install
 4. grunt watch
 
-###如果运行不了，或者有什么严重的bug的话，请联系qq 729880819 @_@
+####如果运行不了，或者有什么严重的bug的话，请联系qq 729880819 @_@
