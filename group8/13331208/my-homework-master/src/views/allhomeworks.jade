@@ -1,0 +1,52 @@
+extends demo
+
+block content
+    .jumbotron
+        .container
+            h1 Welcome #{user.username}
+            if user.role == 'teacher'
+                p Here are all homeworks you created, you can :
+                .btn-group(role='button', aria-label="...")
+                    .btn-group(role='button')
+                        button.btn.btn-primary.btn-lg.dropdown-toggle(type="button", data-toggle="dropdown", aria-expanded="false") Update Homework Settings
+                            span.left-holder
+                            span.caret
+                        ul.dropdown-menu(role='menu')
+                            li: a Update Homework Deadline
+                            li.divider
+                            li: a Update Homework Requirement
+                    button.btn.btn-primary.btn-lg(type="button") Check all students' submissions
+            else if user.role == 'student'
+                p Here are all homeworks for you, you can :
+                .btn-group(role='button')
+                    button.btn.btn-primary.btn-lg(type="button") Submit your Homework
+
+    .container
+        .panel-group#accordion
+            for homework in homeworks
+                .panel.panel-default
+                    .panel-heading
+                        h4.panel-title
+                            a(data-toggle="collapse" data-parent="#accordion" href="#collapse#{homework.name}") #{homework.name}
+                                span.badge.pull-right Submissions: #{homework.uploaded}
+                    .panel-collapse.collapse.in(id='collapse#{homework.name}')
+                        .panel-body
+                            p Start Date : #{moment(homework.startDate).format("YYYY-MM-DD HH:mm")}
+                            p Due Date   : #{moment(homework.deadline).format("YYYY-MM-DD HH:mm")}
+                            p Requirement:
+                            p: pre #{homework.requirement}
+                    .panel-footer
+                        .btn-white.btn-group(role='button', aria-label="...")
+                            if user.role  == 'teacher'
+                                a.btn.btn-primary.btn-lg(href='/homework/update/#{homework.name}') Update
+                                    span.left-holder
+                                    span.glyphicon.glyphicon-cog(aria-hidden="true")
+                            else if user.role == 'student'
+                                a.btn.btn-primary.btn-lg(href='/homework/submit/#{homework.name}') Submit
+                                    span.left-holder
+                                    span.glyphicon.glyphicon-open(aria-hidden="true")
+                            if user.role  == 'teacher'
+                                a.btn.btn-primary.btn-lg(href='/check/#{homework.name}') Check
+                                    span.left-holder
+                                    span.glyphicon.glyphicon-pencil(aria-hidden="true")
+
