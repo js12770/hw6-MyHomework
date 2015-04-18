@@ -36,7 +36,7 @@ block content
 
     if user.isStudent
       div.col-sm-10.col-md-10.col-md-offset-1
-        h1.text-center.login-title All Able Classes
+        h1.text-center.login-title All Classes
           div
             table.table.table-hover
               thead
@@ -45,7 +45,7 @@ block content
                   th.text-center teacher
                   th.text-center time
                   th.text-center In or not?
-                  th.text-center click to join
+                  th.text-center option
               tbody
                 #classes
                   for class_ in classes
@@ -53,7 +53,13 @@ block content
                       td= class_.className
                       td= class_.teacher 
                       td= class_.time 
-                      td No
-                      td
-                        form(method='POST' action='/join/' + class_.className)
-                          button(class='btn btn-sm btn-primary', type='submit') Join
+                      if class_.students.find(user.username)
+                        td yes
+                        td
+                          form(method='GET' action='/class/' + class_.className + '/allHomeworks')
+                            button(class='btn btn-sm btn-primary', type='submit') Homeworks
+                      else
+                        td no
+                        td
+                          form(method='POST' action='/join/' + class_.className)
+                            button(class='btn btn-sm btn-primary', type='submit') Join

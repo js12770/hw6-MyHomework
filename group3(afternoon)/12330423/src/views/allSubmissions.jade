@@ -22,21 +22,21 @@ block content
             table.table.table-hover
               thead
                 tr
-                  th.text-center homework name
-                  th.text-center description
-                  th.text-center deadline
-                  th.text-center all submissions
-                  if user.isStudent
+                  th.text-center student name
+                  th.text-center content
+                  th.text-center date
+                  th.text-center grade
+                  if user.isTeacher
                     th.text-center option
               tbody
-                #class_
-                  for homework in class_.homeworks
+                #submissions
+                  for entry in submissions
                     tr
-                      td= homework.homeworkName
-                      td= homework.description
-                      td= homework.deadline
-                      td
-                        a(href='/class/' + class_.className + '/' + homework.homeworkName + '/allSubmissions') all submissions
-                      if user.isStudent
+                      td= entry.student
+                      td= entry.content
+                      td= entry.date
+                      td= entry.gratde
+                      if user.isTeacher
                         td
-                          a(href='/class/' + class_.className + '/' + homework.homeworkName + '/submit') submit
+                          form(method='GET' action='/home')
+                            button(class='btn btn-sm btn-primary', type='submit') Give a grade

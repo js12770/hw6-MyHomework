@@ -44,14 +44,11 @@ module.exports = (passport)->
         res.redirect '/home'
 
   router.get '/AllClasses', is-authenticated, (req, res)!->
-    (error, class_) <- Class
-    console.log class_
+    (error, class_) <- Class.find
     res.render 'allClasses', user: req.user, classes: class_
 
   router.get '/class/:classname', is-authenticated, (req, res)!->
-    console.log(req.params.classname)
     (error, class_) <- Class.find-one {className: req.params.classname}
-    console.log class_
     res.render 'viewClass', user: req.user, class_: class_
 
   router.get '/class/:classname/addHomework', is-authenticated, (req, res)!->
@@ -85,5 +82,38 @@ module.exports = (passport)->
 
   router.get '/class/:classname/allHomeworks', is-authenticated, (req, res)!->
     (error, class_) <- Class.find-one {className: req.params.classname}
-    console.log class_
     res.render 'allHomeworks', user: req.user, class_: class_
+
+  router.post '/join/:classname', is-authenticated, (req, res)!->
+    (error, class_) <- Class.find-one {className: req.params.classname}
+    return (console.log 'Error in join new class: ', error ; done error) if error
+
+    class_.students.push(req.user.username)
+    class_.save (error) -> if error then return handleError(error) else console.log('Success!')
+    res.redirect '/allClasses'
+
+  router.get '/class/:classname/:homeworkName/submit', is-authenticated, (req, res)!->
+    (error, class_) <- Class.find-one {className: req.params.classname}
+    res.render 'submitHomework', user: req.user, class_: class_, homeworkName: req.params.homeworkName
+
+  router.post '/class/:classname/:homeworkName/submit', is-authenticated, (req, res)!->
+    (error, class_) <- Class.find-one {className: req.params.classname}
+    (error, homework_) <- Homework.find-one {className: req.params.classname, homeworkName: req.params.homeworkName}
+    homework_.submits.pop {student: req.user.username}
+    homework_.submits.push {
+      student: req.user.username
+      content: req.param 'content'
+      date: Date.now()
+      grade: ''
+    }
+    class_.homeworks.pop {homeworkName: req.params.homeworkName}
+    class_.homeworks.push homework_
+    class_.save()
+    homework_.save()
+
+    res.redirect '/class/' + class_.className + '/allHomeworks'
+
+  router.get '/class/:classname/:homeworkName/allSubmissions', is-authenticated, (req, res)!->
+    (error, homework_) <- Homework.find-one {className: req.params.classname, homeworkName: req.params.homeworkName}
+    console.log homework_.submits
+    res.render 'allSubmissions', user: req.user, submissions: homework_.submits
