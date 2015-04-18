@@ -1,0 +1,14 @@
+extends layout
+
+block content
+  #homework-container
+    form.ui.homework.form.segment(action="#{create_url}", method="POST", enctype="multipart/form-data")
+      .ui.error.message
+      .required.field
+        label Homework for #{assignment.title} (Createdby #{assignment.createdby})
+        input(type="file", name="homework")
+      .field(style="display:none")
+        input(type="text", name="user_id", value="#{user._id}")
+      .field(style="display:none")
+        input(type="text", name="assignment_id", value="#{assignment._id}")
+      .ui.homework.submit.button Confirm
