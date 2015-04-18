@@ -1,0 +1,41 @@
+extends layout
+
+block content
+	div.container
+		p This is homework #{homework.name}
+		p Deadline is #{homework.deadline}
+		p #{homework.instruction}
+		if user.character == 'teacher'
+			p Hello, Teacher #{user.username}!
+			-var nowDate = new Date()
+			if nowDate < homework.deadline
+				p You can edit the 
+					a(href="/homeworks/edit/#{homework._id}") homework information
+			else
+				p The homework has passed.
+			p The students' homeworks are below:
+			ol
+				if contents.length != 0
+					-var i = 0
+					each content in contents
+						-var i = i + 1
+						li
+							-var i = i
+							a(href="/homeworks/content/#{content._id}") homework
+				else
+					p No student has submit the homework.
+
+		if user.character == 'student'
+			p Hello, Student #{user.username}!
+			if content
+				if (nowDate = new Date()) < homework.deadline
+					p Your homework is here,
+						a(href="/homeworks/write/#{content._id}") Change it?
+				else
+					p The homework has passed, Your score is #{content.score}
+			else
+				if (nowDate = new Date()) < homework.deadline
+					p You haven't write your homework,
+						a(href='/homeworks/write/no?homework=#{homework._id}') write now?
+				else
+					p The homework has passed, and you didn't submit your homework, what a fucking guy!

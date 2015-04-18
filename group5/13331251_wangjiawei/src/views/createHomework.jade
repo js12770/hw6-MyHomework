@@ -1,0 +1,9 @@
+extend layout
+
+block content
+	div.container
+		form(action="/homeworks/create/#{courseId}", method="POST")
+			input(type="text", name="name", placeholder="Name of the homework")
+			input(type="text", name="instruction", placeholder="instruction")
+			input(type="text", name="deadline", placeholder="deadline")
+			button.btn(type="submit") Create
