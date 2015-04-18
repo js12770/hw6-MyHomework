@@ -1,0 +1,26 @@
+extends layout
+
+block content
+	div.container
+		div.row
+			div.col-sm-6.col-md-4.col-md-offset-4
+				#user
+					h1.text-center.login-title Welcome #{user.firstName}. Check your details below:
+						div.signup-wall
+							ul.user-details
+								li Username ---> #{user.username}
+								li Email    ---> #{user.email}
+								li First Name ---> #{user.firstName} 
+								li Last Name ---> #{user.lastName}
+						button(id="myhomework" class='btn btn-lg btn-primary btn-block half-width float-left') My Homework
+						//- button(class='btn btn-lg btn-primary btn-block half-width float-right' onclick="window.location.href('/signout')") Sign Out
+						a(href='/signout', class='text-center new-account float-right margin-higher') Sign Out
+						div.signup-wall.topper
+							form(class='form-signin' id="add")
+								input(type='text', name='request' class='form-control', placeholder='Request',required, autofocus)
+								input(type='text', name='detail' class='form-control', placeholder='Detail', required)
+								input(type='text', name='date' class='form-control', placeholder='xxxx/xx/xx-xx:xx', required)
+								div.whole-width
+									button(class='btn btn-lg btn-primary btn-block half-width float-left') Add
+									button(class='btn btn-lg btn-primary btn-block half-width float-right') Cancel
+								span.clearfix
