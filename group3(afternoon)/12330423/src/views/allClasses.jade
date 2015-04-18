@@ -28,7 +28,32 @@ block content
               tbody
                 #classes
                   for class_ in classes
+                    if class_.teacher == user.username
+                      tr(href=class_.className)
+                        td
+                          a(href='/class/' + class_.className) #{class_.className}
+                        td= class_.time 
+
+    if user.isStudent
+      div.col-sm-10.col-md-10.col-md-offset-1
+        h1.text-center.login-title All Able Classes
+          div
+            table.table.table-hover
+              thead
+                tr
+                  th.text-center classname
+                  th.text-center teacher
+                  th.text-center time
+                  th.text-center In or not?
+                  th.text-center click to join
+              tbody
+                #classes
+                  for class_ in classes
                     tr(href=class_.className)
-                      td
-                        a(href='/class/' + class_.className) #{class_.className}
+                      td= class_.className
+                      td= class_.teacher 
                       td= class_.time 
+                      td No
+                      td
+                        form(method='POST' action='/join/' + class_.className)
+                          button(class='btn btn-sm btn-primary', type='submit') Join

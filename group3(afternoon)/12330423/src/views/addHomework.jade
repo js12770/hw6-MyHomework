@@ -1,4 +1,3 @@
-
 extends layout
 
 block content
@@ -10,7 +9,7 @@ block content
             ul.user-details
               li Username ---> #{user.username}
                 li Email    ---> #{user.email}
-                li First Name ---> #{user.firstName} 
+                li First Name ---> #{user.firstName}
                 li Last Name ---> #{user.lastName}
                 li Is Teacher ---> #{user.isTeacher}
                 li Is Student ---> #{user.isStudent}
@@ -18,9 +17,10 @@ block content
 
         h1.text-center.login-title Create A New Class
           div.signup-wall
-            form(class='form-signin', action='/CreateNewClass', method='POST')
-              input(type='text', name='classname', class='form-control', placeholder='Class Name',required, autofocus)
-              input(type='text', name='time', class='form-control nomargin', placeholder='Class Time', required)
+            form(class='form-signin', action='/class/' + class_.className + '/CreateNewHomework', method='POST')
+              input(type='text', name='homeworkName', class='form-control', placeholder='Homework Name',required, autofocus)
+              input(type='text', name='description', class='form-control nomargin', placeholder='Description', required)
+              input(type='text', name='deadline', class='form-control nomargin', placeholder='Deadline(xxxx-xx-xx xx:xx:xx)', required)
               button(class='btn btn-lg btn-primary btn-block', type='submit') Sumbit
               span.clearfix
                 #message

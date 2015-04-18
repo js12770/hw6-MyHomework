@@ -1,5 +1,6 @@
 require! ['express']
 require! {Class: '../models/class'}
+require! {Homework: '../models/homework'}
 router = express.Router!
 
 is-authenticated = (req, res, next)-> if req.is-authenticated! then next! else res.redirect '/'
@@ -43,7 +44,7 @@ module.exports = (passport)->
         res.redirect '/home'
 
   router.get '/AllClasses', is-authenticated, (req, res)!->
-    (error, class_) <- Class.find {teacher: req.user.username}
+    (error, class_) <- Class
     console.log class_
     res.render 'allClasses', user: req.user, classes: class_
 
@@ -53,8 +54,36 @@ module.exports = (passport)->
     console.log class_
     res.render 'viewClass', user: req.user, class_: class_
 
-  router.get 'class/:classname/addHomework', is-authenticated, (req, res)!->
+  router.get '/class/:classname/addHomework', is-authenticated, (req, res)!->
     console.log(req.params.classname)
     (error, class_) <- Class.find-one {className: req.params.classname}
     console.log 'adding homework'
     res.render 'addHomework', user: req.user, class_: class_
+
+  router.post '/class/:classname/CreateNewHomework', is-authenticated, (req, res)!->
+    (error, class_) <- Class.find-one {className: req.params.classname}
+    return (console.log 'Error in add new homework: ', error ; done error) if error
+
+    new-homework = new Homework {
+      homeworkName: req.param 'homeworkName'
+      className: class_.className
+      teacher: class_.teacher
+      description: req.param 'description'
+      deadline: req.param 'deadline'
+    }
+
+    class_.homeworks.push(new-homework)
+    class_.save (error) -> if err then return handleError(err) else console.log('Success!')
+
+    new-homework.save (error) ->
+      if error
+        console.log 'Falied to save new homework: ', error
+        throw error
+      else
+        console.log 'Create new homework successfully!'
+        res.redirect '/class/' + class_.className
+
+  router.get '/class/:classname/allHomeworks', is-authenticated, (req, res)!->
+    (error, class_) <- Class.find-one {className: req.params.classname}
+    console.log class_
+    res.render 'allHomeworks', user: req.user, class_: class_
