@@ -1,0 +1,19 @@
+extends layout
+
+block content
+	h1 Homework:
+		each item in HwPublic
+			h3 课程 #{item.course}</br>
+			h3 作业要求 #{item.content}</br>
+			h3 Deadline #{item.deadline}</br>
+			hr
+
+	h1 提交作业：
+		form(action='/hwsumbit', method='POST')
+
+			|course
+			textarea(rows='1', name='course', class='form-control' placeholder='课程名', required)
+
+			textarea(rows='10', name='content', class='form-control' placeholder='在这里放你的作业内容', required)
+			button(class='width20 pull-right btn btn-lg btn-primary btn-block', type='submit') 提交作业
+

@@ -1,0 +1,35 @@
+extends home
+
+block home-block
+	div.container
+		a(href='/home') homeworklist
+		form(class='form', action='/createHw', method='POST', width='90%')
+			.input-group
+				span.input-group-addon Hw_id
+				input(type='text', name='id', class='form-control', value='#{HwId}',required, autofocus)
+			.input-group
+				span.input-group-addon title
+				input(type='text', name='title', class='form-control', placeholder='title',required, autofocus)
+			.input-grout
+				div(class="input-group date form_datetime col-md-5" data-date="2015-04-16T00:00:07Z" data-date-format="yyyy-mm-dd hh:ii" data-link-field="dtp_input1")
+					span.input-group-addon deadline
+					input(name="deadline", class="form-control", size="16", type="text", placeholder='deadline', required, readonly)
+					span.input-group-addon
+						span(class="glyphicon glyphicon-remove")
+					span.input-group-addon
+						span(class="glyphicon glyphicon-th")
+			.input-group
+				span.input-group-addon require
+				textarea(type='text', name='require', rows="20", class='form-control', placeholder='require',required, autofocus)
+			button(class='btn btn-lg btn-primary btn-block', type='submit') Publish Homework
+	script
+		$("input[name='id']").attr('readonly', 'true')
+		$('.form_datetime').datetimepicker({weekStart: 1, todayBtn: 1, autoclose: 1, todayHighlight: 1, startView: 2, forceParse: 0, showMeridian: 1})
+	if edit
+		script
+			$("input[name='title']").attr('readonly', 'true')
+			$("input[name='id']").attr('value', "#{homework.Hw_id}")
+			$("input[name='title']").attr('value', "#{homework.title}")
+			$("textarea[name='require']").attr('value', "#{homework.require}")
+			$("input[name='deadline']").attr('value', "#{homework.deadline}")
+			$("form[class='form']").attr('action', '/editHw')

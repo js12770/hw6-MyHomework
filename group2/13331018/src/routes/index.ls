@@ -22,6 +22,9 @@ module.exports = (passport)->
     allAssignments.find  (err, docs)!->
       res.render 'home', user: req.user, assignment: docs
 
+  router.post '/home', (req, res)!->
+    res.render 'changeAssignDemand', user: req.user
+
 
   router.get '/signout', (req, res)!-> 
     req.logout!

@@ -18,6 +18,6 @@ based on http://code.tutsplus.com/tutorials/authenticating-nodejs-applications-w
     - 其中，老师的账号名为Teacher，学生的账号名为Student1和Student2，三个人物的密码均为12345。
     - 三个作业的名称分别为Lab1，Lab2，Lab3，已经有作业要求和提交的作业，均为文本格式...
 2. 存在重复导入数据的问题：当重启服务器时，会再一次把三个人物和三个作业的数据导入数据库，待改进...
-3. 暂时就这么多，能力有限，暂时就写了这么多，抱歉。
+3. 暂时就这么多，能力有限，抱歉。
 
 
