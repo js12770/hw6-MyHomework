@@ -8,6 +8,19 @@ block content
 					.col-md-8.h2 Hello #{user.firstName}!
 					.col-md-4.h2.text-right  #{' '+user.role}
 		if user.role == 'teacher'
+			.row
+				.col-md-12.h2 所有已提交的作业
+			if homework.length
+				for hw in homework
+						.row
+							.col-md-4.col-md-offset-2.h4 姓名：#{hw.studentName}
+							if hw.grade != undefined
+								.col-md-3.h4 评分：#{hw.grade}
+							else
+								.col-md-3.h4 尚未评分
+							.col-md-2
+								a.back-button(href='/homework/#{homework.assignmentId}')
+									button.btn.btn-info(type="button") 查看
 			.panel.panel-primary
 				.panel-heading
 					h3.panel-title 修改作业信息
@@ -26,9 +39,13 @@ block content
 							button.btn.btn-success(type="submit") 修改
 							a.back-button(href='/assignment')
 								button.btn.btn-info(type="button") 返回
+
 		else if user.role == 'student'
 			.panel.panel-heading
-				h2.panel-title 作业详情
+				if homework != undefined
+					h2.panel-title 得分：#{homework.grade}
+				else
+					h2.panel-title 尚未批改
 			.panel.panel-heading
 				.panel.panel-default
 					.row
@@ -40,11 +57,10 @@ block content
 						.col-md-8.h3 #{assignment.description}
 			form(role="form", action="/homework/#{assignment._id}", method='POST')
 				.form-group
-					if homework != null
-						label 修改作业
-						textarea.form-control(rows="10", placeholder="在这里写下要修改的内容", name="homework[description]", required) #{homework.content}
+					label 提交作业
+					if homework
+						textarea.form-control(rows="10", placeholder="在这里写下要提交的内容", name="homework[description]", required) #{homework.content}
 					else
-						label 提交作业
 						textarea.form-control(rows="10", placeholder="在这里写下要提交的内容", name="homework[description]", required)
 					br
 					button.btn.btn-success(type="submit") 提交

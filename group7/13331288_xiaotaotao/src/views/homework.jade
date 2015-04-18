@@ -21,9 +21,10 @@ block content
 							.col-md-2.h3 作业要求
 							.col-md-8.h3 #{ass.description}
 							.col-md-2
-								a.back-button(href='/homework/#{ass._id}')
+								a(href='/homework/#{ass._id}')
 									button.btn.btn-info(type="button") 我的提交
-
+				a(href='/home')
+					button.btn.btn-info(type="button") 返回主页
 				//- div.panel-body
 				//- 	form(role="form", action="/homework", method='POST')
 				//- 		.form-group
@@ -37,5 +38,5 @@ block content
 				//- 			input.form-control#homework-deadline(type="date", placeholder="请输入截止时间", name="homework[deadline]", required)
 				//- 			br
 				//- 			button.btn.btn-success(type="submit") 发布
-				//- 			a.back-button(href='/home')
+				//- 			a(href='/home')
 				//- 				button.btn.btn-info(type="button") 返回

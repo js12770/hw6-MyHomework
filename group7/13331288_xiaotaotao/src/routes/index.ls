@@ -20,29 +20,36 @@ module.exports = (passport)->
 
   router.get '/assignment', is-authenticated, (req, res)!->
     if req.user.role is 'teacher'
-      then
-        Assignment.find {}, (err, docs)!->
-          res.render 'assignment', user: req.user, assignment: docs
+      Assignment.find {}, (err, docs)!->
+        res.render 'assignment', user: req.user, assignment: docs
     # else
     #   Assignment.find-by-id
     # console.log 'there is  ', Assignment.count {}, (err, docs)!-> console.log err if err
 
   router.get '/assignment/*', is-authenticated, (req, res)!->
-    ass-id = req.url.substr 12
-    Assignment.find-by-id ass-id, (err, docs)!->
-      res.render 'detail', user: req.user, assignment: docs
+    if req.user.role is 'teacher'
+      ass-id = req.url.substr 12
+      Assignment.find-by-id ass-id, (err, doc)!->
+        Homework.find {assignment-id: doc._id}, (err, docs)!->
+          res.render 'detail', user: req.user, assignment: doc, homework: docs
 
   router.get '/homework', is-authenticated, (req, res)!->
-    Assignment.find {}, (err, docs)!->
-      res.render 'homework', user:req.user, assignment:docs
+    if req.user.role is 'student'
+      Assignment.find {}, (err, docs)!->
+        res.render 'homework', user:req.user, assignment:docs
 
   router.get '/homework/*', is-authenticated, (req, res)!->
     if req.user.role is 'student'
       ass-id = req.url.substr 10
+      # Homework.remove {assignment-id: ass-id}, (err, docs)!->
+      #   console.log docs
       Assignment.find-by-id ass-id, (err, docs)!->
         Homework.find {assignment-id: docs._id, student-name: req.user.first-name} (err, hws)!->
-          console.log "this student's homework: ", hws
-          res.render 'detail', user:req.user, assignment:docs, homework: hws
+          console.log hws
+          if hws != []
+            res.render 'detail', user:req.user, homework: hws[hws.count!-1], assignment:docs
+          else
+            res.render 'detail', user:req.user, assignment:docs
 
   router.post '/assignment', is-authenticated, (req, res)!->
     ass = req.body.assignment
@@ -65,13 +72,17 @@ module.exports = (passport)->
       assignment-id: ass-id
       content: hw.description
       student-name: req.user.first-name
-      grade: '-'
+      grade: undefined
     }
-    new-hw.save (err, ass-id)!->
-      if (err)
-        console.log err
-      Assignment.find {}, (err, docs)!->
-        res.render 'homework', user: req.user, assignment: docs
+    Homework.remove {
+      assignment-id: ass-id
+      student-name:req.user.first-name
+    } ,(err, docs)!->
+      new-hw.save (err, ass-id)!->
+        if (err)
+          console.log err
+        Assignment.find {}, (err, docs)!->
+          res.render 'homework', user: req.user, assignment: docs
 
   router.get '/signout', (req, res)!-> 
     req.logout!
