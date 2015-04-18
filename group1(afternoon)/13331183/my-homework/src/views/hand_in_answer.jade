@@ -5,5 +5,7 @@ block content
               textarea(rows="12", cols="113", name="answer_content", placeholder='Your Answer', class='form-control')
               input(type="hidden", name="homework_id", value="#{homework_id}")
               input(type="hidden", name="homework_title", value="#{homework_title}")
+              input(type="hidden", name="homework_deadline", value="#{homework_deadline}")
+              input(type="hidden", name="score", value=0)
               button(class='btn btn-lg btn-primary btn-block', type='submit') Submit
         a(href='/home', class='text-center new-account') Back
