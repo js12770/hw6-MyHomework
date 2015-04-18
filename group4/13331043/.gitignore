@@ -1,0 +1,5 @@
+*.sw*
+*~
+.temp/
+*.log
+.DS_Store

@@ -1,0 +1,27 @@
+extends layout
+
+block content
+    a(href='/signout', class='text-center new-account') 登出
+    div.container
+        div.row
+            div.col-md-2
+            div.col-md-8
+                h1.text-center.login-title 所有作业
+
+                if assignments.length == 0
+                    if user.identity == "1"
+                        p
+                            | 太棒辣，没有作业！
+                    if user.identity == "0"
+                        p
+                            | 你还没发布作业
+                        a(href='/assign') 现在去发布
+                else
+                    div.list-group
+                        each assign in assignments
+                            a.list-group-item(href='/assignments/#{assign._id}')
+                                ul 
+                                    li 题目：#{assign.title}
+                                    li 要求：#{assign.description}
+                                    li 截止日期：#{new Date(parseInt(assign.deadline))}
+            div.col-md-2

@@ -1,0 +1,20 @@
+extends layout
+
+block content
+    a(href='/signout', class='text-center new-account') 登出
+    a(href='/assignments', class='text-center new-account') 所有作业
+    div.container
+        div.row
+            div.col-md-2
+            div.col-md-8
+                if user.identity == "1"
+                    | 少年，这不是你该来的地方！
+                if user.identity == "0"
+                    h1.text-center.login-title 发布作业，请填写作业信息
+                    form(class='form-signin', method='POST')
+                        input(type='text', name='title', class='form-control', placeholder='作业名', required, autofocus)
+                        input(type='text', name='description', class='form-control', placeholder='描述', required)
+                        input(type='datetime-local', name='deadline', class='form-control', placeholder='截止日期', required)
+                        button(class='btn btn-lg btn-primary btn-block', type='submit') 提交
+                        span.clearfix
+            div.col-md-2
