@@ -9,11 +9,20 @@ based on http://code.tutsplus.com/tutorials/authenticating-nodejs-applications-w
 4. grunt watch
 
 
-teacher: 王青
+npm install
+mongod --dbpath data
+grunt watch
+
+teacher1: 王青
 password: 123
+
+teacher2：王海
+password：123
 
 student1: lin
 password: 123
 
 student2: luking
 password: 123
+
+如果账号没有了，请新建

@@ -39,9 +39,7 @@ module.exports = (passport)->
       res.render 'submit', user: req.user, myrequirement : collection
 
   router.post '/submit/:name' (req, res) !->
-    console.log 'myfindbegan'
     Homework.find {'name' : (req.param 'name'), 'student': (req.user.username)},(err, collection) ->
-      console.log 'my23232' collection
       if collection.length == 0
         new-homework = new Homework {
             student  : req.user.username
@@ -55,11 +53,7 @@ module.exports = (passport)->
             console.log "Homework submit success"
         res.redirect '/home'
       else
-        console.log 'my!!!!!' req.user.username
-        console.log req.param 'name'
-        console.log req.param 'answer'
         Homework.find-one {'name' : (req.param 'name'), 'student': (req.user.username)},(err, collection) ->
-          console.log  collection
           conditions = {name : collection.name}
           update     = {$set : {answer : req.param 'answer'}}
           options    = {upsert : true}
@@ -74,8 +68,14 @@ module.exports = (passport)->
 
       
 
-  router.get '/viewrequirement', is-authenticated, (req, res)!-> 
+  router.get '/viewrequirement', is-authenticated, (req, res)!->
     Requirement.find (err, collection) ->
+      Date today = new Date();
+      for col in collection
+          if col.deadline.valueOf! < today.valueOf!
+            col.cancheck = true
+          else
+            col.cancheck = false
       res.render 'viewrequirement', user: req.user, collection: collection
 
   router.get '/viewhomework', is-authenticated, (req, res)!-> 
@@ -88,7 +88,6 @@ module.exports = (passport)->
 
   router.post '/changedl/:name' (req, res) !->
     Requirement.find-one {name : req.param 'name'},(err, collection) ->
-      console.log "shit", collection
       conditions = {name : collection.name}
       update     = {$set : {deadline : req.param 'deadline'}}
       options    = {upsert : true}
@@ -100,6 +99,10 @@ module.exports = (passport)->
           console.log "Homework submit success"
     res.redirect '/viewrequirement'
   
+
+  router.get '/checkhomework/:name', is-authenticated, (req, res)!-> 
+    Homework.find {name : req.param 'name'},(err, collection) ->
+      res.render 'checkhomework', user: req.user, collection : collection
 
   router.get '/signout', (req, res)!-> 
     req.logout!
