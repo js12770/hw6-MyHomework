@@ -1,0 +1,55 @@
+//
+  args
+  title, requirement, date, deadline, isTeacher
+  is teacher: submits[{path, student, date}]
+  not teacher: _id, username, submitDate
+
+extends layout
+
+block content
+  div#homework
+    label Title
+    div#title #{homework.title}
+    label Requirement
+    div#requirement #{homework.requirement}
+    label Pubdate
+    div#date #{homework.date}
+    label Deadline
+    div#deadline #{homework.deadline}
+    if isTeacher
+      if !outOfDeadline
+        div You can 
+          a(href='/edit-homework/' + homework._id) Edit 
+          | this homework
+      else
+        div Out of deadline.
+      label Submits
+      div#submits
+        if homework.submits
+          each submit in homework.submits
+            div.submit
+              a(href='/submits/' + homework._id + '/' + submit.username)
+                div #{submit.username} submitted at #{submit.date}
+              if outOfDeadline
+                form(action='/s-grade/' + homework._id + '/' + submit.username method='GET')
+                  span Score: 
+                  input(type='text' name='score' value=submit.score required pattern='\\d+' placeholder='not graded')
+                  button.btn.btn-primary(type='submit') Grade
+        else
+          div There're no submits
+    else
+      div Your submit:
+      div#submit
+        // submitted
+        if mySubmit
+          a(href='/submits/' + title + '/' + username) Your last submit at #{mySubmit.date}
+          div Score: #{mySubmit.score ? mySubmit.score : 'Not graded'}
+        else
+          div You have no submits
+      // outof deadline
+      if outOfDeadline
+        div Out of deadline.
+      else
+        form(action='/s-submit/' + homework._id + '/' + username method='POST' encType='multipart/form-data')
+          input(type='file' name='submit')
+          button.btn.btn-primary(type='submit') Submit

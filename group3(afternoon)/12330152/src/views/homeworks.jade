@@ -1,0 +1,18 @@
+extends layout
+
+block content
+  if isTeacher
+    a(href='/create-homework')
+      div Create a homework
+  label Homeworks
+  if homeworks.length == 0
+    div There're no homeworks
+  else
+    ol#homeworks.list-unstyled
+      each homework in homeworks
+        li.homework
+          a(href='/homework/' + homework._id)
+            div.title #{homework.title}
+          div.requirement Requirement: #{homework.requirement}
+          div.date Date: #{homework.date}
+          div.deadline Deadline: #{homework.deadline}

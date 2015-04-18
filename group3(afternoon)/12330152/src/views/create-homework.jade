@@ -1,0 +1,9 @@
+extends layout
+
+block content
+  form(action='/s-create-homework' method='POST')
+    input#title(class='form-control' type='text' name='title' placeholder='title' required)
+    textarea#requirement(class='form-control' name='requirement' placeholder='requirement' required)
+    div Deadline
+    input#deadline(class='form-control' type='datetime-local' name='deadline' required)
+    button.btn.btn-primary(type='submit') Submit
