@@ -1,0 +1,35 @@
+extends layout
+block content
+    div.thumbnail.help
+        h2(id='Lab06MyHomework')
+          span(style='font-size: 1.8em;')
+          |简介
+        p
+          strong MyHomework
+          |  是一个基于ExpressJS的Web 2.0应用，老师可以发布作业，学生可以提交作业。
+        ol.ol1
+          li
+            strong 角色
+            | : 学生，老师。
+          li
+            strong 访问管理
+            | ：
+            br
+            ol.ol2
+              li 只有选定了本课程老师和学生才能够访问使用本系统。
+              li 老师可以看到所有的作业要求和所有学生提交的作业。
+              li 学生能看到所有的作业要求，但只能够看到自己的作业。
+          li
+            strong(style='line-height: 13.0pt;') 发布作业要求
+            span(style='line-height: 13.0pt;') ：老师可以发布作业要求，也可以修改一个已发布但是尚未截止的作业要求。
+          li
+            strong 提交作业
+            | ：学生可以提交作业（
+            span(style='line-height: 13.0pt;') 可以多次提交作业，系统将保留最新的版本）。
+          li
+            strong(style='line-height: 13.0pt;') deadline
+            span(style='line-height: 13.0pt;') ：老师可以设定/修改作业要求的截止时间，截止时间到达后，任何学生都将无法提交作业。
+          li
+            strong 作业评分
+            | : 截止时间到达之后，老师可以批改作业给出分数。
+        a.btn.btn-primary.btn-sm.helpHome(href='/home') 返回
