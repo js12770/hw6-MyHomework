@@ -1,0 +1,31 @@
+extends layout
+
+block content
+	div.container
+		div.row
+			div.col-sm-6.col-md-4.col-md-offset-4
+				#user
+
+					h1.text-center.login-title Homework Update
+
+					div.signup-wall
+						div.panel-default
+							div.panel-heading Homework Detail
+							div.panel-body
+								table.table
+									thead
+										tr
+											th Homework
+											th Deadline
+											th Update
+									tbody
+										for requirement in requirements
+											tr
+												td #{requirement.question}
+												td #{requirement.deadline}													 
+												td
+													a(class='btn btn-info' href='/update?hid=#{requirement._id}') Detail
+
+						
+
+					a(href='/signout', class='text-center new-account') Sign Out

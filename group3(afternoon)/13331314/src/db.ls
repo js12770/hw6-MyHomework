@@ -1,2 +1,2 @@
 module.exports = 
-  url: 'mongodb://localhost/my-homework'
+  url: 'mongodb://localhost/myhomework'
