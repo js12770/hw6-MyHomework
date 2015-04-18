@@ -1,0 +1,39 @@
+#fake-header
+#header-container
+  .ui.inverted.segment
+    .ui.inverted.horizontal.celled.list
+      .item(onclick="window.location='/home'", style="cursor: pointer")
+        h1.ui.header My Homework
+      .item(onclick="window.location='#'", style="cursor: pointer")
+        h3.ui.header
+          =title
+      if user
+        .item
+          img.ui.avator.image(src="")
+          .content
+            a.header
+              i.user.icon
+              span #{user.name}
+            .description
+              i.align.left.icon
+              span #{user.usertype}
+        //- if user.usertype == 'teacher'
+        if index_url
+          .item
+            .ui.red.icon.button(onclick="window.location='#{index_url}'")
+              i.home.icon
+        if new_url
+          .item
+            .ui.teal.icon.button(onclick="window.location='#{new_url}'")
+              i.add.icon
+        if edit_url
+          .item
+            .ui.pink.icon.button(onclick="window.location='#{edit_url}'")
+              i.edit.icon
+        .item
+          .ui.grey.icon.button(onclick="window.location='/signout'")
+            i.sign.out.icon
+
+  #message-container
+    if message
+      p #{message}

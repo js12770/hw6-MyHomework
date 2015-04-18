@@ -1,0 +1,14 @@
+extends layout
+
+block content
+  .homework-container
+    //- - var action = Assignment.create!
+    form.ui.homework.form.segment(action="#{update_url}", method="POST")
+      .ui.error.message
+      .required.field
+        label Marks
+        input(placeholder='Must be greater than 0', type='number', name="marks", value="#{homework.marks}")
+      .required.field
+        label Review
+        textarea(rows="100", name="review") #{homework.review}
+      .ui.homework.submit.button Confirm

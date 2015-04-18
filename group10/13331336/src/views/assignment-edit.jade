@@ -1,0 +1,21 @@
+extends layout
+
+block content
+  .assignment-container
+    //- - var action = Assignment.create!
+    form.ui.assignment.form.segment(action="#{assignment.update}?_method=PUT", method="POST")
+      .ui.error.message
+      .disabled.field
+        label Title
+        input(placeholder='Title', type='text', name="title", value="#{assignment.title}", disabled="true")
+      .field
+        label Detials
+        textarea(rows="100", name="detials") #{assignment.detials}
+      .two.fields
+        .disabled.field
+          label Deadline date
+          input(type="date", name="ddlDate", value="#{assignment.ddlDate}", disabled="true")
+        .disabled.field
+          label Deadline time
+          input(type="time", name="ddlTime", value="#{assignment.ddlTime}", disabled="true")
+      .ui.assignment.submit.button Confirm

@@ -1,0 +1,21 @@
+extends layout
+
+block content
+  #homeworks-container
+    .ui.items
+      each homework in homeworks
+        if user.usertype == 'teacher' || user.usertype == 'student' && homework.user_id == user['_id']
+          .item
+            .image
+              img(src='/images/image.png')
+            .content
+              //- a.header #{homework.title}
+              a.header(href="#{homework.show}") More...
+              .meta
+                span Createby: #{homework.createdby}
+              .description
+                p #{homework.detials}
+              .extra
+                | Marks: #{homework.marks}
+      //- if user.usertype == 'student'
+      //-   ea

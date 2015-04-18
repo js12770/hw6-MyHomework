@@ -20,7 +20,7 @@ $(document).ready(function() {
                 data = JSON.parse(data);
                 alert(data.message);
                 if (data.type == 1) {
-                    self.parent.location.replace('/login');
+                    self.parent.location.replace('#/login');
                 }
             });
         },
@@ -32,7 +32,7 @@ $(document).ready(function() {
                 data = JSON.parse(data);
                 alert(data.message);
                 if (data.type == 1) {
-                    window.location.replace('/main');
+                    window.location.replace('#/main');
                 }
             });
         },
@@ -52,7 +52,7 @@ $(document).ready(function() {
                         tbodyArea.append(insertData);
                     }
                 } else {
-                    self.parent.location.replace('/login');
+                    self.parent.location.replace('#/login');
                 }
             });
         },
@@ -61,7 +61,7 @@ $(document).ready(function() {
                 data = JSON.parse(data);
                 alert(data.message);
                 if (data.type == 1) {
-                    window.location.replace('/login');
+                    window.location.replace('#/login');
                 }
             });
         }
@@ -88,7 +88,7 @@ $(document).ready(function() {
         loginController.logout();
     });
 
-    if (window.location.pathname == "/main/students" && self.parent.location.pathname == "/main") {
+    if (window.location.pathname == "#/main/students" && self.parent.location.pathname == "#/main") {
         loginController.getStudents();
     }
 });

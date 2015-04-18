@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<header>
+    <ul>
+        <li>
+            <a href="#/main">首页</a>
+        </li>
+        <li>
+            <a href="#/safe">安全中心</a>
+        </li>
+    </ul>
+    <ul id="logoutArea">
+        <li>
+            <input type="button" value="登 出">
+        </li>
+    </ul>
+</header>
+
+<div id="main-container" ng-controller="homeworkController">
+    <div class="navigation">
+        <ul>
+            <li>
+                <a href="#/main/students" target="right">课程学生名单</a>
+            </li>
+            <li>
+                <a href="#/main/allhomework" target="right">查看所有作业</a>
+            </li>
+            <li>
+                <a href="#/main/homework" target="right" ng-click="checkIfUploaded()">作业提交情况</a>
+            </li>
+            <li>
+                <a href="#/main/upload" target="right">提交作业</a>
+            </li>
+            <li>
+                <a href="#/main/submitHW" target="right">发布作业</a>
+            </li>
+        </ul>
+    </div>
+    <iframe name="right" id="right-container" src="#/main/students">
+    </iframe>
+</div>
+
+<footer>
+    <span>This WebPage Is Created By Lijianhua</span>
+</footer>
+<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+<script src="../javascripts/jquery.js"></script>
+<!-- Include all compiled plugins (below), or include individual files as needed -->
+<script src="../bootstrap/js/bootstrap.min.js"></script>
+<script src="../javascripts/accountController.js"></script>
+</body>
+</html>

@@ -1,0 +1,31 @@
+extends layout
+
+block content
+  #signup-container
+    form.ui.signup.form.segment(action="/signup", method="POST")
+      .ui.error.message
+      .two.fields
+        .required.field
+          label First Name
+          input(placeholder='First Name', type='text', name="firstName")
+        .required.field
+          label Last Name
+          input(placeholder='Last Name', type='text', name="lastNmae")
+      .required.field
+        label Type
+        .ui.selection.dropdown
+          .default.text Select User Type
+          i.dropdown.icon
+          input(type='hidden', name='usertype')
+          .menu
+            .item(data-value='student') Student
+            .item(data-value='teacher') Teacher
+      .six.wide.required.field
+        label Username
+        input(placeholder='Must Be Unique', type='text', name="username")
+      .six.wide.required.field
+        label Password
+        input(placeholder='Please Remember It', type='password', name="password")
+      .ui.signup.submit.button Sign up
+      //- .inline.field
+      a(href="/") Already have an account? Click me!

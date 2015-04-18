@@ -1,0 +1,15 @@
+extends layout
+
+block content
+  #assignment-container
+    .ui.cards
+      each assignment in assignments
+        .pink.card
+            a.image(href="#{assignment.show}")
+              img(src='/images/image.png')
+            .content
+              a.header(href="#{assignment.show}") #{assignment.title}
+              .meta
+                a(href="#{assignment.show}") Createdby: #{assignment.createdby}
+              .description
+                | #{assignment.ddl}
