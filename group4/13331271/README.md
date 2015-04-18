@@ -8,6 +8,7 @@ based on http://code.tutsplus.com/tutorials/authenticating-nodejs-applications-w
 3. npm install
 4. grunt watch
 5. http://localhost:5000
+（如出现无法运行，请联系QQ：553544693）
 
 ## 主要功能
 	1. 注册功能
