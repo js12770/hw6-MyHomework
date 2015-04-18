@@ -1,0 +1,40 @@
+extends layout
+
+block content
+	div.nav.navbar.navbar-inverse.navbar-fixed-top
+		div.container
+			div.navbar-brand
+				if user.identity == 'teacher'
+					div.label.label-danger Teacher
+				else if user.identity == 'student'
+					div.label.label-success Student
+			div.user-info
+				p.navbar-text Welcome #{user.firstName}.#{user.lastName}!
+			div
+				if user.identity == 'teacher'
+					a.btn.navbar-btn.publish-btn(href='/hw-produce') Publish
+				a.btn.navbar-btn.publish-btn(href='/hw-view') View
+				a.btn.navbar-btn.publish-btn(href='/home') Home
+				a.btn.navbar-btn.signout-btn.pull-right(href='/signout') Signout
+	div.show-homework
+		div.text-center
+			h2 Homework Check
+		if announcement.length == 0
+			div.text-center
+				h2 No submittals yet...
+		else
+			ul.col-sm-6.col-md-6.col-md-offset-3.col-sm-offset-3.list-group
+				each student in announcement
+					li.list-group-item.list-group-item-info
+						div(style='display:inline')
+							a.label.label-info(href='/hw-grade/#{student._id}/#{student.hw_id}') #{student.firstName+'.'+student.lastName}
+						p(style='display:inline') &nbspVersion 
+						div(style='display:inline')
+							span.badge #{student.nth}
+						p(style='display:inline') &nbspSubmitted at 
+							span.label.label-warning #{student.commitTime.getFullYear()}-#{student.commitTime.getMonth()+1}-#{student.commitTime.getDate()} #{student.commitTime.toLocaleTimeString()}
+						p.pull-right(style='display:inline') &nbspGrade:
+							if student.grade > -1
+								span.label.label-success #{student.grade}
+							else
+								span.label.label-danger 未审核
