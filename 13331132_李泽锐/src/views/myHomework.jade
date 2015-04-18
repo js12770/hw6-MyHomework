@@ -1,0 +1,16 @@
+extends layout
+
+block content
+	div.homework
+		if (handIn.length == 0)
+			h2 No homework submitted yet!
+		else
+			each hi in handIn
+				|Assignment:
+				pre #{hi.assignment}
+				|Answer:
+				pre #{hi.answer}
+				p grade: #{hi.grade}
+		br
+	a(class = 'home' href = '/home') Home
+	
