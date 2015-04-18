@@ -1,0 +1,27 @@
+extends layout
+
+block content
+	div.container
+		div.row
+			div.col-sm-6.col-md-4.col-md-offset-4
+				#user
+					if user.identity == "T"
+						h1.text-center.login-title Teacher #{user.firstName} , Welcome !
+					else
+						h1.text-center.login-title Student #{user.firstName} , Welcome !
+					//- h1.text-center.login-title Check your details below:
+					div.signup-wall
+						ul.user-details
+							li Username&nbsp;&nbsp;---> #{user.username}
+							li Email&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;---> #{user.email}
+							li First Name&nbsp;---> #{user.firstName} 
+							li Last Name&nbsp;---> #{user.lastName}
+							if user.identity == "T"
+								li Identity&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;---> Teacher
+							else
+								li Identity&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;---> Student
+					a(href='/request', class='text-center new-account') Homework Request
+					a(href='/homework', class='text-center new-account') Homework Submissions
+					if user.identity == "T"
+						a(href='/publish', class='text-center new-account') Publish Homework
+					a(href='/signout', class='text-center new-account') Sign Out
