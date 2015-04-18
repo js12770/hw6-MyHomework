@@ -1,0 +1,56 @@
+extends head
+
+block content
+	h2.teacher.text-center Hi! #{user.username}
+	
+	form(class='form-signin', action='/public-or-modify', method='POST')
+		|Homework_name:
+		input(class='homework_name homework form-control', type='text', placeholder='name', name='homeworkName', required, autofocus)
+		|Homework_content:
+		input(class='homework_content homework form-control', type='text', placeholder='content', name='homeworkContent', required)
+		|Homework_require:
+		input(class='homework_require homework form-control', type='text', placeholder='require', name='homeworkRequire', required)
+		|Homework_deadline:
+		input(class='homework_deadline homework form-control', type='date', placeholder='deadline', name='homeworkDeadline-date', required)
+		input(class='homework_deadline homework form-control', type='time', placeholder='deadline', name='homeworkDeadline-time', required)
+		button(class='public btn btn-lg btn-primary btn-block' type='submit') public
+		//- |#{homeworkdetail[0].homework_name}
+	if ModifyHomeworkName
+		h1.text-center Modify For Homework: #{ModifyHomeworkName}
+		form(class='form-signin', action='/public-or-modify?homework=#{ModifyHomeworkName}', method='POST')
+			|Homework_require:
+			input(class='homework_require homework form-control', type='text', placeholder='require', name='homeworkRequire', value='#{whichHomeworkReturn.requires}')
+			|Homework_deadline:
+			input(class='homework_deadline homework form-control', type='date', placeholder='deadline', name='homeworkDeadline-date', required)
+			input(class='homework_deadline homework form-control', type='time', placeholder='deadline', name='homeworkDeadline-time', required)
+			button(class='modify btn btn-lg btn-primary btn-block' type='submit') modify
+
+
+	if homeworkdetail
+		div(class="panel panel-default participated homework_list.user-details")
+			div(class="panel-heading") Homeworks you has publiced
+			table(class="table")
+				thead
+					tr
+						th #
+						th Homework
+						th Require
+						th Deadline
+						th Modify
+						th Detail
+				tbody
+					each detail,i in homeworkdetail
+						tr
+							th #{i + 1}
+							th #{detail.homework_name}
+							th #{detail.requires}
+							th #{detail.deadline}
+							th
+								a(class='modify' href='/mainpage?homework=#{detail.homework_name}') modify
+							th 
+								a(class='detail' href='/detail?homework=#{detail.homework_name}') detail
+	ul.homework-for-the-participating-for-student
+		if homeworkdetailForStudent
+			//- each student in homeworkdetailForStudent
+				li
+					//- |

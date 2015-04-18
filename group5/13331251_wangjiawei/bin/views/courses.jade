@@ -11,4 +11,7 @@ block content
 			ul
 				each course in courses
 					li
-						a(href="/courses/#{course._id}") #{course.name} 
+						a(href="/courses/#{course._id}") #{course.name}
+	if user.character == 'teacher'
+		p Your can also 
+			a(href='/courses/create') create a new course.

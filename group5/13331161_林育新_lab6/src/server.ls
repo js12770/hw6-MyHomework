@@ -1,4 +1,4 @@
-require! {express, http, path, 'cookie-parser', 'body-parser', mongoose, passport, 'express-session', './db'}
+require! {express, http, path, 'cookie-parser', 'body-parser', mongoose, passport, 'express-session', './db', multer}
 logger = require 'morgan'
 flash = require 'connect-flash'
 favicon = require 'static-favicon'
@@ -20,6 +20,7 @@ app.use expressSession {secret: 'mySecretKey'}
 app.use passport.initialize!
 app.use passport.session!
 app.use flash!
+app.use (multer {dest: './homeworks', rename: (fieldname, filename) -> filename})
 
 initPassport = require './passport/init'
 initPassport passport

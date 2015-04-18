@@ -1,0 +1,42 @@
+extends head
+
+block content
+	h1.homework_name Homework:#{sigleHomeworkInDeatil.homework_name}
+	div.homework_require Homework Require:#{sigleHomeworkInDeatil.requires}
+	div.homework_content Homework Content:#{sigleHomeworkInDeatil.content}
+	div.homework_deadline Homework Deadline:#{sigleHomeworkInDeatil.deadline}
+	if participatorInSingleHomework
+		div(class="panel panel-default participated homework_list.user-details")
+			div(class="panel-heading") Homeworks you has publiced
+			table(class="table")
+				thead
+					tr
+						th #
+						th Student
+						th status
+						th Dowload
+						th Modify
+				tboby
+						each val, i in participatorInSingleHomework
+							tr
+								th #{i + 1}
+								th #{val.participator}
+								th
+									if val.status == '已交'
+										|Has submited!
+									else
+										|Has not submited!
+								th
+									if val.status == '已交'
+										a(class='download', href='/download?destName=#{val.dest_name}&role=teacher') #{val.original_name}
+									else
+										|Has not submited
+								th
+									if participatorInSingleHomework.modify == 'can-modify'
+										form(class='form-for-student-modify', action='/modify', method='POST')
+											input(class='modify', name='score', type='number', required)
+											input(class='student_name', name='student_name', value='#{val.participator}', hidden)
+											input(class='homework_name', name='homework_name', value='#{val.homework_name}', hidden)
+											input(class='confirm', type='submit' max='100', value='confirm')
+									else
+										|Could modify now!

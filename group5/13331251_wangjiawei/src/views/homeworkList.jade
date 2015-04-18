@@ -10,9 +10,9 @@ block content
 					ul
 						each homework in homeworks
 							li
-								a(href="./#{homework._id}") #{homework.name}
+								a(href="/homeworks/detail/#{homework._id}") #{homework.name}
 				else
-					p You have no homeworks, congratulation!
+					p You have no homeworks, congradulation!
 		if user.character == 'teacher'
 			div#homeworkList
 				| You can see the homework below
@@ -20,8 +20,10 @@ block content
 					ul
 						each homework in homeworks
 							li
-								a(href="./#{homework._id}") #{homework.name}
+								a(href="/homeworks/detail/#{homework._id}") #{homework.name}
+					| or 
+					a(href="/homeworks/create?courseId=#{course._id}") Create one.
 				else
 					p
 						| You haven't create any homework
-						a(href="/homeworks/create") Create one?
+						a(href="/homeworks/create?courseId=#{course._id}") Create one?

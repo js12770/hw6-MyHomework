@@ -1,0 +1,22 @@
+extends layout
+
+block content
+    div.container
+        div.control-group
+            div.controls
+                h4.create-mar
+                    strong Title:#{homeworks.title}
+        div.control-group            
+            div.controls
+                h4.create-mar 
+                    strong details:
+                p.create-mar #{homeworks.details}
+        form.form-horizontal.create-form(role="form", action='/student_homework/?id=#{assignment._id}', method='POST')
+            div.control-group
+                div.controls
+                    p #{homeworks.score}
+                    input.create-mar(type="text", name="score", placeholder="score")
+            div.control-group
+                div.controls
+                    input.btn.btn-primary.create-mar(type="submit", value="score_submit")
+        a.btn.btn-primary(href='/assignment_details?id=#{assignment._id}', class='text-center new-account') Back

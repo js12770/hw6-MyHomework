@@ -1,0 +1,8 @@
+*.sw*
+*~
+node_modules/
+.temp/
+bin/
+*.log
+.DS_Store
+._.DS_Store
