@@ -7,13 +7,19 @@ block content
 
                 h2.text-primary.text-center Welcome back, #{user.lastName}#{user.firstName}! 
                 br
+                #message
+                    if message != ''
+                        div.alert.alert-success.alert-dismissible.text-center #{message}
+                            button(type="button", class="close", data-dismiss="alert", aria-label="Close")
+                                span(aria-hidden="true") &times;
                 div.menu-wall
                     h3 
-                        span.label.label-primary Student
+                        span.label.label-primary Role: Student
                     h3.text-primary What can I do for you?
 
                     hr
                     h4 Here's your homework, you can submit your homework if you have finished:
+                    p (Homework can be submitted more than one time if it is not overdue!)
                     br
                     table.table.table-hover.all-homework.text-center
                         tr
@@ -29,27 +35,31 @@ block content
                                 td #{homework.teacher}
                                 td #{homework.title}
                                 td 
-                                    button.btn.btn-primary(data-toggle="modal", data-target="##{homework.id}") Click to view
+                                    button.btn.btn-primary(data-toggle="modal", data-target="##{homework.id}") View
                                     div.modal.fade(id="#{homework.id}", tabindex="-1", role="dialog", aria-labelledby="myModalLabel", aria-hidden="true")
                                         .modal-dialog
                                             .modal-content
                                                 .modal-header
-                                                    h4 #{homework.title}
-                                                .modal-body #{homework.content}
+                                                    h3.text-center.text-primary #{homework.title}
+                                                .modal-body 
+                                                    if homework.issue.filename != 'None'
+                                                        div.alert.alert-success.alert-dismissible.text-center File: 
+                                                            a(target="_blank", href="/download/issue/#{homework.issue.filename}") Click to download
+                                                    pre #{homework.content}
                                                 .modal-footer
                                                     button.btn.btn-default(data-dismiss="modal") Close
                                 td #{homework.deadline}
                                 td 
                                     if homework.overdue
-                                        button.btn.btn-default(disabled, data-toggle="modal", data-target="##{homework.title}") Overdue
+                                        button.btn.btn-default(disabled) Overdue
                                     else
                                         button.btn.btn-primary(data-toggle="modal", data-target="##{homework.title}") Submit
-                                    div.modal.fade(id="#{homework.title}", tabindex="-1", role="dialog", aria-labelledby="myModalLabel", aria-hidden="true")
+                                    div.modal.fade.text-left(id="#{homework.title}", tabindex="-1", role="dialog", aria-labelledby="myModalLabel", aria-hidden="true")
                                         .modal-dialog.modal-lg
                                             .modal-content
                                                 .modal-header
                                                     h2.text-center.text-primary Submit homework
-                                                form(action='/submit', method='POST')
+                                                form(action='/submit', method='POST', enctype='multipart/form-data')
                                                     .modal-body 
                                                         .issue.center-block
                                                             div.form-group
@@ -59,12 +69,32 @@ block content
                                                             hr
                                                             div.form-group
                                                                 label Content
-                                                                textarea(rows="10" name='content', class='form-control', placeholder="Your homework should be written here",required, autofocus)
+                                                                textarea(rows="8" name='content', class='form-control', placeholder="Your homework should be written here",required, autofocus)
+                                                            div.form-group
+                                                                label Relevent File(s)
+                                                                input(type='file', name='file')
+                                                                p.help-block If you have more than one file to upload, please compress them into zip/rar.
                                                     .modal-footer
                                                         .text-center
                                                             button.btn.btn-success.btn-margin Submit
                                                             button.btn.btn-danger.btn-margin(data-dismiss="modal") Close
-                                td #{homework.latestSubmitTime}
+                                td 
+                                    if homework.latestSubmitTime == 'None'
+                                        button.btn.btn-default(disabled) None
+                                    else
+                                        button.btn.btn-primary(data-toggle="modal", data-target="#submission#{homework.title}") #{homework.latestSubmitTime}
+                                        div.modal.fade(id="submission#{homework.title}", tabindex="-1", role="dialog", aria-labelledby="myModalLabel", aria-hidden="true")
+                                            .modal-dialog
+                                                .modal-content
+                                                    .modal-header
+                                                        h3.text-primary My latest submission of #{homework.title}
+                                                    .modal-body
+                                                        if homework.filename != 'None'
+                                                            div.alert.alert-success.alert-dismissible.text-center File: 
+                                                                a(target="_blank", href="/download/submit/#{homework.filename}") Click to download
+                                                        pre #{homework.mySubmit}
+                                                    .modal-footer
+                                                        button.btn.btn-default(data-dismiss="modal") Close
                                 td #{homework.score}
                             
                 a(href='/signout', class='text-center new-account') Sign Out

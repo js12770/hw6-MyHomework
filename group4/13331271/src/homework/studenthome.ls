@@ -15,6 +15,8 @@ class Myhomework
         @teacher-name = \None
         now = moment new Date() .format 'YYYY-MM-DD HH:mm'
         @overdue = now >= @deadline
+        @my-submit = \None
+        @filename = \None
 
 module.exports = (req, res) !->
     issues-list = []
@@ -35,9 +37,11 @@ module.exports = (req, res) !->
             if submit.title == my-homework.title and submit.username == req.user.lastName + req.user.firstName
                 my-homework.latest-submit-time = submit.submittime
                 my-homework.score = submit.score
+                my-homework.my-submit = submit.content
+                my-homework.filename = submit.filename
         for user in user-list
             if user.username is my-homework.issue.username
                 my-homework.teacher = user.lastName + user.firstName
-    res.render 'student', user: req.user, all-homework: all-my-homework
+    res.render 'student', user: req.user, all-homework: all-my-homework, message: req.flash 'message'
 
     #all.callbackres.render 'student', user: req.user, all-homework: all-my-homework

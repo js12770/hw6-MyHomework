@@ -3,15 +3,17 @@ extends layout
 block content
     div.container
         div.row
-            div.col-xs-10.col-sm-10.col-md-10.col-md-offset-1
-                h2.text-primary.text-center Welcome back, #{user.lastName}#{user.firstName}! 
+            div.col-xs-12.col-sm-10.col-md-10.center-block.no-float
+                h2.text-primary.text-center Welcome back, #{user.lastName}#{user.firstName}!
+                br 
                 #message
-                    if message
-                        div.alert.alert-success.text-center #{message}
-                br
+                    if message != ''
+                        div.alert.alert-success.alert-dismissible.text-center #{message}
+                            button(type="button", class="close", data-dismiss="alert", aria-label="Close")
+                                span(aria-hidden="true") &times;
                 div.menu-wall
                     h3 
-                        span.label.label-primary Teacher
+                        span.label.label-primary Role: Teacher
                     h3.text-primary What can I do for you?
 
                     hr
@@ -21,19 +23,23 @@ block content
                             .modal-content
                                 .modal-header
                                     h2.text-center.text-primary Issue new homework
-                                form(action='/issue', method='POST')
+                                form(action='/issue', method='POST', enctype='multipart/form-data')
                                     .modal-body.issue.center-block
-                                    
                                         div.form-group
-                                            label Title
+                                            label Title 
+                                                span.text-danger (It is disable to be modified once you have issued!)
                                             input(type='text', name='title', class='form-control', placeholder='Title',required, autofocus)
                                         div.form-group
                                             label Deadline
-                                            input(todayBtn="true", required, placeholder="Click to choose..." name="deadline", autoclose="true", class='form-control', type="text" size="10" id="datetimepicker" data-date-format="yyyy-mm-dd hh:ii", todayHighlight="true")
-
+                                            input(todayBtn="true", required, placeholder="Click to choose..." name="deadline", autoclose="true", class='form-control', type="text" size="10" class="datetimepicker" data-date-format="yyyy-mm-dd hh:ii", todayHighlight="true")
+                                        
                                         div.form-group
                                             label Content
-                                            textarea(rows="10" name='content', class='form-control', placeholder="The details about your homework...",required, autofocus)
+                                            textarea(rows="7" name='content', class='form-control', placeholder="The details about your homework...",required, autofocus)
+                                        div.form-group
+                                            label Relevent File(s)
+                                            input(type='file', name='file')
+                                            p.help-block If you have more than one file to upload, please compress them into zip/rar.
                                     .modal-footer
                                         .text-center
                                             button.btn.btn-success.btn-margin(type="submit") Issue
@@ -53,17 +59,64 @@ block content
                             tr
                                 td #{issue.title}
                                 td 
-                                    a.btn.btn-primary(data-toggle="modal", data-target='##{issue._id}') Click to view
+                                    button.btn.btn-primary(data-toggle="modal", data-target='##{issue._id}') View
                                 td #{issue.deadline}
-                                td 
-                                    a.btn.btn-primary(href='/grade/?title=#{issue.title}') Grade
+                                td
+                                    if issue.deadline <= nowTime
+                                        a.btn.btn-primary.margin-right(href='/grade/?title=#{issue.title}') Grade
+                                    else
+                                        button.btn.btn-primary.margin-right(data-toggle="tooltip" data-placement="top", title="Not the time to grade!") Grade
+                                    button.btn.btn-success.margin-right(data-toggle="modal", data-target='#edit#{issue._id}') Edit
+                                    button.btn.btn-danger(data-toggle="modal", data-target='#delete#{issue._id}') Delete
                                 div.modal.fade(id='#{issue._id}', tabindex="-1", role="dialog", aria-labelledby="myModalLabel", aria-hidden="true")
                                     .modal-dialog
                                         .modal-content
                                             .modal-header
-                                                h4 #{issue.title}
-                                            .modal-body #{issue.content}
+                                                h3.text-primary.text-center #{issue.title}
+                                            .modal-body
+                                                if issue.filename != 'None'
+                                                    div.alert.alert-success.alert-dismissible.text-center File: 
+                                                        a(target="_blank", href="/download/issue/#{issue.filename}") Click to download
+                                                pre #{issue.content}
                                             .modal-footer
                                                 button.btn.btn-default(data-dismiss="modal") Close
+                                div.modal.fade(id='edit#{issue._id}' tabindex="-1", role="dialog", aria-labelledby="myModalLabel", aria-hidden="true")
+                                    .modal-dialog.modal-lg
+                                        .modal-content
+                                            .modal-header
+                                                h2.text-center.text-primary Edit details of homework
+                                            form(action='/edit', method='POST', enctype='multipart/form-data')
+                                                .modal-body.issue.center-block
+                                                    div.form-group
+                                                        label Title
+                                                        input.hide(type='text', name='id', value='#{issue_id}')
+                                                        input(value='#{issue.title}', readonly, type='text', name='title', class='form-control', placeholder='Title',required)
+                                                    div.form-group
+                                                        label Deadline
+                                                        input(value='#{issue.deadline}', todayBtn="true", required, placeholder="Click to choose..." name="deadline", autoclose="true", class='form-control', type="text" size="10" class="datetimepicker" data-date-format="yyyy-mm-dd hh:ii", todayHighlight="true")
+                                                    div.form-group
+                                                        label Content
+                                                        textarea(rows="7" name='content', class='form-control', placeholder="The details about your homework...",required, autofocus) #{issue.content}
+                                                    div.form-group
+                                                        label Relevent File(s)
+                                                        input(type='file', name='file')
+                                                        p.help-block If you have more than one file to upload, please compress them into zip/rar.
+                                                .modal-footer
+                                                    .text-center
+                                                        button.btn.btn-success.btn-margin(type="submit") Modify
+                                                        button.btn.btn-danger.btn-margin(data-dismiss="modal") Cancel
+
+                                div.modal.fade(id='delete#{issue._id}', tabindex="-1", role="dialog", aria-labelledby="myModalLabel", aria-hidden="true")
+                                    .modal-dialog
+                                        .modal-content
+                                            .modal-header
+                                                h3.text-danger.text-center Delete Confirm!
+                                            .modal-body 
+                                                h4.text-center Are you sure to delete homework #{issue.title} ?
+                                            .modal-footer
+                                                form(action='/delete', method='POST')
+                                                    input.hide(name='id', value='#{issue._id}')
+                                                    button.btn.btn-danger Delete
+                                                    button.btn.btn-default(data-dismiss="modal") Cancel
                 a(href='/signout', class='text-center new-account') Sign Out
     
