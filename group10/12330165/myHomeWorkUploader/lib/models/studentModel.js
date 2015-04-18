@@ -7,7 +7,8 @@ var Schema = mongoose.Schema;
 
 var fileSchema = new Schema({
     title: String,
-    time: String
+    time: String,
+    path: String
 });
 
 var studentSchema = new Schema({
@@ -38,7 +39,9 @@ var teacher = new Student({
 
 Student.findOne({studentID: "teacher"}, function(err, data) {
     if (err) console.log(err);
-    else if (data) return;
+    else if (data) {
+        console.log("老师数据已存在");
+    }
     else {
         teacher.save(function(err) {
             if (err) console.log(err);

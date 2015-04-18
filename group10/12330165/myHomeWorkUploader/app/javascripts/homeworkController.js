@@ -2,11 +2,14 @@
  * Created by Kira on 4/11/15.
  */
 
-$(document).ready(function() {
+var homeworkControllers = angular.module('homeworkControllers', []);
+
+homeworkControllers.controller('homeworkController', ['$location', '$scope', function($location, $scope) {
     var homeworkController = {
         getAllHomeWork: function() {
             $.get('/main/allhomeworkInfo', function(data) {
                 data = JSON.parse(data);
+                console.log(data);
                 if (data.type != 0) {
                     data = data.data;
                     for (var i = 0; i < data.length; i++) {
@@ -33,26 +36,26 @@ $(document).ready(function() {
                 data = JSON.parse(data);
                 alert(data.message);
                 if (data.type != 0) {
-                    window.location.replace('/main/students');
+                    $location.path('/main/students');
                 }
             });
         },
         checkIfUploaded: function(studentID) {
-            if (window.location.pathname == "/main/homework") {
-                var all = $('tbody').find('tr');
-                for (var i = 0; i < all.length; i++) {
-                    var j = i;
-                    $.post('/main/checkIfUploaded', {
-                        title: $($(all[i]).find('td')[0]).html()
-                    }, function(data) {
-                        data = JSON.parse(data);
-                        if (data.type) {
-                            $($(all[j]).find('td')[3]).html("已提交");
-                        } else {
-                            $($(all[j]).find('td')[3]).html("未提交");
-                        }
-                    });
-                }
+            var all = $('tbody').find('tr');
+            for (var i = 0; i < all.length; i++) {
+                var j = i;
+                console.log($($(all[i]).find('td')[0]).html());
+                $.post('/main/checkIfUploaded', {
+                    title: $($(all[i]).find('td')[0]).html()
+                }, function(data) {
+                    data = JSON.parse(data);
+                    console.log(data);
+                    if (data.type) {
+                        $($(all[j]).find('td')[3]).html("已提交");
+                    } else {
+                        $($(all[j]).find('td')[3]).html("未提交");
+                    }
+                });
             }
         }
     }
@@ -60,4 +63,7 @@ $(document).ready(function() {
     $('.submit-button3').click(function() {
         homeworkController.postNewHomeWork();
     });
-});
+    $scope.checkIfUploaded = function() {
+        homeworkController.checkIfUploaded();
+    }
+}]);
