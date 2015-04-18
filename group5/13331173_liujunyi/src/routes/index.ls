@@ -66,6 +66,7 @@ module.exports = (passport)->
             if error
               console.log 'error in finding id:', id
             else
+              console.log homew
               res.render 'assignment_details', user: req.user, assignment: assi, homeworks: homew
   
   router.post '/change/:_id', is-authenticated, (req, res) !->
@@ -115,6 +116,7 @@ module.exports = (passport)->
           new-homework = new Homework {
             title             : req.param 'title'
             assignmentId      : id
+            time              : Date! - 'GMT+0800 (中国标准时间)'
             details           : req.param 'details'
             author            : req.user.username
             score             : '/'
@@ -134,9 +136,41 @@ module.exports = (passport)->
       if error
         console.log 'error in finding id:', id
       else if req.user.identity is 'student'
-          Homework.find-one {assignmentId: id}, (error, homew)!-> 
+          Homework.find-one {assignmentId: id, author: req.user.username}, (error, homew)!-> 
             if error
               console.log 'error in finding id:', id
             else
               console.log homew
               res.render 'my_homework', user: req.user, assignment: assi, homeworks: homew
+
+  router.get '/student_homework', is-authenticated, (req, res)!->
+    id = req.param 'id'
+    console.log 'fuck'+id
+    Assignment.find-by-id id, (error, assi)!->
+      if error
+        console.log 'error in finding id:', id
+      else if req.user.identity is 'teacher'
+          Homework.find-one {assignmentId: id}, (error, homew)!-> 
+            if error
+              console.log 'error in finding id:', id
+            else
+              console.log homew
+              res.render 'student_homework', user: req.user, assignment: assi, homeworks: homew
+
+  router.post '/student_homework', is-authenticated, (req, res)!->
+    id = req.param 'id'
+    console.log 'fuck'+id
+    Assignment.find-by-id id, (error, assi)!->
+      if error
+        console.log 'error in finding id:', id
+      else if req.user.identity is 'teacher'
+          Homework.find-one {assignmentId: id}, (error, homew)!-> 
+            if error
+              console.log 'error in finding id:', id
+            else
+              Homework.update {assignmentId: id}, {$set: {score: req.param 'score'}}, {safe:true}, (error, bars) !->
+                console.log homew
+                res.render 'student_homework', user: req.user, assignment: assi, homeworks: homew
+
+
+  

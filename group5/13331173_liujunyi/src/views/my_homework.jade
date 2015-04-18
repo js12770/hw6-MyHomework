@@ -4,10 +4,15 @@ block content
     div.container
         div.control-group
             div.controls
-                h4.create-mar Title:#{homeworks.title}
-        div.controls
-            h4.create-mar details:
-            p.create-mar #{homeworks.details}
-        div.controls
-            h4.create-mar score:#{homeworks.score}
+                h4.create-mar
+                    strong Title:#{homeworks.title}
+        div.control-group            
+            div.controls
+                h4.create-mar 
+                    strong details:
+                p.create-mar #{homeworks.details}
+        div.control-group
+            div.controls
+                h4.create-mar 
+                    strong score:#{homeworks.score}
         a.btn.btn-primary(href='/student_upload?id=#{assignment._id}', class='text-center new-account') Back to upload
