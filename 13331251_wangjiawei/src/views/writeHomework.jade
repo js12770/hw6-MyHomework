@@ -1,0 +1,10 @@
+extends layout
+
+block content
+	p #{user.username}, this is the homework of Course #{courseName}
+	div.container
+		p You can write your homework here:
+		form#content(action='./#{content._id}', method="POST")
+			textarea(name='content', form="content", type="text")
+				| #{content.content}
+			button.btn(type="submit") submit
