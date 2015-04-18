@@ -9,6 +9,7 @@ block content
 				else if user.identity == 'student'
 					div.label.label-success Student
 			div.user-info
+				#user
 				p.navbar-text Welcome #{user.firstName}.#{user.lastName}!
 			div.sign-out
 				if user.identity == 'teacher'
@@ -18,22 +19,19 @@ block content
 				a.btn.navbar-btn.signout-btn.pull-right(href='/signout') Signout
 	div.produce-homework
 		div.col-sm-6.col-md-4.col-md-offset-4
-			h1.text-center.login-title Answer Homework
+			h1.text-center.login-title Grade Homework
 			div.well.well-sm
 				h4.question-title Title: #{question.title}
 		div.col-sm-6.col-md-4.col-md-offset-2
-			textarea.form-control(rows='20' disabled) #{question.question}
+			textarea.form-control(rows='20' disabled style='display:inline') #{question.question}
 		div.col-sm-6.col-md-4
-			form(action='/hw-answer' method='POST')
-				input(name='answer-question-id' type='hidden' value='#{question._id}')
-				div.produce-homework
-					if announcement.length == 0
-						textarea.form-control(name='answer-question-content' rows='20' placeholder='Put answer here...' required autofocus)
-					else
-						textarea.form-control(name='answer-question-content' rows='20' placeholder='Put answer here...' required autofocus) #{announcement[0].answer}
-				if date < question.ddl
-					button.btn.btn-lg.btn-primary.btn-block(type='submit') Submit
+			textarea.form-control(rows='20' disabled style='display:inline') #{announcement.answer}
+		div.col-sm-6.col-md-4.col-md-offset-4
+			form(action='/hw-grade/#{announcement._id}/#{announcement.hw_id}' method='POST')
+				div.text-center
+					p(style='display:inline') Grade 
+					input.form-control(name='checked-announcement-grade' type='text' style='display:inline' required)
+				if date >= question.ddl
+					button.btn.btn-lg.btn-primary.center-block(type='submit') Submit
 				else
-					button.btn.btn-lg.btn-primary.btn-block.disabled(type='submit') Submit
-
-					
+					button.btn.btn-lg.btn-primary.center-block.disabled(type='submit') Submit	
