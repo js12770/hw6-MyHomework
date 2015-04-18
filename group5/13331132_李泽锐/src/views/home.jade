@@ -12,6 +12,53 @@ block content
 								li Email    ---> #{user.email}
 								li First Name ---> #{user.firstName} 
 								li Last Name ---> #{user.lastName}
-								li User Type ---> #{user.userType}
 						a(href='/signout', class='text-center new-account') Sign Out
+				if user.userType == 'student'
+					div.stassignments
+						h2 Assignments
+						ol.assignments-details
+							if (ass.length != 0)
+								each as in ass
+									li
+										form(action = '/submit' method = 'POST')
+											div.ass
+												|Deadline: #{as.date}
+												br
+												|Assignment 
+												br
+												pre #{as.viewContent}
+												input(class = 'hidden' name = 'asct' value = '#{as.dbContent}')
+												input(class = 'hidden' name = 'studentName' value = '#{user.firstName}')
+												if (as.time < as.deadline)
+													button(class='btn btn-lg btn-primary btn-block',type='submit',name='submit') submit
+												else
+													button(class='btn btn-lg btn-primary btn-block',type='submit',name='submit',disabled) submit
+					form(action = '/myHomework' method = 'GET')
+						input(class = 'hidden' name = 'studentName' value = '#{user.firstName}')
+						button(class='btn btn-primary myHomework' type = 'submit') My Homework
+				else
+					div.assignments
+						h2 Assignments
+						ol.assignments-details
+							if (ass.length != 0)
+								each as in ass
+									li 
+										form(action = '/update' method = 'POST')
+											div.ass
+												|Deadline: #{as.date}
+												br
+												|Assignment
+												br
+												pre #{as.viewContent}
+												input(class = 'hidden' name = 'asct' value = '#{as.dbContent}')
+												if (as.time < as.deadline)
+													button(class='btn btn-lg btn-primary btn-block', type='submit') update
+												else
+													button(class='btn btn-lg btn-primary btn-block', type='submit',disabled) update
+					div.all-homeworks
+						h2 All students' homework
+						each st in stu
+							a(class = 'btn btn-primary' href= '/answer?studentName='+'#{st.firstName}') #{st.firstName}
+							br
 
+					a(class = 'publish', href = '/publish') Publish Homework
