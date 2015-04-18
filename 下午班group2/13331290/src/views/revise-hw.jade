@@ -16,6 +16,6 @@ block sub-container
                         tr
                             td #{one.name}
                             td #{one.id}
-                            td: a(href='/download/#{one.path}') #{one.path}
+                            td: a(href='/download/#{one.path}/#{homework.title}') #{one.path}
                             td: input.form-control(type='text' name='scores' value='#{one.score}')
                     button.btn.btn-default(type='submit') 提交
