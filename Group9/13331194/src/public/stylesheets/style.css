@@ -85,6 +85,7 @@ h1.error-message{
 }
 ul.user-details{
     list-style: none;
+<<<<<<< HEAD
 }
 
 /* My Addtional css*/
@@ -118,4 +119,6 @@ h1 {
 #add {
     position: relative;
     top: 20px;
+=======
+>>>>>>> 8e87d8047ea9b60158d5b4011b64802f4e8a21e3
 }

@@ -1,0 +1,17 @@
+extends layout
+
+block content
+	h1.text-center.login-title Welcome Teacher #{user.firstName} !
+	h1.text-center.login-title Publish New Homework Request:
+	form(class='form-signin', action='/publish', method='post')
+		input(type='text', name='title', class='form-control', placeholder='Homework Title', required)
+		textarea(rows = "10", cols = "40", name = "content", required)
+		input(type='text', name='startTime', class='form-control nomargin', placeholder='startTime->>yyyy-mm-dd hh:min:sec', required)
+		input(type='text', name='endTime', class='form-control nomargin', placeholder='endTime->>yyyy-mm-dd hh:min:sec', required)
+		button(class='btn btn-lg btn-primary btn-block', type='submit') Publish
+
+	a(href='/home', class='text-center new-account') Back
+
+	#message
+		if message
+			h1.text-center.error-message #{message}

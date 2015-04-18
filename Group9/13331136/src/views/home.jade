@@ -1,0 +1,29 @@
+extends layout
+
+block content
+	div.container
+		div.row
+			div.col-sm-10.col-md-10.col-md-offset-1
+				#user
+					h1.text-center.login-title Welcome #{user.firstName} #{user.lastName} (#{user.usertype}).
+						div.signup-wall.col-sm-10.col-md-10.col-md-offset-1
+							if user.usertype == "teachers"
+								form(class='add-content', action='/home', method='POST')
+									input(class='add-requirement-ddl', type='text', name='title', placeholder='Title', required)
+									textarea(class='add-requirement-text', name='text', rows='4' cols='25', placeholder='Add a new requirement', required)
+									input(class='add-requirement-ddl', type='text', name='deadline', placeholder='Deadline', required)
+									button(class='add-requirement-btn', type='submit') Add
+								
+							span.requirement_title Requirement
+							//- div.requirement_block MyHomework是一个基于ExpressJS的Web 2.0应用，老师可以发布作业，学生可以提交作业.
+							//- 	//- span.close_btn X
+							each rq in requirement
+								div.requirement_block
+									p 
+										strong #{rq.title}
+									span #{rq.text+" "}
+									if user.usertype == "students"
+										a(href='/submit/#{rq.title}', class='') [Submit]
+									span.ddl-bar Deadline: #{rq.deadline}
+
+							a(href='/signout', class='text-center new-account') Sign Out

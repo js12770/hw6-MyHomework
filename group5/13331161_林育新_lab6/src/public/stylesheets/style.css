@@ -86,6 +86,7 @@ h1.error-message{
 ul.user-details{
     list-style: none;
 }
+<<<<<<< HEAD:group5/13331161_林育新_lab6/src/public/stylesheets/style.css
 .radio {
     position: relative;
     left:32%;
@@ -121,6 +122,36 @@ ul.user-details{
 .all-homeworks a {
     width: 150px;
     margin-top: 8%;
+=======
+
+
+.signup-wall input[type=radio] {
+    position: static;
+    margin: 18px 10px 18px 10px;
+}
+
+.requirement_block {
+    position: relative;
+    background-color: #FFFFFF;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 12pt;
+    /*line-height: 25px;*/
+    text-align:left;
+    display: block;
+    width: 50%;
+    margin: 30px auto;
+    padding: 15px 20px;
+    border-radius: 2px;
+    box-shadow: 1px 1px 5px;
+    word-wrap: break-word; 
+    word-break: normal;
+}
+
+.requirement_title {
+    display: block;
+    margin-top: 30px;
+    color: #727272;
+>>>>>>> 8e87d8047ea9b60158d5b4011b64802f4e8a21e3:Group9/13331136/src/public/stylesheets/style.css
 }
 
 h2 {
@@ -134,6 +165,7 @@ h2 {
     font-weight: bold;
     font-size: 1.5em;
 }
+<<<<<<< HEAD:group5/13331161_林育新_lab6/src/public/stylesheets/style.css
 .home {
     position: relative;
     left: 48%;
@@ -158,4 +190,40 @@ h2 {
 }
 .homework button {
     margin-top: 5%;
+=======
+
+.add-requirement-text {
+    width: 50%;
+    margin-top: 0px;
+    font-family: Helvetica, sans-serif;
+    font-size: 11pt;
+}
+
+.add-requirement-ddl {
+    display: block;
+    margin: 5px auto 10px auto;
+    width: 50%;
+    font-family: Helvetica, sans-serif;
+    font-size: 11pt;
+}
+
+.add-requirement-btn {
+    display: block;
+    margin: 3px auto;
+}
+
+.ddl-bar {
+    display: block;
+    width: auto;
+    background-color: #879DFE;
+    font-size: 10pt;
+    color: #FFFFFF;
+    line-height: 20px;
+    position: absolute;
+    z-index: 99;
+    left: 0px;
+    top: -10px;
+    border-radius: 3px;
+    padding: 0 5px 0 5px;
+>>>>>>> 8e87d8047ea9b60158d5b4011b64802f4e8a21e3:Group9/13331136/src/public/stylesheets/style.css
 }

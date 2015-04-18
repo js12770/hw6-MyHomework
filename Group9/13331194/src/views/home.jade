@@ -5,6 +5,7 @@ block content
 		div.row
 			div.col-sm-6.col-md-4.col-md-offset-4
 				#user
+<<<<<<< HEAD
 					h1.text-center.login-title Welcome #{user.firstName}. Check your details below:
 						div.signup-wall
 							ul.user-details
@@ -24,3 +25,25 @@ block content
 									button(class='btn btn-lg btn-primary btn-block half-width float-left') Add
 									button(class='btn btn-lg btn-primary btn-block half-width float-right') Cancel
 								span.clearfix
+=======
+					if user.identity == "T"
+						h1.text-center.login-title Teacher #{user.firstName} , Welcome !
+					else
+						h1.text-center.login-title Student #{user.firstName} , Welcome !
+					//- h1.text-center.login-title Check your details below:
+					div.signup-wall
+						ul.user-details
+							li Username&nbsp;&nbsp;---> #{user.username}
+							li Email&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;---> #{user.email}
+							li First Name&nbsp;---> #{user.firstName} 
+							li Last Name&nbsp;---> #{user.lastName}
+							if user.identity == "T"
+								li Identity&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;---> Teacher
+							else
+								li Identity&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;---> Student
+					a(href='/request', class='text-center new-account') Homework Request
+					a(href='/homework', class='text-center new-account') Homework Submissions
+					if user.identity == "T"
+						a(href='/publish', class='text-center new-account') Publish Homework
+					a(href='/signout', class='text-center new-account') Sign Out
+>>>>>>> 8e87d8047ea9b60158d5b4011b64802f4e8a21e3

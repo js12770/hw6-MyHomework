@@ -1,0 +1,25 @@
+extends layout
+
+block content
+  .myhw-wrapper
+    include ./includes/breadcrumb.jade
+    .ui.cards
+      if asmlist.length == 0
+        .myhw-wrapper-100
+          .ui.icon.header
+            i.connectdevelop.icon
+            .content
+              | 并没有东西
+              .sub.header
+                | 你还没有发布作业，
+                a(href='/assign') 现在去发布新作业
+      else
+        each val in asmlist
+          a.card.myhw-card(href='/assignments/#{val._id}')
+            .content
+              .header #{val.title}
+              .meta
+                i.wait.icon
+                | #{val.datestring}
+              .description
+                | #{val.briefdescription}

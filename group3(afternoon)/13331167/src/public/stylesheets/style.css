@@ -86,16 +86,100 @@ h1.error-message{
 ul.user-details{
     list-style: none;
 }
+<<<<<<< HEAD:group3(afternoon)/13331167/src/public/stylesheets/style.css
 .role-radio {
     margin: 10px;
+=======
+div.homework-box {
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    padding: 5px 10px 4px 5px;
+    margin-top: 30px;
+    margin-bottom: 30px;
+    text-align: left;
+    font-size: 14px;
+>>>>>>> 8e87d8047ea9b60158d5b4011b64802f4e8a21e3:Group9/12330340/src/public/stylesheets/style.css
 }
 
 .back-button {
     margin-left: 10px;
 }
 
+<<<<<<< HEAD:group3(afternoon)/13331167/src/public/stylesheets/style.css
 .warning {
     color: red;
     font-weight: bold;
     font-family: '微软雅黑', sans-serif;
+=======
+#homework-content {
+    margin-top: 10px;
+}
+
+.edit {
+    height: 22px;
+    margin-top: 10px;
+    padding-top: 0px!important;
+    padding-bottom: 0px!important;
+    display: none!important;
+}
+
+.show-submit {
+    height: 22px;
+    margin-top: 10px;
+    padding-top: 0px!important;
+    padding-bottom: 0px!important;
+    display: none!important;
+}
+
+.submit-box-stu {
+    display: none;
+}
+
+.alert-format {
+    color: red;
+    font-size: 10px;
+    float: left;
+}
+
+.alert-req {
+    color: red;
+    font-size: 10px;
+    float: left;
+}
+
+.answer {
+    display: inherit;
+}
+
+.show-change {
+    height: 22px;
+    margin-top: 10px;
+    padding-top: 0px!important;
+    padding-bottom: 0px!important;
+    display: none!important;
+}
+
+.student-answers {
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    padding: 5px 10px 4px 5px;
+    margin: 10px 10px 10px 5px;
+}
+
+.student-name {
+    font-weight: bold;
+    margin-bottom: 3px;
+    color: black;
+}
+
+.grade {
+    display: none!important;
+}
+
+.grading {
+    height: 22px;
+    margin-top: 10px;
+    padding-top: 0px!important;
+    padding-bottom: 0px!important;
+>>>>>>> 8e87d8047ea9b60158d5b4011b64802f4e8a21e3:Group9/12330340/src/public/stylesheets/style.css
 }

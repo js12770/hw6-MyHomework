@@ -1,0 +1,21 @@
+extends layout
+
+block content
+	h1.text-center.login-title All Homework Requests:
+		each item in request
+			div.signup-wall
+				ul.user-details
+					li Title: #{item.title}
+					li Teacher : #{item.teacher}
+					li Content : 
+						span #{item.content}
+					li StartTime : #{item.startTime}
+					li EndTime&nbsp;&nbsp;: #{item.endTime}
+					if user.identity == "S"
+						if item.startTime <= currentTime && currentTime < item.endTime
+							a(href='/submit/#{item.title}', class='text-center new-account') Submit
+					else
+						if user.username == item.teacher
+							a(href='/change/#{item.title}', class='text-center new-account') Change
+				
+	a(href='/home', class='text-center new-account') Back
