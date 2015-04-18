@@ -1,0 +1,42 @@
+extends teacher
+
+block sub-container
+  link(rel='stylesheet', href='/stylesheets/bootstrap-datetimepicker.min.css')
+  h1.page-header 新作业
+  form.form-horizontal(action='/publish' method='post')
+    .form-group
+      label.col-sm-2.control-label 作业标题
+      .col-sm-10.col-md-5
+        input.form-control(type='text' name='title' required)
+
+    .form-group
+      label.col-sm-2.control-label 截止时间
+      .col-sm-10.col-md-5
+        .input-group.date.form_datetime(data-date-format='yyyy-mm-dd hh:ii')
+          input.form-control(size='16', type='text', value='', readonly='' name='deadline' placeholder="2015-04-01 12:00")
+          span.input-group-addon
+            span.glyphicon.glyphicon-remove
+          span.input-group-addon
+            span.glyphicon.glyphicon-th
+
+    .form-group
+      label.col-sm-2.control-label 具体要求
+      .col-sm-10
+        textarea.form-control(rows='10' name='requirement' required)
+
+    .form-group
+      .col-sm-offset-2.col-sm-10
+        button.btn.btn-default(type='submit') 发布
+
+  script(type='text/javascript', src='/javascripts/bootstrap-datetimepicker.min.js')
+  script(type='text/javascript', src='/javascripts/bootstrap-datetimepicker.zh-CN.js')
+  script(type='text/javascript').
+    $('.form_datetime').datetimepicker({
+      language:  'zh-CN',
+      weekStart: 1,
+      todayBtn:  1,
+      autoclose: 1,
+      todayHighlight: 1,
+      startView: 2,
+      forceParse: 0
+    });
