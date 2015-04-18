@@ -1,0 +1,10 @@
+extends  home
+
+block home-block
+	h1 Homework
+	for homework in homeworks
+		li.list-group-item
+			span.deadline_ deadline: #{homework.deadline}
+			a(href="/homework?homework_t=#{homework.title}")
+				h2.list-group-item-heading 	#{homework.title}
+			p.list-group-item-text	#{homework.require}
