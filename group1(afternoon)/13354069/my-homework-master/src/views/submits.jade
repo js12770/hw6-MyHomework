@@ -1,0 +1,63 @@
+extends layout
+
+block content
+	div.container
+		ul.nav
+			li
+				a(href='/home') Homeworks
+			li.active
+				if user.identity == 'student'
+						a(href='/submits') Your Submits
+					else if user.identity == 'teacher'
+						a(href='/submits') All Submits
+			li
+				if user.identity == 'student'
+					a(href='/new') Submit new homework
+				else if user.identity == 'teacher'
+					a(href='/new') Publish new homework
+			li 
+				a(href='/signout') Signout
+		hr
+
+		if submits.length == 0
+			p &nbsp;&nbsp;none.
+		else
+			if user.identity == 'teacher'
+				each item in submits
+					div.row
+						p <strong>Homework:#{item.hw} &nbsp; Student:#{item.stu}</strong>
+						div.hw #{item.content}
+						if item.time < item.ddl
+							p Latest submit: #{item.time} &nbsp; DDL: #{item.ddl}  
+						else
+							if item.score
+								p Score: #{item.score}
+							else
+								form(action='/score/#{item.hw}/#{item.stu}', method='POST')
+									input.form-control(style='width:100px', type='number', name='submit-score', placeholder="Score",required)
+									br
+									button(class='btn btn-sm btn-primary', type='submit') OK
+									&nbsp;
+									button(class='btn btn-sm btn-secondary', type='button') Download
+									span.clearfix
+					br
+
+			else if user.identity == 'student'
+				for item in submits
+					if item.stu == user.username
+						div.row
+							if item.time < item.ddl 
+								p <strong>Homework:#{item.hw}</strong> &nbsp; DDL: #{item.ddl}
+							else 
+								p <strong>Homework:#{item.hw}</strong> &nbsp;
+							div.hw #{item.content}
+
+							if item.time < item.ddl 
+								form(action='/rewrite/#{item.hw}/#{item.stu}', method='GET')
+									button(class='btn btn-sm btn-primary', type='submit') Rewrite
+							else
+								if item.score
+									p Score: #{item.score}
+								else
+									p The teacher hasn't scored your homework.
+						br

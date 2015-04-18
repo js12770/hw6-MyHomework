@@ -16,11 +16,10 @@ block content
                     textarea(type="text" name="description" required)
             div.field
                 label 开始日期
-                //-console.log #{homework.start.getFullYear()}
-                input(type="date" name="start" value=homework == null ? "":"#{homework.startDate}" required)
+                input#datetimepicker(type='text', name='start', value=homework == null ? "":"#{homework.startDate}", data-date-format='yyyy-mm-dd hh:ii', required)
             div.field
                 label 截止日期
-                input(type="date" name="end" value=homework == null ? "":"#{homework.endDate}" required)
+                input#datetimepicker2(type='text', name='end', value=homework == null ? "":"#{homework.endDate}", data-date-format='yyyy-mm-dd hh:ii', required)
             if overtime
                 input(class="ui button green " type="submit", value="save")
             else if homework

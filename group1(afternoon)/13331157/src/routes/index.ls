@@ -4,16 +4,6 @@ require! {Homework: '../models/homework', Submit:'../models/submit'}
 router = express.Router! 
 is-authenticated = (req, res, next)-> if req.is-authenticated! then next! else res.redirect '/login'
 
-formate-date = (date)->
-  y = date.getFullYear!
-  m = date.getMonth!+1
-  d = date.getDate!
-  if m < 10
-    m = '0'+m
-  if d < 10
-    d = '0'+d
-  return y+'-'+m+'-'+d
-
 markdown = require 'markdown' .markdown
 
 module.exports = (passport)->
@@ -26,8 +16,6 @@ module.exports = (passport)->
         date = new Date
         for item in obj
           item.description = markdown.toHTML item.description
-          item.startDate = formate-date item.start
-          item.endDate = formate-date item.end
         res.render 'index', {
           user: req.user
           homeworks: obj
@@ -51,7 +39,7 @@ module.exports = (passport)->
           item.description = markdown.toHTML item.description
         res.render 'home', {user: req.user,submits:obj,homeworks:null}
     else if req.user.type == 'teacher'
-      Homework.find {},(err, obj)->
+      Homework.find {author:req.user.username},(err, obj)->
         for item in obj
           item.description = markdown.toHTML item.description
         res.render 'home', {user: req.user,submits:null,homeworks:obj}
@@ -63,13 +51,14 @@ module.exports = (passport)->
   router.get '/post', is-authenticated, (req, res)!->
     if req.user.type == 'teacher'        # 只允许老师访问
       res.render 'post', {user: req.user, homework:null}
-    else
+    else                                 # 否则跳转到 '/'
       res.redirect '/'
 
   router.post '/post', is-authenticated, (req, res)!->
     if req.user.type == 'teacher'
       homework = new Homework(
         title       : req.param 'title'
+        author      : req.user.username
         description : req.param 'description'
         start       : req.param 'start'
         end         : req.param 'end'
@@ -94,8 +83,6 @@ module.exports = (passport)->
           overtime = false
         else
           overtime = true
-        obj.startDate = formate-date obj.start
-        obj.endDate = formate-date obj.end
         res.render 'post', {user:req.user, homework:obj, overtime:overtime}
     else
       res.redirect '/'
@@ -108,6 +95,7 @@ module.exports = (passport)->
           throw error
       homework = new Homework(
         title       : req.param 'title'
+        author      : req.user.username
         description : req.param 'description'
         start       : req.param 'start'
         end         : req.param 'end'

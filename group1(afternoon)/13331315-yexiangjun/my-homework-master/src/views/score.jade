@@ -1,0 +1,13 @@
+extends layout
+
+block content
+	div.container
+		div.row
+			div.col-sm-6.col-md-4.col-md-offset-4
+				h1.text-center.login-title Write Down Your Score and Commit Here
+					div.signup-wall
+						form(class='form-signin', action='/score/#{homework.student}/#{homework.title}', method='POST')
+							input(type='text', name = 'score_' class='form-control', placeholder='Score',required)
+							br
+							textarea(rows = "10", cols = "25", name = "commit",required)
+							button(class='btn btn-lg btn-primary btn-block', type='submit') Submit

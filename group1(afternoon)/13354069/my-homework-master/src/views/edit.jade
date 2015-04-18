@@ -1,0 +1,43 @@
+extends layout
+
+block content
+	div.container
+		ul.nav
+			li
+				a(href='/home') Homeworks
+			li
+				if user.identity == 'student'
+					a(href='/submits') Your Submits
+				else if user.identity == 'teacher'
+					a(href='/submits') All Submits
+			li
+				if user.identity == 'student'
+					a(href='/new') Submit new homework
+				else if user.identity == 'teacher'
+					a(href='/new') Publish new homework
+			li 
+				a(href='/signout') Signout
+		hr
+		
+		if user.identity == 'teacher'
+			form(action='/edit', method='POST')
+				#homework
+				input.form-control(type='text', name='title', value='#{homework.name}', readonly="readonly")
+				br
+				textarea.form-control(rows='13', name='edit-description') #{homework.description}
+				br
+				span Deadline: 
+				input.form-control(type='date', name='edit-ddl', value='#{homework.ddl}')
+				br
+				button(class='btn btn-lg btn-primary btn-block', type='submit') OK
+				span.clearfix
+
+		else if user.identity == 'student'
+			form(action='/edit', method='POST')
+				#submit
+				input.form-control(type='text', name='title', value='#{submit.hw}', readonly="readonly")
+				br
+				textarea.form-control(rows='13', name='edit-content') #{submit.content}
+				br
+				button(class='btn btn-lg btn-primary btn-block', type='submit') OK
+				span.clearfix

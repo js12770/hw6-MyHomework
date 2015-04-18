@@ -10,9 +10,11 @@ block content
                         p.text-left Title: #{collection.title}
                         p.text-left Requirements: #{collection.requirements}
                         p.text-left Deadline: #{collection.deadline}
-                        p.text-left teacher_id: #{collection.teacher_id}
-                        p.text-left Answer this question:
-                        form(class='form-signin', action='/answer/#{collection._id}/#{collection.title}', method='POST')
-                            textarea(row='10',col='20' name='content' class='form-control', placeholder='Answer',required, autofocus)
-                            button(class='btn btn-lg btn-primary btn-block', type='submit') Submit
+                        if isDeadlinePassed == true
+                            p.text-left.text-danger.bg-danger The deadline has passed.
+                        else
+                            p.text-left Answer this question:
+                            form(class='form-signin', action='/answer/#{collection._id}/#{collection.title}', method='POST')
+                                textarea(row='10',col='20' name='content' class='form-control', placeholder='Answer',required, autofocus)
+                                button(class='btn btn-lg btn-primary btn-block', type='submit') Submit
                     a(href='/home', class='text-center new-account') Home

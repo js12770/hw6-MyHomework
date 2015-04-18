@@ -6,5 +6,4 @@ module.exports = mongoose.model 'Homework', {
   title:String,
   deadline:Date,
   demand:String,
-  score:Number,
 }
