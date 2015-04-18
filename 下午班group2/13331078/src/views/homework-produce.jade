@@ -3,18 +3,28 @@ extends layout
 block content
 	div.nav.navbar.navbar-inverse.navbar-fixed-top
 		div.container
+			div.navbar-brand
+				if user.identity == 'teacher'
+					div.label.label-danger Teacher
+				else if user.identity == 'student'
+					div.label.label-success Student
 			div.user-info
-				#user
 				p.navbar-text Welcome #{user.firstName}.#{user.lastName}!
 			div.sign-out
-				a.btn.navbar-btn.home-btn(href='/home') Home
-				a.btn.navbar-btn.signout-btn(href='/signout') Signout
+				if user.identity == 'teacher'
+					a.btn.navbar-btn.publish-btn(href='/hw-produce') Publish
+				a.btn.navbar-btn.publish-btn(href='/hw-view') View
+				a.btn.navbar-btn.publish-btn(href='/home') Home
+				a.btn.navbar-btn.signout-btn.pull-right(href='/signout') Signout
 	div.produce-homework
 		div.col-sm-6.col-md-4.col-md-offset-4
 			h1.text-center.login-title Produce Homework
 			form(action='/hw-produce' method='POST')
-				div.input-group
-					input.form-control(name='produced-question-content' type='text' placeholder='Write new homework...')
-					input.form-control(name='produced-question-date' type='date')
-					button.btn.btn-lg.btn-primary.btn-block(type='submit') Publish
+				div.produce-homework
+					input.form-control(name='produced-question-title' type='text' placeholder='Title' required autofocus)
+				div.produce-homework
+					textarea.form-control(name='produced-question-content' rows='20' placeholder='Write new homework...' required)
+				div.produce-homework
+					input.form-control(name='produced-question-date' type='datetime-local' required)
+				button.btn.btn-primary.btn-block(type='submit') Publish
 					
