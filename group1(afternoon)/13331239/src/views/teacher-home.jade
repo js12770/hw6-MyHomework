@@ -1,0 +1,22 @@
+extends teacher
+
+block sub-container
+    h1.page-header 所有作业
+    .table-responsive
+        table.table.table-striped.table-bordered
+            thead
+                tr
+                    th 标题
+                    th 提交人数
+                    th 截止时间
+                    th 操作
+            tbody
+                each homework in homeworks
+                    tr
+                        td #{homework.title}
+                        td #{homework.students.length}
+                        td.before-deadline #{homework.deadline}
+                        td
+                            a.btn.btn-success.btn-sm.edit(href='/edit/#{homework._id}') 编辑
+                            a.btn.btn-danger.btn-sm.edit(href='/delete/#{homework._id}') 删除
+                            a.btn.btn-primary.btn-sm.hidden(href='/r/#{homework._id}') 批改

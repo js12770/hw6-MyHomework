@@ -1,0 +1,28 @@
+extends student
+
+block sub-container
+    h1.page-header 所有作业
+    .table-responsive
+        table.table.table-striped.table-bordered
+            thead
+                tr
+                    th 老师
+                    th 标题
+                    th 截止时间
+                    th 分数
+                    th 操作
+            tbody
+                each homework in homeworks
+                    tr
+                        td #{homework.teacherName}
+                        td #{homework.title}
+                        td.before-deadline #{homework.deadline}
+                        - found = false
+                        each one in homework.students
+                            if one.name == user.username
+                                td #{one.score}
+                                - found = true
+                        if !found
+                            td
+                        td
+                            a.btn.btn-primary.btn-sm.upload-hw(href='/p/#{homework._id}') 查看详情
