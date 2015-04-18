@@ -32,3 +32,17 @@
         - 无权限一律redirect '/home'
     - 后端接口
         一律bad request(400)
+- 数据库设计
+    - User
+        - username
+        - password
+        - role
+    - Homework
+        - title
+        - requirement
+        - pubdate
+        - deadline
+        - submits[]
+            - username
+            - date
+            - score
