@@ -6,5 +6,6 @@ module.exports =  mongoose.model 'Submission', {
     submittime: String,
     score: String,
     title: String,
-    content: String
+    content: String,
+    filename: String
 }

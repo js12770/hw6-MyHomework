@@ -1,0 +1,16 @@
+extends layout
+
+block content
+	div.container
+		div.row
+			div.col-sm-6.col-md-4.col-md-offset-4
+				if prehandin != null
+					h1.text-center.login-title Welcome #{user.firstName}. You have handed in this homework before:
+					div.signup-wall
+						ul.user-details
+							li  #{prehandin.answer}
+				h1.text-center.login-title  Hand in your homework here:
+				form(class='form-signin', action='/handin/#{homework.hwname}', method='POST')
+					textarea(rows = "10", cols = "40", name = "answer",required)
+					button(class='btn btn-lg btn-primary btn-block', type='submit') Submit
+	a(href='/home', class='text-center new-account') Homepage

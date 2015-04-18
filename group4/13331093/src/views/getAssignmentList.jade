@@ -20,7 +20,8 @@ mixin allass(id,title,author,status,aid,_id,deadline)
         tr
           +idTitleAuthor(id,title,author,aid)
           td #{status}
-          td 尚未到达截止日期
+          td
+            a(href='myassignment/#{_id}' class="btn btn-info") 查看
       
     else
       tr.success

@@ -2,9 +2,18 @@ require! {Issue:'../models/issue'}
 require! {Submission:'../models/submission'}
 require! {User:'../models/user'}
 require! moment
+require! fs
 
 module.exports = (req, res) !->
-    <- Submission.remove({title: req.param 'title', username: req.user.lastName + req.user.firstName})
+    filename = 'None'
+    if req.files.file
+      upload-file = req.files.file
+      temp-path = upload-file.path
+      new-path = "uploads/submit/#{upload-file.originalname}"
+      filename := upload-file.originalname
+      (error) <- fs.rename temp-path, new-path
+      console.log error if error
+    <- Submission.remove {title: req.param('title'), username: (req.user.lastName + req.user.firstName)}
     new-submit = new Submission {
       id        : req.param 'id'
       username  : req.user.lastName + req.user.firstName
@@ -12,12 +21,13 @@ module.exports = (req, res) !->
       score     : 'None'
       title     : req.param 'title'
       content   : req.param 'content'
+      filename  : filename
     }
-    new-submit.save (error)->
-      if error
-        console.log "Error in saving submit: ", error
-        throw error
-      else
-        console.log "submit save success"
-    #req.flash 'message', 'Issue successfully!'
-    res.redirect '/home'
+    (error) <- new-submit.save!
+    if error
+      console.log "Error in saving submit: ", error
+      throw error
+    else
+      console.log "submit save success"
+      req.flash 'message', 'Submit homework successfully!'
+      res.redirect '/home'

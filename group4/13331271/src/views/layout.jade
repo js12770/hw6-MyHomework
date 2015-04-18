@@ -13,4 +13,6 @@ html
     script(type="application/javascript", src="/javascript/bootstrap.min.js")
     script(type="application/javascript", src="/javascript/bootstrap-datetimepicker.min.js")
     script(type="application/javascript", src="http://localhost:35729/livereload.js")
-    script $('#datetimepicker').datetimepicker({autoclose: true, todayBtn: true});
+    script 
+        |$('.datetimepicker').datetimepicker({autoclose: true, todayBtn: true});
+        |$('[data-toggle="tooltip"]').tooltip();

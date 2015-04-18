@@ -8,6 +8,7 @@ block content
 					div.signup-wall
 						ul.user-details
 							li Homework Title  :  #{item.title}
+							li DeadLine  :  #{item.ddl}
 							li By  :  #{item.student}
 							if item.grade != ""
 								li Grade  :  #{item.grade}
@@ -17,7 +18,7 @@ block content
 						a(href='/update/#{item.title}')
 							button(class = "submit") Update
 					if user.status == 'T'
-						a(href='/grade/#{item.title}')
+						a(href='/grade/#{item.code}')
 							button(class = "submit") Grade
 	a(href='/home', class='text-center new-account') Back
 					

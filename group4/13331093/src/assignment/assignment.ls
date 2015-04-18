@@ -6,7 +6,7 @@ require! './editAssignment'
 require! './getMyAssignment'
 require! './getAssignmentList'
 require! './rateAssignment'
-
+require! './getMyAssignmentJson'
 
 # 获取发布的作业详情/发布的作业详细页/读出作业详情传递给修改作业页面
 module.exports.get = getAssignment
@@ -24,3 +24,5 @@ module.exports.myAssignment = getMyAssignment
 module.exports.getAssignmentList = getAssignmentList
 # 老师给作业评分
 module.exports.rateAssignment = rateAssignment
+# 获取作业详情的JSON格式
+module.exports.getMyAssignmentJson = getMyAssignmentJson

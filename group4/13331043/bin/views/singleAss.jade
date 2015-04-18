@@ -1,0 +1,84 @@
+extends layout
+
+block content
+    a(href='/signout', class='text-center new-account') 登出
+    a(href='/assignments', class='text-center new-account') 所有作业
+    div.container
+        div.row
+            div.col-md-2
+            div.col-md-8
+                h2.text-center #{assignment.title}
+
+                h3.text-center #{assignment.description}
+                h3.text-center 截止日期：#{new Date(parseInt(assignment.deadline))}
+
+                if user.identity == "1"
+                    if outOfDate
+                        p 少年，你来晚一步，已经无法再提交作业喽！
+                    else
+                        p 快，抓紧时间，还可以提交！
+                        form(action='/post', method='post')
+                            textarea.form-control(name='hw', rows="10", placeholder="你的作业写在这里")
+                            input(type='hidden', name='assignment_id', value='#{assignment._id}')
+                            input(type='hidden', name='assignment_title', value='#{assignment.title}')
+                            button(class='btn btn-lg btn-primary btn-block', type='submit') 提交作业
+
+                if user.identity == "0"
+                    if user._id == assignment.teacherId
+                        if outOfDate
+                            p 截止日期已到，可以批改作业啦！
+                        else
+                            p 还没到截止日期~
+                        form(action='/modify', method='post')
+                            if !outOfDate
+                                input(type='text', name='change_description', class='form-control', placeholder='更改作业要求', required)
+                            input(type='datetime-local', name='deadline', class='form-control', placeholder='截止日期')
+                            input(type='hidden', name='assignment_id', value='#{assignment._id}')
+                            button(class='btn btn-primary', type='submit') 提交
+                            if !outOfDate
+                                p 点击提交修改作业要求与截止日期
+                            else
+                                p 点击提交修改截止日期
+
+                    else
+                        if outOfDate
+                            p 截止日期已到。
+                        else
+                            p 截止日期未到。
+
+                    br
+                    if homeworks.length == 0
+                        p 还没有人提交噢
+                    else
+                        table.table
+                            caption 作业提交信息
+                            thead
+                                tr
+                                    th 学生姓名
+                                    th 提交时间
+                                    th 作业链接
+                                    th 分数
+                            tbody
+                                each homework in homeworks
+                                    tr
+                                        td
+                                            | #{homework.studentName}
+                                        td
+                                            | #{new Date(parseInt(homework.postTime))}
+                                        td
+                                            a(href="/assignments/#{assignment._id}/#{homework._id}") #{homework.text.slice(0, 20)}
+                                        td
+                                            if user._id == assignment.teacherId
+                                                if homework.grade >= 0
+                                                    | #{homework.grade}
+                                                else
+                                                    form(action='/grade', method='post')
+                                                        input(type="number", name="grade", placeholder="请评分")
+                                                        input(type='hidden', name='homework_id', value='#{homework._id}')
+                                                        button(class='btn btn-primary', type='submit') 评分
+                                            else
+                                                if homework.grade >= 0
+                                                    | #{homework.grade}
+                                                else
+                                                    | 尚未评分
+            div.col-md-2

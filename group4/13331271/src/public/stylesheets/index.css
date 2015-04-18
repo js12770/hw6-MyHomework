@@ -28,3 +28,21 @@ td {font-size: 16px;}
 
 .role-radio { width: 100%;}
 .role-radio label {width:  50%;}
+
+.margin-right {   
+    margin-right: 10px;
+}
+
+.no-float {
+    float: none !important;
+}
+
+.datetimepicker {
+    padding: 6px 12px;
+}
+
+pre {
+    background-color: #E7F1FA;
+    text-align: left;
+    font-size: 16px;
+}

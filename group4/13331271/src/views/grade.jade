@@ -7,11 +7,15 @@ block content
                 h2.text-primary.text-center Welcome back, #{user.lastName}#{user.firstName}! 
                 br
                 #message
-                    if message
-                        div.alert.alert-danger.text-center #{message}
+                    if message != ''
+                        div.alert.alert-success.alert-dismissible.text-center #{message}
+                            button(type="button", class="close", data-dismiss="alert", aria-label="Close")
+                                span(aria-hidden="true") &times;
                 div.menu-wall
+                    h3
+                        a(href="/home") < Go back to homepage
                     h3 
-                        span.label.label-primary #{title}
+                        span.label.label-primary Title: #{title}
                     h3.text-primary Here is the homework of all students, you can grade it.
                     br
 
@@ -25,7 +29,7 @@ block content
                             tr
                                 td #{submit.username}
                                 td 
-                                    a.btn.btn-primary(data-toggle="modal", data-target="##{submit._id}") Click to view
+                                    a.btn.btn-primary(data-toggle="modal", data-target="##{submit._id}") View and Grade
                                 td #{submit.submittime}
                                 td #{submit.score}
                                 div.modal.fade(id="#{submit._id}", tabindex="-1", role="dialog", aria-labelledby="myModalLabel", aria-hidden="true")
@@ -33,7 +37,11 @@ block content
                                         .modal-content
                                             .modal-header
                                                 h3.text-primary #{submit.username}'s homework of #{title}
-                                            .modal-body #{submit.content}
+                                            .modal-body
+                                                if submit.filename != 'None'
+                                                    div.alert.alert-success.alert-dismissible.text-center File: 
+                                                        a(target="_blank", href="/download/submit/#{submit.filename}") Click to download
+                                                pre #{submit.content}
                                             .modal-footer
                                                 form(action='/grade', method='POST')
                                                     input.form-control.score-input(required, name="score" type="text" placeholder="Grade here")

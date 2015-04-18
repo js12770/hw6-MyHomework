@@ -1,5 +1,5 @@
 {
-  "author": "王青",
+  "author": "吴嘉华",
   "name": "MyHomework",
   "version": "0.0.1",
   "homepage": "",
@@ -43,6 +43,7 @@
     "load-grunt-configs": "^0.4.0",
     "load-grunt-tasks": "^0.6.0",
     "moment": "^2.10.2",
+    "multer": "^0.1.8",
     "node-bourbon": "^1.2.3"
   }
 }

@@ -18,7 +18,7 @@ html
             else
                 a(href='/setassignment', class='navbar-brand') 发布作业
                 a(href='/correctassignment', class='navbar-brand') 批改作业
-            p.identity #{user.identity}:#{user.username}
+            p.identity #{user.identity.toUpperCase()}:#{user.username}
 
     include ./hint.jade
     block content

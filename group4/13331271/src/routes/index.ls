@@ -26,7 +26,7 @@ module.exports = (passport, homework)->
 
   router.get '/signout', (req, res)!-> 
     req.logout!
-    #req.redirect 'message', 'Logout successfully!'
+    req.flash 'message', 'Logout successfully!'
     res.redirect '/'
 
   # 批改页面
@@ -43,3 +43,20 @@ module.exports = (passport, homework)->
   # 提交作业功能
   router.post '/submit', is-authenticated, (req, res)!->
     homework.submit req, res
+
+  # 删除提交功能
+  router.post '/delete', is-authenticated, (req, res)!->
+    homework.del req, res
+
+  # 编辑提交功能
+  router.post '/edit', is-authenticated, (req, res)!->
+    homework.edit req, res
+
+  router.get '/download/submit/:filename', is-authenticated, (req, res)!->
+    (err)<- res.download "./uploads/submit/#{req.param 'filename'}"
+    return console.log err if err
+
+  router.get '/download/issue/:filename', is-authenticated, (req, res)!->
+    (err)<- res.download "./uploads/issue/#{req.param 'filename'}"
+    return console.log err if err
+
