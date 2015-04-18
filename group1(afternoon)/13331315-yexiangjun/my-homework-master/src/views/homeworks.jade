@@ -7,6 +7,13 @@ block content
 				ul.user-details
 					li Homework Title  :  #{item.title}
 					li Student :  #{item.student}
+					li Score : #{item.score}
+					li Commit: #{item.commit}
 				span #{item.content}
+				if user.identity == 'T'
+					br
+					a(href='/score/#{item.student}/#{item.title}')
+						button(class = "submit") score
+
 	a(href='/home', class='text-center new-account') Back
 					

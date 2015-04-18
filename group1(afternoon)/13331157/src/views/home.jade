@@ -16,24 +16,26 @@ block content
 		if user.type == 'teacher'
 			br
 			div.ui.yellow.message 
-				h1 All homeworks:
+				h1 All homeworks you post:
 			each item in homeworks
-				div.panel.panel-success
-					p.panel-heading <b>#{item.title}</b>
-					div.panel-body !{item.description}
-						p 开始时间: #{item.start}&nbsp;&nbsp;&nbsp;&nbsp;截止时间: #{item.end}
+				div.ui.piled.segment
+					h2 <b>#{item.title}</b>
+					div !{item.description}
+						p 开始时间: <code>#{item.startDate}</code>
+						p 截止时间: <code>#{item.endDate}</code>
 				br
 		if user.type == 'student'
 			br
 			div.ui.yellow.message 
 				h1 All your submits:
 			each item in submits
-				div.panel.panel-success
-					p.panel-heading <b>#{item.title}</b>
-					div.panel-body !{item.description}
+				div.ui.piled.segment
+					h2 <b>#{item.title}</b>
+					div !{item.description}
 						p 作者: #{item.author}
-						p 提交时间: #{item.time}
+						p 提交时间: <code>#{item.submitDate}</code>
 						if item.grade
-							p 分数: #{item.grade}
+							p 分数: <code>#{item.grade}</code>
 						else
 							p 分数: 未给出分数
+				br

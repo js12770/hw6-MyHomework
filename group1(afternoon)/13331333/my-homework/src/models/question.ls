@@ -5,5 +5,5 @@ module.exports = mongoose.model 'Question', {
     teacher_name: String,
     title: String,
     requirements: String,
-    deadline: String,
+    deadline: Date,
 }

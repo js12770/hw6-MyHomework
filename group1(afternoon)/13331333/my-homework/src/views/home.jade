@@ -12,8 +12,11 @@ block content
 								li Email    ---> #{user.email}
 								li First Name ---> #{user.firstName} 
 								li Last Name ---> #{user.lastName}
-						if user.identity == 'teacher'
-							a(href='/ask' class='text-center new-account') Ask
-						a(href='/question' class='text-center new-account') Questions
-						a(href='/score' class='text-center new-account') Score
+							if user.identity == 'teacher'
+								a(href='/ask' class='text-center new-account') Publish a question
+							a(href='/question' class='text-center new-account') Questions
+							if user.identity == 'teacher'
+								a(href='/score' class='text-center new-account') Give score
+							else
+								a(href='/score' class='text-center new-account') Update answer or check score
 						a(href='/signout', class='text-center new-account') Sign Out

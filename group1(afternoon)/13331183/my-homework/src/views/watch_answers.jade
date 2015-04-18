@@ -8,5 +8,14 @@ block content
             input(type="text", name="homework_title", value="#{answer.homework_title}" readonly)
             label Homework By
             input(type="text", name="master", value=" #{answer.master}" readonly)
-            textarea(rows="12", cols="113", name="answer_content", placeholder='Your Answer', class='form-control') #{answer.content}
+            label Score
+            input(type="text", name="score", value=" #{answer.score}" readonly)
+            textarea(rows="12", cols="113", name="answer_content", placeholder='Your Answer', class='form-control' readonly) #{answer.content}
+            if user.character == "teacher" && answer.canCheck == true
+              form(class='form-signin', action='/check', method='POST')
+                label Giving Score
+                input(type="text", name="check_score" placeholder='Answer score')
+                input(type="hidden", name="answer_id" value = "#{answer._id}")
+                hr
+                button(class='btn btn-lg btn-primary btn-block', type='submit') Upload Score
   a(href='/home', class='text-center new-account') Back
