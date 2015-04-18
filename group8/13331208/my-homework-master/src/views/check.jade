@@ -1,0 +1,56 @@
+extends demo
+
+block content
+    .container
+        .page-header
+            h1 Welcome #{user.username}
+            if user.role == 'teacher'
+                h3 Check all students' submissions for this homework
+            else if user.role == 'student'
+                h3 Check all your submissions
+        .row
+            .container
+                if user.role == 'teacher'
+                    table.table.table-striped
+                        thead
+                            th Student
+                            th UploadDate
+                            th Commitment
+                            th Grades
+                        tbody
+                            for homework in homeworks
+                                tr
+                                    td #{homework.student}
+                                    td #{moment(homework.uploadDate).format("YYYY-MM-DD HH:mm:ss")}
+                                    td #{homework.commitment}
+                                    td
+                                        if homework.grades
+                                            span #{homework.grades}
+                                        span.left-holder
+                                        a(href='/grade/#{homework.homeworkName}/#{homework.student}')
+                                            span.glyphicon.glyphicon-pencil(aria-hidden="true")
+                else if user.role == 'student'
+                    table.table.table-striped
+                        thead
+                            th Homework
+                            th Student
+                            th Complement
+                            th File
+                            th UploadDate
+                            th Grades
+                        tbody
+                            for homework in homeworks
+                                tr
+                                    td #{homework.homeworkName}
+                                    td #{homework.student}
+                                    td #{homework.commitment}
+                                    td: a(href='/download/#{homework.homeworkName}/#{homework.student}') 
+                                        span.glyphicon.glyphicon-download-alt
+                                    td #{moment(homework.uploadDate).format("YYYY-MM-DD HH:mm:ss")}
+                                    td
+                                        if homework.grades
+                                            span #{homework.grades}
+                #message
+                    if message
+                        h1.text-center.error-message #{message}
+

@@ -2,6 +2,8 @@ require! {express, http, path, 'cookie-parser', 'body-parser', mongoose, passpor
 logger = require 'morgan'
 flash = require 'connect-flash'
 favicon = require 'static-favicon'
+multer  = require 'multer'
+fs = require 'fs'
 mongoose.connect db.url
 
 app = express!
@@ -20,6 +22,10 @@ app.use expressSession {secret: 'mySecretKey'}
 app.use passport.initialize!
 app.use passport.session!
 app.use flash!
+app.use multer {
+  dest: (path.join __dirname, 'tempupload'),
+  rename: (fieldname, filename, req, res)-> req.body.name+'_'+req.user.username
+}
 
 initPassport = require './passport/init'
 initPassport passport
