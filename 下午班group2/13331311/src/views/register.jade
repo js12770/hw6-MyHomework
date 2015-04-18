@@ -12,7 +12,12 @@ block content
 							input(type='email', name='email', class='form-control', placeholder='Email',required)
 							input(type='text', name='firstName', class='form-control', placeholder='First Name',required)
 							input(type='text', name='lastName', class='form-control', placeholder='Last Name',required)
-							input(type='text', name='career', class='form-control', placeholder='Teacher Or Student',required)
+							div.myradio
+								input(type='radio', name='career', value='Teacher')
+								span.myspan Teacher
+								input(type='radio', name='career', value='Student', checked='checked')
+								span.myspan Student
+							// input(type='text', name='career', class='form-control', placeholder='Teacher Or Student',required)
 							button(class='btn btn-lg btn-primary btn-block', type='submit') Register
 							span.clearfix
 					#message

@@ -2,20 +2,15 @@
 
 based on http://code.tutsplus.com/tutorials/authenticating-nodejs-applications-with-passport--cms-21619
 
-
-
 Install & start development
-
   1. install MonogoDB
-  
-2. run mongod (on default port 27017)
+  2. run mongod (on default port 27017)
   3. npm install
-
   4. grunt watch
 
 
 Create an account: 
-  P.S. Please input Teacher or Student!
+  Default choose Student.
 
 Create an assignment:
   Teacher can create an assignment.
