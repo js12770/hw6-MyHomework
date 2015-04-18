@@ -5,5 +5,6 @@ module.exports = mongoose.model 'hw', {
 	master: String,
 	hwname: String,
 	hwrequest: String,
-	hwddl: Date
+	hwddl: Date,
+	overddl : String
 }

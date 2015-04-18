@@ -9,12 +9,18 @@ block content
 					li Master  :  #{item.master}
 					li DeadLine  :  #{item.hwddl}
 				span #{item.hwrequest}
-			if user.chara == 'student'
-				a(href='/submit/#{item._id}')
-					button(class = "submit") Submit
+			if user.chara == 'student' 
+				if item.overddl == "0"
+					a(href='/submit/#{item._id}')
+						button(class = "submit") Submit
+				else
+					button(class = "submit") Overddl
 			if user.chara == 'teacher'
-				a(href='/republish/#{item._id}')
-					button(class = "submit") Republish
+				if item.overddl == "0"
+					a(href='/republish/#{item._id}')
+						button(class = "submit") Republish
+				else
+					button(class = "submit") Overddl
 				a(href='/watch_homework/#{item._id}')
 					button(class = "submit") WatchHomeWork
 	a(href='/main', class='text-center new-account') Back

@@ -6,6 +6,6 @@ block content
 			div.signup-wall
 				ul.user-details
 					li Student  :  #{item.worker}
-			input(type='text', name='hwid', class='form-control', value = '#{item.content}' ,required)
+			textarea(type='text', name='hwid', rows = '15', class='form-control', placeholder = '#{item.content}' ,required)
 	a(href='/hwsee', class='text-center new-account') Back
 					
