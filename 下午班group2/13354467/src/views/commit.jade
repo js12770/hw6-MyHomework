@@ -1,0 +1,32 @@
+extends layout
+
+block content
+	div.container
+		ul(class='nav nav-pills')
+			li
+				a(href='/home') 作业
+			li.active
+				a(href='#') 提交
+			li.disabled
+				a(href='#') 查看
+			li.disabled
+				a(href='#') #{user.username}
+			li
+				a(href='/signout') 退出
+		br
+		ul.list-group
+			li.list-group-item 作业编号: #{homework.homeworkid}
+			li.list-group-item 作业要求: #{homework.require}
+			li.list-group-item 截止时间: #{homework.ddl.toDateString()} #{homework.ddl.toLocaleTimeString()}
+			if shomework != null
+				li.list-group-item 最近提交: #{shomework.content}
+			else
+				li.list-group-item 最近提交: 
+		hr
+		fieldset
+			legend 提交/修改作业
+			form(role='form', action='/commit/#{homework.homeworkid}', method='POST')
+				div.form-group
+					label 我的作业
+					textarea.form-control(rows='3',name='content')
+				button.btn.btn-default(type="submit") 提交
