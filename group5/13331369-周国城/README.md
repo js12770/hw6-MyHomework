@@ -6,5 +6,5 @@ based on http://code.tutsplus.com/tutorials/authenticating-nodejs-applications-w
 1. install MonogoDB
 2. run mongod (on default port 27017)
 3. npm install
-4. npm install multer
+如果运行出错的话就运行一下 npm install multer， 再运行一下grunt watch
 4. grunt watch
