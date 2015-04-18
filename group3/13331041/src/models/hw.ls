@@ -7,5 +7,6 @@ module.exports = mongoose.model 'HW', {
 	student     : String,
 	content    : String,
 	deadline   : String,
-	grade      : Number
+	grade      : Number,
+	time       : String
 }

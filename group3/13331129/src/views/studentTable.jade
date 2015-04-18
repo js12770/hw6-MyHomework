@@ -1,0 +1,31 @@
+table.table.table-striped
+	thead
+		tr 
+			th title
+			th decription
+			th deadline
+			th homework
+			th grade
+	tbody
+		if docs != null
+			for doc, index in docs
+				tr
+					td(name="#{doc._id}") #{doc.title}
+					td.description #{doc.description}
+					td #{doc.date}
+					td 	
+						if items[index] != null
+							a(href = "#{items[index].url}") #{items[index].name}
+						else
+							a
+					td 
+						if items[index] != null
+							| #{items[index].grade} 
+					td
+						form.form-inline.upLoadForm(enctype='multipart/form-data', action='/homework', method='POST')
+							div.form-group
+								input.form-control(type='file', name='file')
+								input(type='text', name='assignment', style="display: none", value="#{doc._id}")
+								input(type='text', name='student', style="display: none", value="#{user._id}")
+								| &nbsp;
+								input.form-control(type='submit', name='submit')

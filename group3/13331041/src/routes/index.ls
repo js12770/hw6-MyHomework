@@ -5,12 +5,19 @@ router = express.Router!
 history = new Date()
 year = history.getFullYear!
 month = history.getMonth!+1
+hour = history.getHours!
+minute = history.getMinutes!
 if month < 10
   month = '0'+month.toString!
 day = history.getDate!
 if day < 10
   day = '0'+day.toString!
+if hour < 10
+  hour = '0'+hour.toString!
+if minute < 10
+  minute = '0'+minute.toString!
 date = year+'-'+month+'-'+day
+time = hour+':'+minute
 is-authenticated = (req, res, next)-> if req.is-authenticated! then next! else res.redirect '/'
 
 module.exports = (passport)->
@@ -45,6 +52,7 @@ module.exports = (passport)->
   router.post '/create', is-authenticated, (req,res)!->
     new-homework = new Homework {
       deadline  : req.param 'deadline'
+      time      : req.param 'time'
       homework  : req.param 'homework'
       course    : req.param 'course'
       detail    : req.param 'detail'
@@ -56,7 +64,7 @@ module.exports = (passport)->
         throw error
       else
         console.log "User registration success"
-        res.redirect '/home'
+        res.redirect '/history'
 
   router.get '/homework', is-authenticated, (req, res)!->
     value = req.query
@@ -73,16 +81,18 @@ module.exports = (passport)->
   router.post '/homework', is-authenticated, (req,res)!->
     Homework.findOneAndUpdate {_id:req.param 'id'},{$set:{deadline:req.param 'deadline'}} (err)!->
       Homework.findOneAndUpdate {_id:req.param 'id'},{$set:{detail:req.param 'detail'}} (err)!->
-        res.redirect '/history'
+        Homework.findOneAndUpdate {_id:req.param 'id'},{$set:{time:req.param 'time'}} (err)!->
+          res.redirect '/history'
 
 
   router.get '/history', is-authenticated, (req,res)!->
     Homework.find (err, result)->
-      res.render 'history',user:req.user, homework: result, date:date
+      res.render 'history',user:req.user, homework: result, date:date, time:time
 
   router.post '/submit', is-authenticated, (req,res)!->
     new-homework = new HW {
       deadline  : req.param 'deadline'
+      time      : req.param 'time'
       homework  : req.param 'homework'
       course    : req.param 'course'
       detail    : req.param 'detail'
@@ -100,20 +110,11 @@ module.exports = (passport)->
 
   router.get '/stu_homework', is-authenticated, (req,res)!->
     HW.find (err, result)->
-      res.render 'hw',user:req.user, homework: result
+      res.render 'hw',user:req.user, homework: result, time:time, date:date
 
   router.get '/my_homework', is-authenticated, (req,res)!->
-    history = new Date()
-    year = history.getFullYear!
-    month = history.getMonth!+1
-    if month < 10
-      month = '0'+month.toString!
-    day = history.getDate!
-    if day < 10
-      day = '0'+day.toString!
-    date = year+'-'+month+'-'+day
     HW.find {student: req.user.username} (err, result)->
-      res.render 'hw',user:req.user, homework: result, date:date
+      res.render 'hw',user:req.user, homework: result, date:date, time:time
 
 
   router.get '/change', is-authenticated, (req, res)!->

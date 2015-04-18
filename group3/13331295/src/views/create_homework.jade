@@ -7,11 +7,10 @@ block content
         div.homework-create-wall
           form.homework-create-form(method='post')
             div.homework-create-block
-              input.homework-create-name(type ='text' name='new-homework' placeholder='Enter Homework Name')
+              input.homework-create-name(type ='text' name='new-homework' placeholder='Enter Homework Name' required)
               br
               |Deadline:
-              input.homework-deadline(name='homework-deadline-date' type='date')
-              input.homework-deadline(name='homework-deadline-time' type='time')
+              input.homework-deadline(name='homework-deadline-date' type='date' required)
               textarea.homework-create-demand(name='new-homework-demand' placeholder='Enter homework Demand' required maxlength=100)
             button.course-create-btn(type='submit') Create
         a(href='/home' class='text-center new-account') Back to Home

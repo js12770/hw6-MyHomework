@@ -28,6 +28,8 @@ html
                       a(href='/history') history
                     li.active
                       a(href='/change?id=#{homework.homework}') change
+                    li
+                      a(href='stu_homework') homework
               div.col-md-4
                 ul.nav.navbar-nav
                   li
@@ -60,6 +62,9 @@ html
                     label.control-label(for='input01') Deadline
                     .controls
                       input(type='date', name = 'deadline', value = '#{homework.deadline}')
+                    label.control-label(for='input01') Deadline time
+                    .controls
+                      input(type='time', name = 'time', value = '#{homework.time}')
                   .control-group
                     .controls
                       button.btn.btn-success.submit Change

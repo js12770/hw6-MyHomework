@@ -1,4 +1,4 @@
-require! {express, http, path, 'cookie-parser', 'body-parser', mongoose, passport, 'express-session', './db'}
+require! {express, http, path, util, 'cookie-parser', 'body-parser', mongoose, passport, 'express-session', './db'}
 logger = require 'morgan'
 flash = require 'connect-flash'
 favicon = require 'static-favicon'

@@ -1,4 +1,4 @@
-require! {express, http, path, 'cookie-parser', 'body-parser', mongoose, passport, 'express-session', './db'}
+require! {express, http, path, 'cookie-parser', 'body-parser', mongoose, passport, 'express-session', './db', multer}
 logger = require 'morgan'
 flash = require 'connect-flash'
 favicon = require 'static-favicon'
@@ -14,6 +14,7 @@ app.use favicon!
 app.use logger 'dev'
 app.use bodyParser.json!
 app.use bodyParser.urlencoded!
+app.use (multer {dest: './src/public/uploads/'})
 app.use cookieParser!
 app.use express.static path.join __dirname, 'public'
 app.use expressSession {secret: 'mySecretKey'}
