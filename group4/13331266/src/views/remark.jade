@@ -1,0 +1,14 @@
+extends layout
+
+block content
+	div.container
+		div.row
+			div.col-sm-6.col-md-4.col-md-offset-4
+				h1.text-center.login-title #{handin.hwname} answered by #{handin.student}
+				div.signup-wall #{handin.answer} 
+
+				h1.text-center.login-title Remark this homework here:
+				form(class='form-signin', action='/remark/#{handin.hwname}/#{handin.student}', method='POST')
+					input(type='text', name='score', class='form-control', placeholder='score',required, autofocus)
+					button(class='btn btn-lg btn-primary btn-block', type='submit') remark
+		a(href='/home', class='text-center new-account') Homepage

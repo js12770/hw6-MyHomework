@@ -1,0 +1,43 @@
+extends layout
+
+block content
+	div.container
+		div.row
+			div.col-sm-6.col-md-4.col-md-offset-4
+				#user
+					h1.text-center.login-title Welcome #{user.firstName}. Check your details below:
+						div.signup-wall
+							ul.user-details
+								li Username ---> #{user.username}
+								li Email    ---> #{user.email}
+								li First Name ---> #{user.firstName} 
+								li Last Name ---> #{user.lastName}
+								li Identity ---> #{user.identity}
+			table.table.table-hover
+				thead
+					tr
+						th Title
+						th Discription
+						th Deadline
+						th Operation
+				tbody
+					each item in homework
+						tr
+							th #{item.hwname}
+							th #{item.discription}
+							th #{item.deadline.toLocaleString()}
+							if user.identity == 'teacher'
+								if now.valueOf() >= item.deadline.valueOf()
+									th 
+										a(href='/answerlist/#{item.hwname}') Remark
+								else
+									th 
+										a(href='/homework/#{item.hwname}') Edit
+							if user.identity == 'student'
+								if now.valueOf() < item.deadline.valueOf()
+									th 
+										a(href='/handin/#{item.hwname}') Hand in
+
+					if user.identity == 'teacher'
+						a(href='/homework', class='text-center new-account') Add a new homework		
+					a(href='/signout', class='text-center new-account') Sign Out

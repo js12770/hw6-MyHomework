@@ -1,0 +1,31 @@
+extends layout
+// list homework
+// homework form
+block content
+	div.container
+		div.row
+			div.col-sm-6.col-md-4.col-md-offset-4
+				if edit == 0
+					h1.text-center.login-title New Homework Details
+						div.signup-wall
+							form(class='form-signin', action='/homework', method='POST')
+								input(type='text', name='hwname', class='form-control', placeholder='Homework name',required, autofocus)
+								input(type='text', name='discription', class='form-control', placeholder='Discription',required)
+								input(type='datetime-local', name='deadline', class='form-control', placeholder='Deadline',required)
+								button(class='btn btn-lg btn-primary btn-block', type='submit') Confirm
+								span.clearfix
+				else
+					h1.text-center.login-title Edit homework #{homework.hwname}
+						div.signup-wall
+							ul.user-details
+								li old discription ---> #{homework.discription}
+								li old deadline    ---> #{homework.deadline.toLocaleString()}
+							form(class='form-signin', action='/homework/#{homework.hwname}', method='POST')
+								input(type='text', name='discription', class='form-control', placeholder='Discription',required)
+								input(type='datetime-local', name='deadline', class='form-control', placeholder='Deadline',required)
+								button(class='btn btn-lg btn-primary btn-block', type='submit') Confirm
+								span.clearfix
+				#message
+					if message
+						h1.text-center.error-message #{message}
+				a(href='/home', class='text-center new-account') Homepage
