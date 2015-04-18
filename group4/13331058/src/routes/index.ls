@@ -47,12 +47,15 @@ module.exports = (passport)->
     res.render 'home', user: req.user, time: time
 
   /* 创建作业要求 */
-  router.get '/create', is-authenticated, (req, res)!-> res.render 'create', user: req.user
+  router.get '/create', is-authenticated, (req, res)!-> 
+    can = 'yes'
+    res.render 'create', user: req.user, can: can
 
   router.post '/create' (req, res) !->
     Requirement.find-one {Head : req.param 'Head'},(err, collection) ->
       if collection
-        res.redirect '/create'
+        can = 'no'
+        res.render 'create', can: can
       else
         new-requirement = new Requirement {
           master  : req.user.username
@@ -80,22 +83,30 @@ module.exports = (passport)->
           else
             myDate = new Date()
             time = myDate.toLocaleString()
-            res.render 'illegal', requirement : collection, time : time
+            info = 'r'
+            res.render 'illegal', requirement : collection, time : time, error : info
 
   router.post '/submit/:title' (req, res) !->
-    blank = ""
-    new-homework = new Homework {
-      student  : req.user.username
-      title  : req.param 'title'
-      answer  : req.param 'answer'
-      grade  : blank
-    }
-    new-homework.save (error)->
-      if error
-        console.log "Error in saving homework: ", error
-      else
-        console.log "Homework submit success"
-    res.redirect '/viewhomework'
+    Requirement.find-one {Head : req.param 'title'},(err, collection) ->
+      blank = ""
+      codes = ""
+      codes += req.user.username
+      codes += ' by '
+      codes += req.param 'title'
+      new-homework = new Homework {
+        student  : req.user.username
+        title  : req.param 'title'
+        answer  : req.param 'answer'
+        grade  : blank
+        code  : codes
+        ddl  : collection.ddl
+      }
+      new-homework.save (error)->
+        if error
+          console.log "Error in saving homework: ", error
+        else
+          console.log "Homework submit success"
+      res.redirect '/viewhomework'
   
   /* 修改作业要求 */
   router.get '/modify/:title', is-authenticated, (req, res)!-> 
@@ -106,7 +117,8 @@ module.exports = (passport)->
       else
         myDate = new Date()
         time = myDate.toLocaleString()
-        res.render 'illegal', requirement : collection, time : time
+        info = 'r'
+        res.render 'illegal', requirement : collection, time : time, error : info
 
   router.post '/modify/:title' (req, res) !->
     Requirement.update { Head : req.param 'title' } , { $set:{content : req.param 'content'} }, (err, collection) ->
@@ -119,7 +131,8 @@ module.exports = (passport)->
 
   router.post '/changeddl/:title' (req, res) !->
     Requirement.update { Head : req.param 'title' } , { $set:{ddl : req.param 'ddl'} }, (err, collection) ->
-      res.redirect '/viewrequirement'
+      Homework.update { title : req.param 'title' } , { $set:{ddl : req.param 'ddl'} }, { multi : true }, (err, collection2) ->
+        res.redirect '/viewrequirement'
   
   /* 重复提交作业 */
   router.get '/update/:title', is-authenticated, (req, res)!-> 
@@ -131,7 +144,8 @@ module.exports = (passport)->
         else
           myDate = new Date()
           time = myDate.toLocaleString()
-          res.render 'illegal', requirement : collection, time : time
+          info = 'h'
+          res.render 'illegal', requirement : collection, time : time, error : info
       
   router.post '/update/:title' (req, res) !->
     Homework.update {student:req.user.username, title:req.param 'title'} , { $set:{answer : req.param 'answer'} }, (err, collection) ->
@@ -139,18 +153,18 @@ module.exports = (passport)->
   
   /* 批改作业 */
   router.get '/grade/:title', is-authenticated, (req, res)!-> 
-    Homework.find-one {title : req.param 'title'},(err, collection) ->
-      Requirement.find-one {Head : req.param 'title'},(err, collection2) ->
-        temp = collection2.ddl
-        if temp < get-time!
-          res.render 'grade', user: req.user, homework : collection
-        else
-          myDate = new Date()
-          time = myDate.toLocaleString()
-          res.render 'illegal', requirement : collection2, time : time
+    Homework.find-one {code : req.param 'title'},(err, collection) ->
+      temp = collection.ddl
+      if temp < get-time!
+        res.render 'grade', user: req.user, homework : collection
+      else
+        myDate = new Date()
+        time = myDate.toLocaleString()
+        info = 'h'
+        res.render 'illegal', requirement : collection, time : time, error : info
 
   router.post '/grade/:title' (req, res) !->
-    Homework.update { title : req.param 'title' } , { $set:{grade : req.param 'grade'} }, (err, collection) ->
+    Homework.update { code : req.param 'title' } , { $set:{grade : req.param 'grade'} }, (err, collection) ->
       res.redirect '/viewhomework'
 
   router.get '/viewrequirement', is-authenticated, (req, res)!-> 
