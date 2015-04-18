@@ -1,0 +1,51 @@
+extends layout
+
+block content
+    div.container
+        div.row
+            div.col-sm-6.col-md-4.col-md-offset-4
+                #user
+                    h1.text-center.login-title Welcome <span id='username'>#{user.firstName}</span>:
+                        if user.actor == 'teacher'
+                            div#homeworks
+                                each hw in homework
+                                    div.homework-box
+                                        div.homework-requirement #{hw.requires}
+                                        span.deadline Deadline:
+                                        span.date #{hw.deadline}
+                                        br
+                                        button(class='edit btn btn-mini btn-primary') Edit
+                                        each ans in answer
+                                            if ans.hid == hw._id
+                                                div.student-answers
+                                                    div.student-name #{ans.student}
+                                                    div.student-answer #{ans.content}
+                                                    br
+                                                    if ans.grade == 'null'
+                                                        div.student-grade Not graded yet
+                                                    else
+                                                        div.student-grade Grade: #{ans.grade}
+                                                    input(name='grade', class='grade form-control', required)
+                                                    button(class='grading btn btn-mini btn-primary') grade
+                            div.submit-box
+                                textarea(id='requirement', name='requires', class='form-control', placeholder='Content',required, autofocus)
+                                input(id='deadline', name='deadline', class='form-control', placeholder='2015-04-11',required)
+                                button(id='reqSub', class='btn btn-lg btn-primary btn-block') Submit
+
+                        else if user.actor == 'student'
+                            each req in homework
+                                div.homework-box
+                                    div.tea-info #{req.teacher}
+                                    div.homework-requirement #{req.requires}
+                                    span.deadline Deadline:
+                                    span.date #{req.deadline}
+                                    br
+                                    each ans in answer
+                                        if ans.hid == req._id
+                                            div.answer #{ans.content}
+                                    button(class='show-submit btn btn-mini btn-primary') Submit
+                                    button(class='show-change btn btn-mini btn-primary') Change
+                                    div.submit-box-stu
+                                        textarea(name='content', class='homework-content form-control', placeholder='Content',required, autofocus)
+                                        button(class='hwSub btn btn-lg btn-primary btn-block') Submit
+                        a(href='/signout', class='text-center new-account') Sign Out

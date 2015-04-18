@@ -1,0 +1,11 @@
+extends layout
+
+block content
+	div.container
+		div.row
+			div.col-sm-10.col-md-10.col-md-offset-1
+				#user
+					h1.text-center.login-title Welcome #{user.firstName} #{user.lastName} (#{user.usertype}).
+						div.signup-wall.col-sm-10.col-md-10.col-md-offset-1
+							div #{title}
+							a(href='/signout', class='text-center new-account') Sign Out

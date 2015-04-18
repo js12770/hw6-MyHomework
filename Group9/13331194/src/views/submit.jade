@@ -1,0 +1,20 @@
+extends layout
+
+block content
+	h1.text-center.login-title Welcome #{user.firstName} !
+	if request
+		h1.text-center.login-title Submit your homework for #{request.title}:
+		form(class='form-signin', action='/submit/#{request.title}', method='post')
+			textarea(rows = "10", cols = "40", name = "content", required)
+			button(class='btn btn-lg btn-primary btn-block', type='submit') Submit
+	else
+		h1.text-center.login-title Submit your homework for #{homework.title}:
+		form(class='form-signin', action='/submit/#{homework.title}', method='post')
+			textarea(rows = "10", cols = "40", name = "content", required) #{homework.content}
+			button(class='btn btn-lg btn-primary btn-block', type='submit') Edit
+
+	a(href='/home', class='text-center new-account') Back
+
+	#message
+		if message
+			h1.text-center.error-message #{message}
