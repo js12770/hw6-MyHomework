@@ -50,7 +50,7 @@ block content
 										li #{submission}
 								if user.isTeacher
 									form(class='form-signin', action='/grade', method='POST')
-										input(type='text', name='assgnId', class='form-control', placeholder='AssignId', required, autofocus)
+										input(type='text', name='assignId', class='form-control', placeholder='AssignId', required, autofocus)
 										input(type='text', name='studentName', class='form-control', placeholder='Student', required)
 										input(type='text', name='score', class='form-control', placeholder='score', required)
 										button(class='btn btn-lg btn-primary btn-block', type='submit') Grade

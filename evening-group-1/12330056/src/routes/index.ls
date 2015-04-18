@@ -33,7 +33,7 @@ module.exports = (passport)->
 
   router.post '/assign', is-authenticated, (req, res)!->
     if !req.user.isTeacher
-      console.log msg = "Only teacher has the permission to assign"
+      console.log msg = "Permission deny"
       res.render 'home', user: req.user, message: msg
     else
         Homework.count {isQuestion: true}, (err, count)->
@@ -46,7 +46,7 @@ module.exports = (passport)->
             }
             new-homework.save (error)->
               if error
-                console.log "Error during saving homework ", error
+                console.log "Error during assigning homework ", error
                 throw error
               else
                 console.log msg = "Assign successfully"
@@ -54,7 +54,7 @@ module.exports = (passport)->
 
   router.post '/updateDeadline', is-authenticated, (req, res)!->
     if !req.user.isTeacher
-      console.log msg = "Only teacher has the permission to update deadline"
+      console.log msg = "Permission deny"
       res.render 'home', user: req.user, message: msg
     else
         Homework.findOne {id: parseInt(req.param('assignId')), author: req.user.username, isQuestion:true}, (err, assignment)->
@@ -65,7 +65,7 @@ module.exports = (passport)->
                 assignment.deadline = new Date(req.param('deadline'))
                 assignment.save (error)->
                   if error
-                    console.log "Error during updating deadline: ", error
+                    console.log "Error during updating deadline ", error
                     throw error
                   else
                     console.log msg = "Update successfully"
@@ -73,7 +73,7 @@ module.exports = (passport)->
 
   router.post '/submit', is-authenticated, (req, res)->
     if req.user.isTeacher
-      console.log msg = "Only student has permission to submit"
+      console.log msg = "Permission deny"
       res.render 'home', user: req.user, message: msg
     else
         Homework.findOne {id: parseInt(req.param('assignId')), isQuestion:true}, (err, homework)->
@@ -90,7 +90,7 @@ module.exports = (passport)->
                         isQuestion: false
                     }, {upsert: true}, (err, submission) ->
                             if err
-                                console.log "Error in saving hw: ", error
+                                console.log "Error during submiting homework: ", error
                             throw error
                     console.log msg = "Submit successfully"
                     res.redirect '/home'
@@ -100,18 +100,21 @@ module.exports = (passport)->
 
   router.post '/grade', is-authenticated, (req, res)!->
     if !req.user.isTeacher
-      console.log msg = "Only teacher has the permission to grade"
+      console.log msg = "Permission deny"
       res.render 'home', user: req.user, message: msg
     else
-        Homework.findOne {id: parseInt(req.param('assignId')), isQuestion:true }, (err, homework)->
-            if homework.deadline < new Date()
-                Homework.findOne {id: parseInt(req.param('assignId')), author: req.param('studentName'), isQuestion: false}, (err, homework)->
-                    if !homework
+        Homework.findOne {id: parseInt(req.param('assignId')), author: req.user.username, isQuestion:true }, (err, homework)->
+            if !homework
+                console.log msg = "Invalid id or permission deny" 
+                res.render 'home', user: req.user, message: msg
+            else if homework.deadline < new Date()
+                Homework.findOne {id: parseInt(req.param('assignId')), author: req.param('studentName'), isQuestion: false}, (err, submission)->
+                    if !submission
                         console.log msg = "Invalid id or student name"
                         res.render 'home', user: req.user, message: msg
                     else
-                        homework.score = parseInt req.param('score')
-                        homework.save !->
+                        submission.score = parseInt req.param('score')
+                        submission.save !->
                             res.redirect '/home'
             else
                 console.log msg = "Deadline hasn't passed"
