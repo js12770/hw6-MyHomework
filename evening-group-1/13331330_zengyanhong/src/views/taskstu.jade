@@ -1,0 +1,31 @@
+extends layout
+
+block content
+	div.container
+		h3 All Homework(所有作业)
+		table.tasklist
+			thead
+				tr
+					th
+						strong name
+					th
+						strong start-date
+					th
+						strong dead-line
+					th
+						strong detail
+					th
+						strong my submission
+			thead
+			tbody
+			each hw in tasklist
+				tr
+					td #{hw.name}
+					td #{hw.startdate}
+					td #{hw.deadline}
+					td #{hw.detail}
+					td 
+						a(href='/submission/#{hw.name}', class='text-center new-account') my submission
+	br
+	a(href='/upload', class='text-center new-account') Upload Homework
+	a(href='/signout', class='text-center new-account') Sign Out
