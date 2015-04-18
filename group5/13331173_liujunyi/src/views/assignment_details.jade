@@ -17,3 +17,29 @@ block content
                     div.controls
                         input.btn.btn-primary.create-mar(type="submit", value="Save")
         a.btn.btn-primary(href='/homeworklist', class='text-center new-account') Back to homeworklist
+
+    div.container
+        div
+            table.table
+                thead
+                    tr
+                        th id
+                        th title
+                        th time
+                        th author
+                        th.text-right
+                tbody
+                    -   for (var i = 0; i < homeworks.length; i++) {
+                        tr
+                            td #{i+1}
+                            td #{homeworks[i].title}
+                            td #{homeworks[i].time}
+                            td #{homeworks[i].author}
+                            td.text-right
+                                a(href="/student_homework/?id=#{assignment._id}")
+                                    |view
+                    -   }
+            a.btn.btn-primary(href='/home', class='text-center new-account') Back to home
+
+
+
