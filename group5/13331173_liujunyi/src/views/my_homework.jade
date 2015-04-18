@@ -1,0 +1,13 @@
+extends layout
+
+block content
+    div.container
+        div.control-group
+            div.controls
+                h4.create-mar Title:#{homeworks.title}
+        div.controls
+            h4.create-mar details:
+            p.create-mar #{homeworks.details}
+        div.controls
+            h4.create-mar score:#{homeworks.score}
+        a.btn.btn-primary(href='/student_upload?id=#{assignment._id}', class='text-center new-account') Back to upload
