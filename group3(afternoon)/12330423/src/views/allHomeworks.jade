@@ -1,0 +1,42 @@
+extends layout
+
+block content
+  div.container
+    div.col-sm-6.col-md-4.col-md-offset-4
+      #user
+        h1.text-center.login-title Welcome #{user.firstName}. Check your details below:
+          div.signup-wall
+            ul.user-details
+              li Username ---> #{user.username}
+                li Email    ---> #{user.email}
+                li First Name ---> #{user.firstName} 
+                li Last Name ---> #{user.lastName}
+                li Is Teacher ---> #{user.isTeacher}
+                li Is Student ---> #{user.isStudent}
+            a(href='/signout', class='text-center new-account') Sign Out
+
+    #user
+      div.col-sm-10.col-md-10.col-md-offset-1
+        h1.text-center.login-title All Homeworks
+          div
+            table.table.table-hover
+              thead
+                tr
+                  th.text-center homework name
+                  th.text-center description
+                  th.text-center deadline
+                  th.text-center all submissions
+                  if user.isStudent
+                    th.text-center option
+              tbody
+                #class_
+                  for homework in class_.homeworks
+                    tr
+                      td= homework.homeworkName
+                      td= homework.description
+                      td= homework.deadline
+                      td
+                        a(href='/class/' + class_.className + '/' + homework.homeworkName + '/allSubmissions') all submissions
+                      if user.isStudent
+                        td
+                          a(href='/class/' + class_.className + '/' + homework.homeworkName + '/submit') submit

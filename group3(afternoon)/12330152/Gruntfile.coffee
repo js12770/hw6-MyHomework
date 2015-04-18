@@ -3,7 +3,9 @@ module.exports = (grunt) ->
   path = require('path')
   pkg = grunt.file.readJSON("package.json")
 
-  DEBUG = false # 添加测试所需代码，发布时应该为false
+  DEBUG = true # 添加测试所需代码，发布时应该为false
+
+  grunt.option 'stack', true
 
   grunt.initConfig 
     pkg: pkg
@@ -39,7 +41,7 @@ module.exports = (grunt) ->
     copy:
       appCode:
         files: [
-          src: ["**/*.*", "!**/**.{ls,sass}"]
+          src: ["**/*.*", "!**/**.{ls}"]
           dest: "bin/"
           cwd: "src/"
           expand: true
@@ -67,18 +69,6 @@ module.exports = (grunt) ->
         dest: "bin/"
         ext: ".js"
 
-    sass:
-      options:
-        includePaths: require('node-bourbon').with('src/common/sass')
-      build:
-        files: [
-          src: ["**/*.sass"]
-          dest: "bin/"
-          cwd: "src/"
-          expand: true
-          ext: ".css"
-        ]
-
     express:
       dev:
         options:
@@ -96,12 +86,8 @@ module.exports = (grunt) ->
         files: ["src/**/*.ls"]
         tasks: ["newer:livescript"]
 
-      sass:
-        files: ["src/**/*.sass"]
-        tasks: ["newer:sass", "concat"]
-
       appCode:
-        files: ["src/**/*.*", "!src/**/**.{ls,sass}"]
+        files: ["src/**/*.*", "!src/**/**.{ls}"]
         tasks: ["newer:copy:appCode"]
 
       express:
@@ -129,7 +115,6 @@ module.exports = (grunt) ->
 
   grunt.registerTask "build", [
     "livescript"
-    "sass"
     "copy"
   ]
   

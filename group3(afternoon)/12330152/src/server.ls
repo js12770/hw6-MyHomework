@@ -1,7 +1,10 @@
-require! {express, http, path, 'cookie-parser', 'body-parser', mongoose, passport, 'express-session', './db'}
+require! {express, http, path, multer, 'cookie-parser', 'body-parser', mongoose, passport, 'express-session', './db'}
 logger = require 'morgan'
 flash = require 'connect-flash'
 favicon = require 'static-favicon'
+
+const ROOT = path.join __dirname, '..'
+
 mongoose.connect db.url
 
 app = express!

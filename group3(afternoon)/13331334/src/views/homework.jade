@@ -1,0 +1,35 @@
+extends layout
+
+block content
+    div.container
+        div.row
+            h1 #{homework.title}
+            blockquote #{homework.description}
+            if user.identity == "teacher"
+                h2 submissions
+                mixin answer_row(id, firstName, lastName, score)
+                    tr
+                        td=firstName + " " + lastName
+                        td=score
+                        td: a(href="/answer/" + id) judge
+                table.table
+                    thead
+                        tr
+                            th student
+                            th score
+                            th link
+                    tbody
+                        each answer in answers
+                            +answer_row(answer._id, answer.firstName, answer.lastName, answer.score)
+            else
+                //- student
+                if answer && answer.score
+                    p score: #{answer.score}
+                else
+                    p score: none
+                form(method="post")
+                    if answer
+                        textarea(class="form-control", name="content", placeholder='answer to the homework') #{answer.content}
+                    else
+                        textarea(class="form-control", name="content", placeholder='answer to the homework')
+                    button(type="submit", class="btn btn-default", required) Submit answer

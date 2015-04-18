@@ -1,0 +1,11 @@
+extends layout
+
+block content
+    div.container
+        div.row
+            form(class='ui grid', method="post")
+                input(class="form-control", type="text", name='title', placeholder='title', required)
+                textarea(class="form-control", name="description", placeholder='description', rows="20", required)
+                //- label Deadline
+                //-     input(type='datetime' placeholder="", name='deadline', data-date-format='yyyy-mm-dd hh:ii')
+                button(type="submit", class="btn btn-default") Post a new question

@@ -1,0 +1,14 @@
+extends layout
+
+block content
+  form(action='/s-edit-homework/' + homework._id method='POST')
+    label Title
+    input#title(class='form-control' type='text' name='title' placeholder='title' value=homework.title required)
+    label Requiement
+    textarea#requirement(class='form-control' name='requirement' placeholder='requirement' required)
+      | #{homework.requirement}
+    label Deadline
+    - var ddlStr = homework.deadline.toISOString();
+    - ddlStr = ddlStr.substr(0, ddlStr.length - 8);
+    input#deadline(class='form-control' type='datetime-local' name='deadline' value=ddlStr required)
+    button.btn.btn-primary(type='submit') Submit

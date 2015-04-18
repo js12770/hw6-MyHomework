@@ -66,6 +66,7 @@ module.exports = (passport)->
     res.render 'homework', { courses: (Util.unique courses), mycourses: (Util.unique mycourses), user: req.user, requirements: requirements, homeworks: homeworks}
 
   router.post '/addhomework', (req, res)!->
+    console.log (req.param 'deadline')
     console.log (new Date(req.param 'deadline'))
     new-requirement = new Requirement {
       coursename: req.param 'coursename'

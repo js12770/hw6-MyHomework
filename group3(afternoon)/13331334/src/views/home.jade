@@ -1,15 +1,22 @@
 extends layout
 
 block content
-	div.container
-		div.row
-			div.col-sm-6.col-md-4.col-md-offset-4
-				#user
-					h1.text-center.login-title Welcome #{user.firstName}. Check your details below:
-						div.signup-wall
-							ul.user-details
-								li Username ---> #{user.username}
-								li Email    ---> #{user.email}
-								li First Name ---> #{user.firstName} 
-								li Last Name ---> #{user.lastName}
-						a(href='/signout', class='text-center new-account') Sign Out
+    div.container
+        div.row
+            //- div.col-sm-6.col-md-4.col-md-offset-4
+            #user
+                h1.text-center.login-title Welcome #{user.firstName}.
+                if user.identity == "teacher"
+                    a(href="/assign") Assign a new homework
+                mixin homework_row(id, title, deadline)
+                    tr
+                        td: a(href="/homework/" + id)=title
+                        td=deadline
+                table.table
+                    thead
+                        tr
+                            th title
+                            th deadline
+                    tbody
+                        each homework in homeworks
+                            +homework_row(homework._id, homework.title, homework.deadline)
