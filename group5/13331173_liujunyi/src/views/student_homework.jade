@@ -15,8 +15,8 @@ block content
             div.control-group
                 div.controls
                     p #{homeworks.score}
-                    input.create-mar(type="text", name="score", placeholder="#{homeworks.score}")
+                    input.create-mar(type="text", name="score", placeholder="score")
             div.control-group
                 div.controls
-                    input.btn.btn-primary.create-mar(type="submit", value="OK")
+                    input.btn.btn-primary.create-mar(type="submit", value="score_submit")
         a.btn.btn-primary(href='/assignment_details?id=#{assignment._id}', class='text-center new-account') Back
