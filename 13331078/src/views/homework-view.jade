@@ -1,0 +1,59 @@
+extends layout
+
+block content
+	div.nav.navbar.navbar-inverse.navbar-fixed-top
+		div.container
+			div.navbar-brand
+				if user.identity == 'teacher'
+					div.label.label-danger Teacher
+				else if user.identity == 'student'
+					div.label.label-success Student
+			div.user-info
+				p.navbar-text Welcome #{user.firstName}.#{user.lastName}!
+			div
+				if user.identity == 'teacher'
+					a.btn.navbar-btn.publish-btn(href='/hw-produce') Publish
+				a.btn.navbar-btn.publish-btn(href='/hw-view') View
+				a.btn.navbar-btn.publish-btn(href='/home') Home
+				a.btn.navbar-btn.signout-btn.pull-right(href='/signout') Signout
+	div.show-homework
+		div.text-center
+			h2 Homework
+		if hwlist.length == 0
+			div.text-center
+				h2 No homework yet...
+		else
+			ul.list-group
+				each hw in hwlist
+					li.list-group-item.list-group-item-info
+						div(style='display:inline')
+							if user.identity == 'teacher'
+								a.label.label-success(href='/hw-check/#{hw._id}') #{hw.title}
+							else if user.identity == 'student'
+								a.label.label-success(href='/question/#{hw._id}') #{hw.title}
+						p(style='display:inline') &nbspBy 
+							span.label.label-info #{hw.producerName}
+						p(style='display:inline') &nbspAt 
+							span.label.label-warning #{hw.createTime.getFullYear()}-#{hw.createTime.getMonth()+1}-#{hw.createTime.getDate()} #{hw.createTime.toLocaleTimeString()}
+						p(style='display:inline') &nbspUntil 
+							span.label.label-warning #{hw.ddl.getFullYear()}-#{hw.ddl.getMonth()+1}-#{hw.ddl.getDate()} #{hw.ddl.toLocaleTimeString()}
+						if date >= hw.ddl
+							p(style='display:inline') &nbsp
+								span.label.label-danger 截止
+						if user.identity == 'teacher'
+							div.pull-right
+								a(href='hw-modify/#{hw._id}/ddl') &nbsp Deadline
+								span.glyphicon.glyphicon-pencil
+							div.pull-right
+								a(href='hw-modify/#{hw._id}/content') Content
+								span.glyphicon.glyphicon-pencil
+						else if user.identity == 'student'
+							each anno in announcement
+								if anno.hw_id == hw._id
+									div.pull-right
+										p(style='display:inline') &nbspGrade:
+										if anno.grade > -1
+											span.label.label-success #{anno.grade}
+										else
+												span.label.label-warning 未审核
+
