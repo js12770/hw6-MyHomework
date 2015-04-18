@@ -1,0 +1,29 @@
+extends layout
+
+block content
+	div.homework-container
+		if message
+			h1.text-center.error-message #{message}
+		div.homework-info
+			a(href="/home") 返回
+			h2.hw-title Title: #{homework.title}
+			h3.hw-time Deadline: #{homework.deadline}
+			pre.hw-dpt Desprtion: #{homework.content}
+		div.homework-list
+			div.homework-details
+				each submit in submits
+					div.homework-block.homework-mark
+						h2.homework-name #{submit.student}
+						p.homework-content #{submit.content}
+						div.mark
+							form(action="/mark/?homework_id=#{submit.homework_id}&student=#{submit.student}", method="POST")
+								span 评分:
+								input(type="number", min="0", max="100", name="score", required)
+								button(type="submit") 提交
+						if submit.score
+							p.homework-score Score:#{submit.score}
+						else
+							p.not-mark has not mark
+		
+
+

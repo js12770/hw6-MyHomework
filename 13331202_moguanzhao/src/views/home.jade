@@ -1,0 +1,68 @@
+extends layout
+
+block content
+	div.container
+		if message
+			h1.text-center.error-message #{message}
+		if submits.length > 0&&user.status === 'student'
+			div.submit-homework
+				h2 Your submitting homeworks
+				each submit in submits
+					div.submit-info
+						h4.title No.#{submit.homework_id}  #{submit.title}
+						span #{submit.content}
+						if submit.score
+							span.score Score: #{submit.score}
+						else 
+							span.score Not get the score
+		else if user.status === 'student'
+			h1 You have not submitted any homeworks!
+
+		div.row
+			div.col-sm-6.col-md-4.col-md-offset-4
+				#user
+					h1.text-center.login-title Welcome #{user.firstName}. Check your details below:
+						div.signup-wall
+							ul.user-details
+								li Username ---> #{user.username}
+								li Email    ---> #{user.email}
+								li First Name ---> #{user.firstName} 
+								li Last Name ---> #{user.lastName}
+								li Status ---> #{user.status}
+						a(href='/signout', class='text-center new-account') Sign Out
+						if user.status === 'teacher'
+							div.options
+								button(class='btn btn-lg btn-primary btn-block publish_homework') publish homework
+								form(class='form-publish-homework', action="/publish_homework", method="POST")
+									input(name="title", type="text", class='form-control', placeholder='Titile',required)
+									textarea(name="content" class='form-control' placeholder="homework content" rows="10" cols="37",required)
+									span deadline(yyyy-mm-dd/xx:xx)
+									input(id="deadline",name="deadline",type="datetime",required)
+									button(class="btn-primary btn btn-lg" type="submit") 提交
+									button(class='cancle btn-primary btn btn-lg') 取消
+		if homeworks
+			div.homework-container
+				each homework in homeworks
+					div.homework-block
+						button(class='btn btn-lg btn-block homework') #{homework.title}
+						div(class="homework-wall homework#{homework.id}")
+							ul.user-details
+								li Number: #{homework.id}
+								li content: #{homework.content}
+								li deadline: #{homework.deadline}
+							if user.status === 'student'
+								form(class='form-submit-homework', action="/submit/?homework_id=#{homework.id}&username=#{user.username}&title=#{homework.title}", method="POST")
+									textarea(name="content" class='form-control' placeholder="homework submit" rows="10" cols="37",required)
+									button(class="btn-block btn-lg homework-submit" type="submit") 提交
+							if user.status === 'teacher'
+								form(class="alter_content" action="/alter_content/?homework_id=#{homework.id}", method="POST")
+									textarea(name="content" class='form-control' placeholder="homework content" rows="5" cols="37",required) #{homework.content}
+									button(class="btn-lg content" type="submit") 修改要求
+								form(class="alter_deadline" action="/alter_deadline/?homework_id=#{homework.id}", method="POST")
+									span deadline(yyyy-mm-dd/xx:xx)
+									input(id="deadline",name="deadline",type="datetime",required)
+									button(class="btn-lg deadline" type="submit") 修改时间
+								a(href="/hw_view/?homework_id=#{homework.id}" class="text-center new-account mark-homework") 批改作业
+							button(class="btn-block btn-lg homework-cancle" type="submit") 收回
+
+
