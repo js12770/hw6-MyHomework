@@ -43,13 +43,26 @@ module.exports = (passport)->
       ass-id = req.url.substr 10
       # Homework.remove {assignment-id: ass-id}, (err, docs)!->
       #   console.log docs
-      Assignment.find-by-id ass-id, (err, docs)!->
-        Homework.find {assignment-id: docs._id, student-name: req.user.first-name} (err, hws)!->
-          console.log hws
+      Assignment.find-by-id ass-id, (err, doc)!->
+        Homework.find {
+          assignment-id: doc._id
+          student-name: req.user.first-name
+        } (err, hws)!->
           if hws != []
-            res.render 'detail', user:req.user, homework: hws[hws.count!-1], assignment:docs
+            res.render 'detail', user:req.user, homework: hws[0], assignment:doc
           else
-            res.render 'detail', user:req.user, assignment:docs
+            res.render 'detail', user:req.user, assignment:doc
+
+    else if req.user.role is 'teacher'
+      paras = req.url.split '/'
+      student-name = paras[2]
+      ass-id = paras[3]
+      Assignment.find-by-id ass-id, (err, doc)!->
+        Homework.find {
+          assignment-id: doc._id
+          student-name: student-name
+        }, (err, hws)!->
+          res.render 'correct', user:req.user, homework: hws[0], assignment:doc
 
   router.post '/assignment', is-authenticated, (req, res)!->
     ass = req.body.assignment
@@ -66,23 +79,36 @@ module.exports = (passport)->
         res.render 'assignment', user: req.user, assignment: docs
 
   router.post '/homework/*', is-authenticated, (req, res)!->
-    hw = req.body.homework
-    ass-id = req.url.substr 10
-    new-hw = new Homework {
-      assignment-id: ass-id
-      content: hw.description
-      student-name: req.user.first-name
-      grade: undefined
-    }
-    Homework.remove {
-      assignment-id: ass-id
-      student-name:req.user.first-name
-    } ,(err, docs)!->
-      new-hw.save (err, ass-id)!->
-        if (err)
-          console.log err
-        Assignment.find {}, (err, docs)!->
-          res.render 'homework', user: req.user, assignment: docs
+    if req.user.role is 'student'
+      hw = req.body.homework
+      ass-id = req.url.substr 10
+      new-hw = new Homework {
+        assignment-id: ass-id
+        content: hw.description
+        student-name: req.user.first-name
+        grade: undefined
+      }
+      Homework.remove {
+        assignment-id: ass-id
+        student-name:req.user.first-name
+      }, (err, docs)!->
+        new-hw.save (err, ass-id)!->
+          if (err)
+            console.log err
+          Assignment.find {}, (err, docs)!->
+            res.render 'homework', user: req.user, assignment: docs
+
+    else if req.user.role is 'teacher'
+      paras = req.url.split '/'
+      student-name = paras[2]
+      ass-id = paras[3]
+      Homework.where {
+        assignment-id: ass-id
+        student-name: student-name
+      } .update {grade: req.body.rank}, (err)!->
+        Assignment.find-by-id ass-id, (err, doc)!->
+          res.redirect '/assignment/'+doc._id
+
 
   router.get '/signout', (req, res)!-> 
     req.logout!
