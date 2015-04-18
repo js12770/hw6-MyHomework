@@ -1,0 +1,10 @@
+extends layout
+
+block content
+	div#container
+		if !course
+			p error
+		else
+			p Course: #{course.name}
+			p
+				a(href="/homeworks?course=#{course._id}") homeworks
