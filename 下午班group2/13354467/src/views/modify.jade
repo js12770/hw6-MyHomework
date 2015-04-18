@@ -1,0 +1,29 @@
+extends layout
+
+block content
+	div.container
+		ul(class='nav nav-pills')
+			li
+				a(href='/home') 作业
+			li.active
+				a(href='#') 修改
+			li.disabled
+				a(href='#') 批改
+			li.disabled
+				a(href='#') #{user.username}
+			li
+				a(href='/signout') 退出
+		br
+		ul.list-inline
+			li 作业编号: #{homework.homeworkid}
+			li 截止时间: #{homework.ddl.toDateString()} #{homework.ddl.toLocaleTimeString()}
+		p 作业要求: #{homework.require}
+		br
+		fieldset
+			legend 修改作业信息
+			form(role='form', action='/modify/#{homework.homeworkid}', method='POST')
+				div.form-group
+					textarea.form-control(rows='3',name='require')
+					label 截止时间
+					input.form-control(name='ddl',type='text',placeholder='2000/01/01 00:00:00')
+				button.btn.btn-default(type="submit") 提交修改

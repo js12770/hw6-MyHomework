@@ -1,0 +1,55 @@
+extends layout
+
+block content
+	div.container
+		ul(class='nav nav-pills')
+			li.active
+				a(href='#') 作业
+			li.disabled
+				a(href='#') 提交
+			li.disabled
+				a(href='#') 查看
+			li.disabled
+				a(href='#') #{user.username}
+			li
+				a(href='/signout') 退出
+		if homeworks != null
+			div
+				table.table
+					caption
+						h3 已经布置作业
+					thead
+						tr
+							th 作业编号
+							th 作业要求
+							th 截止时间
+							th 操作
+					tbody
+						for homework in homeworks 
+							if Date.parse(homework.ddl) > Date.parse(Date())
+								tr
+									td #{homework.homeworkid}
+									td(style='word-break:break-all',width='700') #{homework.require}
+									td #{homework.ddl.toDateString()} #{homework.ddl.toLocaleTimeString()}
+									td
+										a(href='/commit/#{homework.homeworkid}') 提交或修改
+			hr
+			div
+				table.table
+					caption
+						h3 已经截止作业
+					thead
+						tr
+							th 作业编号
+							th 作业要求
+							th 截止时间
+							th 操作
+					tbody
+						for homework in homeworks 
+							if Date.parse(homework.ddl) < Date.parse(Date())
+								tr
+									td #{homework.homeworkid}
+									td(style='word-break:break-all',width='700') #{homework.require}
+									td #{homework.ddl.toDateString()} #{homework.ddl.toLocaleTimeString()}
+									td
+										a(href='/details/#{homework.homeworkid}') 查看
