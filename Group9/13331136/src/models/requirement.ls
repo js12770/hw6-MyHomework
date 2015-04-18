@@ -1,5 +1,8 @@
 require! ['mongoose']
 
 module.exports = mongoose.model 'Requirement', {
-	rqmt: String
+	teacher: String,
+	title: String,
+	deadline: Date,
+	text: String
 }
