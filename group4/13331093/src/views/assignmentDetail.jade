@@ -12,7 +12,7 @@ block content
                 h4.ddl
                     i.icon-time 截止日期：#{assignment.deadline}
                 h3
-                    i.icon-magic 作业要求：#{assignment.content}
+                    i.icon-magic 作业要求：!{assignment.content}
                 div.text-center
                     if user.identity == 'student'
                         if isvalid

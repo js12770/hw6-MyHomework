@@ -47,7 +47,11 @@ module.exports = (passport)->
       assignment.rateAssignment req, res
 
   router.get '/myassignment', is-authenticated, (req, res)!->
-    assignment.getAssignmentList req, res
+    if req.query.aid
+      console.log req.query
+      assignment.getMyAssignmentJson req, res
+    else
+      assignment.getAssignmentList req, res
 
   router.get '/setassignment', is-authenticated, (req, res)!->
     res.redirect '/home' if  req.user.identity is 'student'
