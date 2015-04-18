@@ -1,0 +1,12 @@
+extends basestudent
+
+block content-right
+    .handin
+      form(method="post", action="/handin/#{hw._id}", enctype="multipart/form-data")
+        .form-group
+          label(for="exampleInputEmail1") 提交格式: userid-username.zip
+          label(for="exampleInputEmail1") (eg: 13331161-ll.zip)
+        .form-group
+          label(for="exampleInputFile") File input
+          input#exampleInputFile(type="file" name="homeworks")
+        button.btn.btn-default(type="submit") 提交

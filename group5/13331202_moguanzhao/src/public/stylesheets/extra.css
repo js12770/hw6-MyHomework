@@ -1,0 +1,137 @@
+.form-publish-homework, .homework {
+    margin-top: 25px;
+}
+input[name="deadline"] {
+    width: 300px;
+    margin-left: 20px;
+    margin-bottom: 10px;
+}
+
+.homework {
+    margin-top: 10px;
+    background-color: #FF6A6A;
+    color:#fff;
+}
+.homework-wall {
+    margin-top: 5px;
+    overflow: scroll;
+    margin-bottom: 100px;
+}
+.homework-submit, .homework-cancle {
+    background-color: #EEB422;
+    color:#fff;
+}
+.alter_content, .alter_deadline {
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.content {
+    background-color: #8968CD;
+    color:#fff;
+}
+.deadline {
+    background-color: #00CD66;
+    color: #fff;
+}
+.homework-list {
+    width: 1500px;
+    height: auto;
+}
+.homework-details {
+    width: 80%;
+    height: 100%;
+    margin-left: auto;
+    margin-right: auto;
+}
+.homework-block {
+    float: left;
+    position: relative;
+    width: 28.9%;
+    margin-left: 3%;
+}
+.homework-mark {
+    border: 1px solid #8A8A8A;
+    border-radius: 5px;
+    height: 300px;
+    margin-bottom: 40px;
+}
+.homework-name, .homework-score, .not-mark, .score {
+    text-shadow: 2px 1px 8px rgba(50, 50, 50, .5);
+}
+.homework-content, .homework-name {
+    width: 90%;
+    margin-left: auto;
+    text-overflow:ellipsis;
+    margin-right: auto; 
+    word-wrap:break-word; 
+    word-break:break-all; 
+}
+.homework-content {
+    font-size: 1.5em;
+}
+.homework-score {
+    position: absolute;
+    bottom: 10px;
+    font-size: 1.2em;
+    left: 75%;
+    color: green;
+}
+.mark {
+    position: absolute;
+    bottom: 50px;
+    left: 55%;
+}
+.not-mark {
+    position: absolute;
+    left: 60%;
+    bottom: 10px;
+    font-size: 1.2em;
+    color: #8B6914;
+}
+.homework-info {
+    width: 75%;
+    margin-left: auto;
+    margin-right: auto;
+    font-size: 2em;
+}
+.hw-title {
+    font-weight: bold;
+    font-family: arial, sans-serif;
+}
+.hw-dpt {
+    width: 100%;
+    font-size: 0.8em;
+    padding: 5px 0 100px 10px;
+    border-radius: 5px;
+    border: 1px solid #8A8A8A;
+    margin-bottom: 50px;
+}
+.submit-info {
+    width: 100%;
+    font-size: 1.2em;
+    border-radius: 5px;
+    border: 1px solid #8A8A8A;
+    padding: 3px 0 20px 5px;
+    position: relative;
+    margin-bottom: 15px;
+}
+.score {
+    position: absolute;
+    bottom: 0px;
+    right: 10px;
+    color: green;
+}
+.title {
+    font-weight: bold;
+}
+.homework-container {
+    width: 100%;
+    padding-bottom: 100px;
+}
+.mark-homework {
+    font-size: 1.5em;
+}
+.content, .deadline {
+    margin-left: 32%;
+}

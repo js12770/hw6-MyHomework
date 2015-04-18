@@ -1,0 +1,33 @@
+extends layout
+
+block content
+    div.container
+        div.control-group
+            div.controls
+                h4.create-mar Title:#{assignment.title}
+        div.control-group
+            div.controls
+                h4.create-mar deadline:#{assignment.deadline}
+        div.controls
+            h4.create-mar details:
+            p.create-mar #{assignment.details}
+        a.btn.btn-primary(href='/homeworklist', class='text-center new-account') Back to homeworklist
+    hr
+
+    div.container
+        form.form-horizontal.create-form(role="form", action='/student_upload?id=#{assignment._id}', method='POST')
+            fieldset
+                legend Upload your homework
+                div.control-group
+                    div.controls
+                        input.create-mar(type="text", name="title", placeholder="Title",required, autofocus)
+                div.control-group
+                    div.controls
+                        textarea.create-mar(rows="10", cols="50", name="details", placeholder="details",required)
+                div.control-group
+                    div.controls
+                        input.btn.btn-primary.create-mar(type="submit", value="Upload")
+        a.btn.btn-primary.create-mar(href='/my_homework?id=#{assignment._id}') View my latest answer
+
+
+

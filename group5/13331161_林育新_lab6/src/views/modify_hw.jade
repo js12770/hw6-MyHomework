@@ -1,0 +1,26 @@
+extends baseteacher
+
+block content-right
+    .modifyhw
+      .page-header
+        h1
+          | 软件过程改进
+      form.form-horizontal(method='post', action="/modify/#{hw._id}")
+        -var date = hw.ddl.split(" ")
+        .form-group
+          label.col-sm-2.control-label 发布者
+          .col-sm-8
+            p.form-control-static #{hw.createby}
+        .form-group
+          label.col-sm-2.control-label 截止日期
+          .col-sm-3
+            input.form-control(type="date", name="date" value="#{date[0]}")
+          .col-sm-3
+            input.form-control(type="time", name="time" value="#{date[1]}")
+        .form-group
+          label.col-sm-2.control-label(for="inputPassword") 作业要求
+          .col-sm-8
+            textarea.form-control(rows="8", name="command") #{hw.command}
+        .form-group
+          .col-sm-offset-2.col-sm-8
+            button.btn.btn-default(type="submit") 保存

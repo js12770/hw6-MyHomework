@@ -1,0 +1,35 @@
+extends layout
+
+block content
+    div.container
+        div
+            if user.identity == "teacher"
+                div
+                    a.btn.btn-primary(href='/addassignment', role="button") 
+                        strong Create+
+            table.table
+                thead
+                    tr
+                        th id
+                        th homework
+                        th deadline
+                        th author
+                        th.text-right
+                tbody
+                    -   for (var i = 0; i < allassignment.length; i++) {
+                        tr
+                            td #{i+1}
+                            td #{allassignment[i].title}
+                            td #{allassignment[i].deadline}
+                            td #{allassignment[i].author}
+                            td.text-right
+                                if user.identity == "teacher"
+                                    a(href="assignment_details/?id=#{allassignment[i]._id}") 
+                                        i View
+                                else if user.identity == "student"
+                                    a(href="student_upload/?id=#{allassignment[i]._id}") 
+                                        i View_stu
+                    -   }
+            a.btn.btn-primary(href='/home', class='text-center new-account') Back to home
+
+

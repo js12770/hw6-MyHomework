@@ -1,0 +1,23 @@
+extends layout
+
+block content
+	div.homework
+		if (handIn.length == 0)
+			h2 No homework submitted yet!
+		else
+			each hi in handIn
+				|Assignment:
+				pre #{hi.assignment}
+				|Answer:
+				pre #{hi.answer}
+				p grade: #{hi.grade}
+				br
+				form(action = '/answer', method = 'POST')
+					input(class = 'hidden' value = '#{hi.DBanswer}' name = 'answer')
+					input(class = 'hidden' value = '#{stuName}' name = 'studentName')
+					input(class ='form-control', type = 'text', placeholder = 'grade for this task', name = 'grade', required)
+					if (hi.time > hi.deadline)
+						button(class='btn btn-lg btn-primary btn-block', type='submit') submit
+					else
+						button(class='btn btn-lg btn-primary btn-block', type='submit',disabled) submit
+	a(class = 'home' href = '/home') Home

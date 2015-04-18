@@ -1,0 +1,19 @@
+extends layout
+
+block content
+    div.container
+        form.form-horizontal.create-form(role="form", action='/addassignment', method='POST')
+            fieldset
+                legend Create a new assignment
+                div.control-group
+                    div.controls
+                        input.create-mar(type="text", name="title", placeholder="Title",required, autofocus)
+                div.control-group
+                    div.controls
+                        input.create-mar(type="text", name="deadline", placeholder="deadline XXXX-XX-XX XX:XX",required)
+                div.control-group
+                    div.controls
+                        textarea.create-mar(rows="10", cols="50", name="details", placeholder="details",required)
+                div.control-group
+                    div.controls
+                        input.btn.btn-primary.create-mar(type="submit", value="Publish")

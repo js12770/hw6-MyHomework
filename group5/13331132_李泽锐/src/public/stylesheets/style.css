@@ -86,3 +86,76 @@ h1.error-message{
 ul.user-details{
     list-style: none;
 }
+.radio {
+    position: relative;
+    left:32%;
+    top: 1px;
+}
+.radio+.radio {
+    left: 62%;
+    top: -14px;
+}
+.radioinfo {
+    position: relative;
+    left: -13px;
+    top: -10px;
+}
+.radioinfo+.radioinfo {
+    left: 5%;
+}
+.hidden {
+    visibility: hidden;
+}
+.assignments {
+    position: absolute;
+    left: -80%;
+    top: 50px;
+}
+
+.all-homeworks {
+    position: absolute;
+    left: 150%;
+    top: 50px;
+    text-align: center;
+}
+.all-homeworks a {
+    width: 150px;
+    margin-top: 8%;
+}
+
+h2 {
+    margin-bottom: 25%;
+    text-align: center;
+}
+.publish {
+    position: absolute;
+    top: 400px;
+    left: 25%;
+    font-weight: bold;
+    font-size: 1.5em;
+}
+.home {
+    position: relative;
+    left: 48%;
+    top: 200px;
+    font-size: 1.2em;
+}
+.publishHomework, .update{
+    position: absolute;
+    left: auto;
+    right: auto;
+    width: 60%;
+}
+.myHomework {
+    position: relative;
+    left: 30%;
+    margin: 8%;
+}
+.homework {
+    width: 60%;
+    position: relative;
+    left: 20%;
+}
+.homework button {
+    margin-top: 5%;
+}
