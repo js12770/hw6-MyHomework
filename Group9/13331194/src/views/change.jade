@@ -1,0 +1,18 @@
+extends layout
+
+block content
+	h1.text-center.login-title Welcome Teacher #{user.firstName} !
+	h1.text-center.login-title Change Homework Request:
+	form(class='form-signin', action='/change', method='post')
+		input(name='oldTitle', class='form-control', style="display:none", value="#{request.title}")
+		input(type='text', name='title', class='form-control', placeholder='Homework Title', value="#{request.title}", required)
+		textarea(rows = "10", cols = "40", name = "content", required) #{request.content}
+		input(type='text', name='startTime', class='form-control nomargin', placeholder='startTime->>yyyy-mm-dd hh:min:sec', value="#{request.startTime}", required)
+		input(type='text', name='endTime', class='form-control nomargin', placeholder='endTime->>yyyy-mm-dd hh:min:sec', value="#{request.endTime}", required)
+		button(class='btn btn-lg btn-primary btn-block', type='submit') Change
+
+	a(href='/home', class='text-center new-account') Back
+
+	#message
+		if message
+			h1.text-center.error-message #{message}

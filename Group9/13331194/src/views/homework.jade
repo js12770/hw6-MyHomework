@@ -1,0 +1,33 @@
+extends layout
+
+block content
+	if user.identity == "T"
+		h1.text-center.login-title All Student Homework:
+	else
+		h1.text-center.login-title #{user.firstName} Homework Submissions:
+	each item in homework
+		div.signup-wall
+			ul.user-details
+				li Title&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: #{item.title}
+				li StartTime&nbsp;&nbsp;&nbsp;&nbsp;: #{item.startTime}
+				li EndTime&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: #{item.endTime}
+				li Student&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: #{item.student}
+				li Content&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: 
+					span #{item.content}
+				li SubmitTime : #{item.submitTime}
+				if user.identity == "T"
+					li(style="position:absolute")
+						span Score&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:
+						span
+							form(action='/score/#{item.title}/#{item.student}', method='post', style="margin-top:-22px; margin-left:90px;")
+								input(name='score', style="width:80px", value="#{item.score}", min="0", max="100")
+								if currentTime >= item.endTime
+									button(class='btn btn-primary', type='submit', style="margin-left:5px; height:30px;") Change
+				else
+					li Score&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: #{item.score}
+
+			if user.identity == "S"
+				if currentTime < item.endTime
+					a(href='/edit/#{item.title}', class='text-center new-account') Edit
+				
+	a(href='/home', class='text-center new-account') Back
