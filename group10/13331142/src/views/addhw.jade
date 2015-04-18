@@ -1,0 +1,19 @@
+div(class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true")
+  div.modal-dialog.modal-sm
+    div.modal-content
+      div.modal-header
+        button(type="button" class="close" data-dismiss="modal" aria-label="Close")
+          span(aria-hidden="true") &times;
+        h4(class="modal-title" id="myModalLabel") 布置新作业
+      div.modal-body
+        form(action='/add', method='POST' id='add')
+          div.form-group
+            label(for='homeworkname') 作业名字:
+            input(type='text', name='homeworkname', id='homeworkname', class='form-control', autocomplete='off',required)
+            label(for='discription') 作业说明:
+            textarea(name='discription', id='discription', class="form-control" rows="3")
+            label(for='deadline') 截至时间:
+            input(type='datetime-local',name='deadline', id='deadline' class='form-control', placeholder='Deadline', required)
+      div.modal-footer
+        button(type="button" class="btn btn-default" data-dismiss="modal") 关闭
+        button(type="submit" class="btn btn-primary" form="add") 添加

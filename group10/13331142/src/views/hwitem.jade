@@ -1,0 +1,19 @@
+link(rel='stylesheet', href='/stylesheets/hwitem.css')
+- if (item.deadline.getTime() > Date.now())
+  div.panel.panel-default
+    div.panel-heading
+      a(href='/hwdetail/#{item._id}') 进入作业
+      h3.panel-title 作业：#{item.name}
+    div.panel-body 作业说明：#{item.discription}
+    div.panel-footer
+      p 发布人：#{item.sponsor}
+      p 截至时间：#{item.deadline.getFullYear()}年#{item.deadline.getMonth()+1}月#{item.deadline.getDate()}日#{item.deadline.getHours()}时#{item.deadline.getMinutes()}分
+- else
+  div.panel.panel-danger
+    div.panel-heading
+      a(href='/hwdetail/#{item._id}') 进入作业
+      h3.panel-title 作业：#{item.name}(已经截止提交)
+    div.panel-body 作业说明：#{item.discription}
+    div.panel-footer
+      p 发布人：#{item.sponsor}
+      p 截至时间：#{item.deadline.getFullYear()}年#{item.deadline.getMonth()+1}月#{item.deadline.getDate()}日#{item.deadline.getHours()}时#{item.deadline.getMinutes()}分

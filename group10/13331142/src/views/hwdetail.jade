@@ -1,0 +1,56 @@
+extends layout
+
+block content
+  nav(class='navbar navbar-default navbar-fixed-top')
+    div.container-fluid
+      div.navbar-header
+        button(type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1")
+          span.sr-only Toggle navigation
+          span.icon-bar
+          span.icon-bar
+          span.icon-bar
+        a(href='/home', class='navbar-brand') MyHomework
+      div(class="collapse navbar-collapse", id="bs-example-navbar-collapse-1")
+        if user.identity == 'teacher'
+          ul.nav.navbar-nav
+            li
+              a(href="#" data-toggle="modal" data-target="#myModal")
+                span(class="glyphicon glyphicon-plus" aria-hidden="true")
+                span 修改作业
+        ul.nav.navbar-nav.navbar-right
+          li
+            p.navbar-text welcome #{user.name}
+          li
+            a(href='/signout') 退出
+  include modifyhw
+  div.panel.panel-default
+    div.panel-heading
+      h3.panel-title 作业：#{hwitem.name}
+    div.panel-body 作业说明：#{hwitem.discription}
+    div.panel-footer
+      p 发布人：#{hwitem.sponsor}
+      p 截至时间：#{hwitem.deadline.getFullYear()}年#{hwitem.deadline.getMonth()+1}月#{hwitem.deadline.getDate()}日#{hwitem.deadline.getHours()}时#{hwitem.deadline.getMinutes()}分
+  if user.identity != 'teacher'
+    include upload
+  if user.identity == 'teacher'
+    div.panel.panel-default
+      div.panel-heading
+        h3.panel-title 作业提交情况
+      table.table
+        thead
+          tr
+            th name
+            th uploadtime
+            th homework
+            th score
+        tbody
+          each finisheditem in finishedwork
+            include addmark
+            tr
+              td #{finisheditem.finished_user}
+              td #{finisheditem.finished_time.getFullYear()}年#{finisheditem.finished_time.getMonth()+1}月#{finisheditem.finished_time.getDate()}日#{finisheditem.finished_time.getHours()}时#{finisheditem.finished_time.getMinutes()}分
+              td
+                a(href='/download/#{finisheditem.hw_name}') 下载
+              td #{finisheditem.score}
+              - if (hwitem.deadline.getTime() > Date.now())
+                td <button type="button" class="btn btn-danger btn-xs" data-toggle="modal" data-target="#mymark">评分</button>

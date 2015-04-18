@@ -1,0 +1,24 @@
+- if (hwitem.deadline.getTime() > Date.now())
+    div.panel.panel-default
+      div.panel-body
+        form(action='/upload', method='POST' enctype="multipart/form-data" id='form1')
+          div.form-group
+            label(for="inputFile") 提交作业
+            input(type="file" id="inputFile" name="finishedwork" multiple="multiple")
+            p.help-block 请压缩为ZIP格式
+            input(type="hidden" name="hwid" value="#{hwitem._id}")
+            input(type="submit" value="提交" class="btn btn-primary")
+      div.panel-footer
+        if finishedwork
+          p 你已经交了作业，你的成绩：#{finishedwork.score}
+        else
+          p 你并没有交作业
+- else
+    div.panel.panel-warning
+      div.panel-heading
+        h3 提交已经截止
+      div.panel-body
+        if finishedwork
+          p 你已经交了作业，你的成绩：#{finishedwork.score}
+        else
+          p 你并没有交作业
