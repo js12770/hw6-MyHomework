@@ -18,6 +18,7 @@ module.exports = (passport)!-> passport.use 'signup',  new LocalStrategy pass-re
       firstName : req.param 'firstName'
       lastName  : req.param 'lastName'
       category : req.param 'category'
+      userid : req.param 'userid'
     }
     new-user.save (error)->
       if error

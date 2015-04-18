@@ -79,6 +79,9 @@ body {
 .showhw .changetdfont {
 	padding: 13px 8px 5px 8px;
 }
+.showhw .highlight {
+	color: red;
+}
 .correcthw {
 	width: 80%;
 	margin: 25px 0 0 90px;
@@ -86,9 +89,15 @@ body {
 .correcthw .changetdfont {
 	padding: 13px 8px 5px 8px;
 }
+.correcthw .highlight {
+	color: red;
+}
 .unfinish {
 	width: 85%;
 	margin: 25px auto;
+}
+.unfinish .highlight {
+	color: red;
 }
 .unfinish .changeStuUn {
 	padding: 13px 8px 5px 8px;
@@ -96,4 +105,35 @@ body {
 .finish {
 	width: 85%;
 	margin: 25px auto;
+}
+.finish .highlight {
+	color: red;
+}
+.modifyhw {
+	margin: 25px auto;
+	width: 90%;
+}
+.changeUnfinishbutton {
+	margin-left: 5px;
+}
+.handin {
+	width: 80%;
+	margin: 25px auto;
+}
+.scorehw {
+	width: 80%;
+	margin: 25px 0 0 90px;
+}
+.changeheaderinscore {
+	margin-left: 15px;
+}
+.scorehw .changetdfont {
+	padding: 13px 8px 5px 8px;
+}
+.scorehw .changescore {
+	padding-top: 5px;
+}
+.checkscore {
+	width: 80%;
+	margin: 25px 0 0 90px;
 }

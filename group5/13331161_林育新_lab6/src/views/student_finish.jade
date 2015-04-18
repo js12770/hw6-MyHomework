@@ -2,18 +2,21 @@ extends basestudent
 
 block content-right
     .finish
+      .page-header
+        h1
+          | 软件过程改进
       table.table.table-bordered
         tr
-          th.col-md-2 课程名
+          th.col-md-2 作业名
           th.col-md-2 发布者
           th.col-md-3 要求
           th.col-md-3 截止日期
           th.col-md-2 得分
         each course in hw
             tr
-              td.changeStuUn #{course.coursename}
+              td.changeStuUn #{course.hwname}
               td.changeStuUn #{course.createby}
               td.changeStuUn #{course.command}
-              td.changeStuUn #{course.ddl}
+              td.changeStuUn.highlight #{course.ddl}
               td.changeStuUn
-                | 15
+                a.btn.btn-primary(role="button" href="/check/#{course._id}") 查看
