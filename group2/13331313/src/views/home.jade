@@ -1,0 +1,9 @@
+extends layout
+
+block content
+	div.container
+		p Hello! #{user.username}
+			if user.type == 'tea'
+				a(href='/createHw')  Publish a Hw?
+		block home-block
+		a(href='/signout', class='text-left signout') Sign Out

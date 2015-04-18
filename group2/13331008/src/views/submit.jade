@@ -1,18 +1,27 @@
 extends layout
 
+block script
+  script(src='scripts/submit.js')
+
 block content
   div.container
     div user: #{user.username}
+    div
+      a(href='home') home
+
+    hr
+
     form(action='/submit', method='post')
       input(type='hidden', name='belongTo', value='#{belongTo}')
+      input(type='hidden', name='deadline', value='#{deadline}')
 
       div
-        作业标题:
+        | title:
         input(name="title", type="text")
 
       div
-        作业内容:
-        textarea(name="content", rows="5", cols="30")
+        | content:
+        textarea(name="content", rows="20", cols="100")
 
       div
-        button(type="submit") 提交
+        button(type="submit") submit

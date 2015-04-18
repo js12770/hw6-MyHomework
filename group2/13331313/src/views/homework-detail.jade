@@ -1,0 +1,45 @@
+extend home
+
+block home-block
+	a(href='/home') homeworklist
+	div.jumbotron
+		span.deadline deadline: #{homework.deadline}
+		h1 #{homework.title}
+		p #{homework.require}
+		if user.type=='tea'
+			a(href="/editHw?HwId=#{homework.Hw_id}")
+				span(class="glyphicon glyphicon-pencil")
+	if user.type=='stu' && time < homework.deadline
+		div.handin
+			h1 Handin new answer
+			form(class='form', action='/handin', method='POST', width='90%')
+				input(type='text', name='hwId', class='form-control', value='#{homework.Hw_id}',required)
+				textarea(type='text', name='content', rows="15", class='form-control', placeholder='input here',required, autofocus)
+				button(class='btn btn-lg btn-primary btn-block', type='submit') Handin
+			<span>
+	h1 Answers
+	for answer in answers
+		li.list-group-item
+			div(class="list-group-item-text details")
+				form(class='form-grade', action='/updateGrade?hwId=#{homework.Hw_id}&author=#{answer.author}', method='POST', maxWidth='5px')
+					.input-group
+						span(class="input-group-addon") By #{answer.author}
+						span.input-group-addon grade
+						span(class="input-group-addon submit-grade")
+							button(type='submit')
+								span(class='glyphicon glyphicon-ok')
+						input(width='50px', type='text', name='grade', class='form-control',required, autofocus, size='3')
+						if answer.grade
+							script
+								$("input[name='grade']").attr('value','#{answer.grade}')
+						if time < homework.deadline
+							script
+								$("input[name='grade']").attr('readonly','true')
+
+			p.list-group-item-text #{answer.content}
+	script
+		if user.type=='stu'
+			$("input[name='grade']").attr('readonly','true')
+			$(".submit-grade").css('display', 'none')
+	script
+		$("input[name='hwId']").attr('readonly','true')

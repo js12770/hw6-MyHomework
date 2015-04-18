@@ -2,12 +2,9 @@ Assignment = require './assignment'
 User = require './user'
 
 module.exports = !->
-	now1 = new Date!
-	now2 = new Date!
-	now3 = new Date!
-	now1.setDate 5
-	now2.setDate 20
-	now3.setDate 30
+	now1 = new Date 2009, 2, 27, 23, 59, 59
+	now2 = new Date 2015, 4, 30, 23, 59, 59
+	now3 = new Date 2015, 11, 11, 11, 11, 11
 	assignment = new Assignment {
 		name: 'Lab1'
 		demand: 'Write a Jade.',

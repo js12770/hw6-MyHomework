@@ -1,0 +1,38 @@
+extends layout
+
+block content
+	h1 Homework:
+		each item in HwPublic
+			h3 课程 #{item.course}</br>
+			h3 作业要求 #{item.content}</br>
+			h3 Deadline #{item.deadline}</br>
+			hr
+
+
+	form(action='/hwpublic', method='POST')
+		h3 发布新的作业
+		|course
+		textarea(rows='1', name='course', class='form-control' placeholder='课程名', required)
+		|Deadline</br>
+		input(type='date' name='deadline', required)
+
+		//- label
+		//- 	label(class='text-center')
+		//- 		|Month
+		//- 		select(name='month' class='form-control') 
+		//- 			for (var i = 1; i <= 12; i++)
+		//- 				if i == 4
+		//- 					option(selected) #{i}
+		//- 				else
+		//- 					option #{i}
+		//- 	label(class='text-center')
+		//- 		|Day
+		//- 		select(name='day' class='form-control')
+		//- 			for (var i = 1; i <= 31; i++)
+		//- 				if i == 1
+		//- 					option(selected) #{i}
+		//- 				else
+		//- 					option #{i}
+
+		textarea(rows='10', name='content', class='form-control' placeholder='在这里放新的作业要求', required)
+		button(class='width20 pull-right btn btn-lg btn-primary btn-block', type='submit') 发布作业
