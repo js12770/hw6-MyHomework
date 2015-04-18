@@ -1,0 +1,32 @@
+extends layout
+
+block content
+	div.container
+		ul(class='nav nav-pills')
+			li
+				a(href='/home') 作业
+			li.active
+				a(href='#') 修改
+			li.disabled
+				a(href='#') 批改
+			li.disabled
+				a(href='#') #{user.username}
+			li
+				a(href='/signout') 退出
+		br
+		ul.list-inline
+			li 作业编号: #{homework.homeworkid}
+			li 截止时间: #{homework.ddl.toDateString()} #{homework.ddl.toLocaleTimeString()}
+		p 作业要求: #{homework.require}
+		hr
+		h3 学生作业：
+		if shomework != null
+			for sh in shomework
+				ul.list-group
+					li.list-group-item 学生: #{sh.student}
+					li.list-group-item 内容：#{sh.content}
+					li.list-group-item 分数：#{sh.score}
+					form(role='form', action='/check/#{sh.homeworkid}/#{sh.student}', method='POST')
+						div.form-group
+							input.form-control(name='score',type='text',placeholder='评分')
+						button.btn.btn-default(type="submit") 确认给发

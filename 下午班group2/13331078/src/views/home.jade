@@ -3,23 +3,35 @@ extends layout
 block content
 	div.nav.navbar.navbar-inverse.navbar-fixed-top
 		div.container
+			div.navbar-brand
+				if user.identity == 'teacher'
+					div.label.label-danger Teacher
+				else if user.identity == 'student'
+					div.label.label-success Student
 			div.user-info
-				#user
 				p.navbar-text Welcome #{user.firstName}.#{user.lastName}!
 			div
 				if user.identity == 'teacher'
 					a.btn.navbar-btn.publish-btn(href='/hw-produce') Publish
 				a.btn.navbar-btn.publish-btn(href='/hw-view') View
-				a.btn.navbar-btn.signout-btn(href='/signout') Signout
+				a.btn.navbar-btn.publish-btn(href='/home') Home
+				a.btn.navbar-btn.signout-btn.pull-right(href='/signout') Signout
 	div.show-homework
-		div.well.well-sm.text-center
+		div.text-center
 			h2 Announcement
-		ul
-			each student in announcement
-				li
-					div.well.well-sm
-						p #{student.firstName+'.'+student.lastName}
-						span
-							a #{student.question}
-
-					
+		if announcement.length == 0
+			div.text-center
+				h2 No announcement yet...
+		else
+			ul.col-sm-6.col-md-6.col-md-offset-3.col-sm-offset-3.list-group
+				each student in announcement
+					li.list-group-item.list-group-item-info
+						div.label.label-success(style='display:inline') #{student.title}
+						p(style='display:inline') &nbspFrom 
+							span.label.label-info #{student.firstName+'.'+student.lastName}
+						p(style='display:inline') &nbspVersion 
+						div(style='display:inline')
+							span.badge #{student.nth}
+						p.pull-right(style='display:inline') &nbspSubmitted at 
+							span.label.label-warning #{student.commitTime.getFullYear()}-#{student.commitTime.getMonth()+1}-#{student.commitTime.getDate()} #{student.commitTime.toLocaleTimeString()}
+						

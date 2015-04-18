@@ -3,20 +3,37 @@ extends layout
 block content
 	div.nav.navbar.navbar-inverse.navbar-fixed-top
 		div.container
+			div.navbar-brand
+				if user.identity == 'teacher'
+					div.label.label-danger Teacher
+				else if user.identity == 'student'
+					div.label.label-success Student
 			div.user-info
-				#user
 				p.navbar-text Welcome #{user.firstName}.#{user.lastName}!
 			div.sign-out
-				a.btn.navbar-btn.home-btn(href='/home') Home
+				if user.identity == 'teacher'
+					a.btn.navbar-btn.publish-btn(href='/hw-produce') Publish
 				a.btn.navbar-btn.publish-btn(href='/hw-view') View
-				a.btn.navbar-btn.signout-btn(href='/signout') Signout
+				a.btn.navbar-btn.publish-btn(href='/home') Home
+				a.btn.navbar-btn.signout-btn.pull-right(href='/signout') Signout
 	div.produce-homework
 		div.col-sm-6.col-md-4.col-md-offset-4
 			h1.text-center.login-title Answer Homework
-			#question
-			p.question-content #{question[0].question}
+			div.well.well-sm
+				h4.question-title Title: #{question.title}
+		div.col-sm-6.col-md-4.col-md-offset-2
+			textarea.form-control(rows='20' disabled) #{question.question}
+		div.col-sm-6.col-md-4
 			form(action='/hw-answer' method='POST')
-				input(name='question-content' type='hidden' value='#{question[0].question}')
-				input.form-control(name='answer-question-content' type='text' placeholder='Put answer here...')
-				button.btn.btn-lg.btn-primary.btn-block(type='submit') Publish
+				input(name='answer-question-id' type='hidden' value='#{question._id}')
+				div.produce-homework
+					if announcement.length == 0
+						textarea.form-control(name='answer-question-content' rows='20' placeholder='Put answer here...' required autofocus)
+					else
+						textarea.form-control(name='answer-question-content' rows='20' placeholder='Put answer here...' required autofocus) #{announcement[0].answer}
+				if date < question.ddl
+					button.btn.btn-lg.btn-primary.btn-block(type='submit') Submit
+				else
+					button.btn.btn-lg.btn-primary.btn-block.disabled(type='submit') Submit
+
 					

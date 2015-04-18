@@ -1,0 +1,71 @@
+extends layout
+
+block content
+	div.container
+		ul(class='nav nav-pills')
+			li.active
+				a(href='#') 作业
+			li.disabled
+				a(href='#') 修改
+			li.disabled
+				a(href='#') 批改
+			li.disabled
+				a(href='#') #{user.username}
+			li
+				a(href='/signout') 退出
+		fieldset
+			h3.text-center 布置作业
+			form(role='form', action='/assign', method='POST')
+				div.form-group
+					label 作业要求
+					textarea.form-control(rows='3',name='require')
+					label 截止时间
+					input.form-control(name='ddl',type='text',placeholder='2000/01/01 00:00:00')
+				button.btn.btn-default(type="submit") 发布
+		hr
+		if homeworks != null
+			div
+				table.table
+					caption
+						h3 已经布置作业
+					thead
+						tr
+							th 作业编号
+							th 作业要求
+							th 截止时间
+							th 操作
+							th 操作
+					tbody
+						for homework in homeworks 
+							if Date.parse(homework.ddl) > Date.parse(Date())
+								tr
+									td #{homework.homeworkid}
+									td(style='word-break:break-all',width='700') #{homework.require}
+									td #{homework.ddl.toDateString()} #{homework.ddl.toLocaleTimeString()}
+									td
+										a(href='/modify/#{homework.homeworkid}') 修改
+									td
+										a(href='/remove/#{homework.homeworkid}') 删除
+			hr
+			div
+				table.table
+					caption
+						h3 已经截止作业
+					thead
+						tr
+							th 作业编号
+							th 作业要求
+							th 截止时间
+							th 操作
+							th 操作
+					tbody
+						for homework in homeworks 
+							if Date.parse(homework.ddl) < Date.parse(Date())
+								tr
+									td #{homework.homeworkid}
+									td(style='word-break:break-all',width='700') #{homework.require}
+									td #{homework.ddl.toDateString()} #{homework.ddl.toLocaleTimeString()}
+									td
+										a(href='/check/#{homework.homeworkid}') 批改
+									td
+										a(href='/remove/#{homework.homeworkid}') 删除

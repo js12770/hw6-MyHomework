@@ -1,0 +1,15 @@
+.col-sm-offset-2.col-sm-10 {
+	margin-left: 500px;
+	width: 100px;
+}
+.col-sm-2.control-label{
+	margin-top: 20px;
+}
+
+.col-sm-10.col-md-5 {
+	margin-top: 20px;
+}
+
+.col-sm-10 {
+	margin-top: 35px;
+}

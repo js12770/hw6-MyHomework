@@ -85,4 +85,19 @@ h1.error-message{
 }
 ul.user-details{
     list-style: none;
+<<<<<<< HEAD:下午班group2/13331203/my-homework-master/src/public/stylesheets/style.css
 }
+=======
+}
+.show-homework{
+    margin-top: 20px;
+}
+
+.produce-homework{
+    margin-bottom: 5px;
+}
+
+.questions{
+    color: white;
+}
+>>>>>>> origin/master:13331078/src/public/stylesheets/style.css

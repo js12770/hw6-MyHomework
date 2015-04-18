@@ -1,0 +1,29 @@
+extends student
+
+block sub-container
+    h1.page-header 软件过程改进
+    div.thumbnail
+        .table-responsive
+            table.table.table-hover.table-striped
+                thead
+                    tr
+                        th Teacher
+                        th Homework
+                        th deadline
+                        th Score
+                        th Detail
+                tbody
+                    each homework in homeworks
+                        tr
+                            td #{homework.teacherName}
+                            td #{homework.title}
+                            td.before-deadline #{homework.deadline}
+                            - found = false
+                            each one in homework.students
+                                if one.name == user.username
+                                    td #{one.score}
+                                    - found = true
+                            if !found
+                                td
+                            td
+                                a.btn.btn-primary.btn-sm.upload-hw(href='/p/#{homework._id}') Detail...

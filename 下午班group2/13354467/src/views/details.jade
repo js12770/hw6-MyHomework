@@ -1,0 +1,30 @@
+extends layout
+
+block content
+	div.container
+		ul(class='nav nav-pills')
+			li
+				a(href='/home') 作业
+			li.disabled
+				a(href='#') 提交
+			li.active
+				a(href='#') 查看
+			li.disabled
+				a(href='#') #{user.username}
+			li
+				a(href='/signout') 退出
+		br
+		h3 作业信息
+		ul.list-group
+			li.list-group-item 作业编号: #{homework.homeworkid}
+			li.list-group-item(style='word-break:break-all') 作业要求: #{homework.require}
+			li.list-group-item 截止时间: #{homework.ddl.toDateString()} #{homework.ddl.toLocaleTimeString()}
+		br
+		h3 我的提交
+		ul.list-group
+			if shomework != null
+				li.list-group-item 学生: #{shomework.student}
+				li.list-group-item 内容：#{shomework.content}
+				li.list-group-item 分数：#{shomework.score}
+			else
+				p 你错过了本次作业的提交！

@@ -22,12 +22,16 @@ button.my-btn{
     width: 100px; 
     margin:0px 0px 5px 15px;
 }
-.mark{
+input.mark{
     line-height: 20px;
-    width: 50px;
-    float: right;
+    width: 100px;
     margin: 5px;
+    display: inline-block;
 }
+.list-group-item{
+    word-wrap: break-word;
+}
+
 span.deadline,span.remain{
     font-weight: bolder;
 }
@@ -37,9 +41,20 @@ span.deadline,span.remain{
     font-size: 20px;
     background: #fafafa;
 }
-.form-textarea{
-    max-width: 800px;
+.editHW{
+    margin-bottom: 40px;
+    display: none;
+}
+.editHW textarea{
+    margin: 15px 0;
+}
+.editHW button{
+    float: right;
+}
+textarea{
     margin: 0 auto;
+    width: 100%;
+    min-height: 120px;
 }
 .my-text{
     width: 700px;
@@ -55,7 +70,7 @@ input.short{
     width: 500px;
     display: none;
 }
-.model:last-child{
+.display-none{
     display: none;
 }
 .panel-body textarea{
@@ -63,6 +78,10 @@ input.short{
     overflow: visible;
     min-height: 120px;
     display: none;
+}
+.myp{
+    width: 100%;
+    word-wrap: break-word;
 }
 .panel-body p{
     background: white;
@@ -74,6 +93,9 @@ input.short{
 }
 .modify{
     display: none;
+}
+.right{
+    float: right;
 }
 .username {
     position: absolute;

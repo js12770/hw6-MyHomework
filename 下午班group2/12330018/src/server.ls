@@ -26,10 +26,6 @@ initPassport passport
 routes = (require './routes/index') passport
 app.use '/', routes
 
-# files = require './routes/files'
-# app.get '/upload', files.form
-# app.post 'upload', files.submit app.get 'files'
-
 app.use (req, res, next) ->
   err = new Error 'Not Found'
   err.status = 404
