@@ -1,0 +1,23 @@
+extends baseteacher
+
+block content-right
+    .scorehw
+      .page-header
+        h1
+          | 软件过程改进
+          small.changeheaderinscore #{hw.hwname}
+      form.form-horizontal(method="post", action="/score/#{hw._id}")
+        table.table.table-bordered
+          tr
+            th.col-md-4 文件
+            th.col-md-3 上传者
+            th.col-md-3 得分
+          each stuhw in hw['submit_hw']
+            tr
+              td.changetdfont
+                a(href="/download/#{stuhw.path}") #{stuhw.path}
+              td.changetdfont #{stuhw.name}
+              td
+                .col-sm-2
+                input#inputEmail3.form-control.changescorepadding(type="text" name="score" value="#{stuhw.score}")
+        button.btn.btn-primary(type="submit") 保存    

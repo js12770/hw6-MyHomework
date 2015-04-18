@@ -1,0 +1,24 @@
+extends basestudent
+
+block content-right
+    .checkscore
+      .page-header
+        h1
+          | 软件过程改进
+          small.changeheaderinscore #{hw.hwname}
+      table.table.table-bordered
+        tr
+          th.col-md-4 文件
+          th.col-md-3 上传者
+          th.col-md-3 得分
+          th.col-md-3 操作
+        each stuhw in hw['submit_hw']
+          if stuhw.id.toString() == user._id.toString()
+            tr
+              td.changetdfont
+                a(href="/download/#{stuhw.path}") #{stuhw.path}
+              td.changetdfont #{stuhw.name}
+              td.changetdfont #{stuhw.score}
+              td
+                a.btn.btn-primary(role="button" href="/finish") 返回 
+         
