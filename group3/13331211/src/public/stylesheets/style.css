@@ -76,6 +76,10 @@ a {
     -webkit-border-radius: 50%;
     border-radius: 50%;
 }
+.ddl-create {
+    max-width: 330px;
+    text-align: left;
+}
 .new-account{
     display: block;
     margin-top: 10px;
