@@ -17,7 +17,7 @@ block content
 
     #user
       div.col-sm-10.col-md-10.col-md-offset-1
-        h1.text-center.login-title All Homeworks
+        h1.text-center.login-title All Submissions
           div
             table.table.table-hover
               thead
@@ -29,14 +29,17 @@ block content
                   if user.isTeacher
                     th.text-center option
               tbody
-                #submissions
-                  for entry in submissions
-                    tr
-                      td= entry.student
-                      td= entry.content
-                      td= entry.date
-                      td= entry.gratde
-                      if user.isTeacher
-                        td
-                          form(method='GET' action='/home')
-                            button(class='btn btn-sm btn-primary', type='submit') Give a grade
+                #homework_
+                  for entry in homework_.submits.reverse()
+                    if (entry.student == user.username || user.isTeacher)
+                      if (entry.offdate == 'false')
+                        tr
+                          td= entry.student
+                          td= entry.content
+                          td= entry.date
+                          td= entry.grade
+                          if user.isTeacher
+                            form(method='POST' action='/class/' + homework_.className + '/' + homework_.homeworkName + '/' + entry.student + '/updateGrade')
+                              td
+                                input(type='text', name='score', class='form-control', placeholder=entry.grade,required)
+                                button(class='btn btn-sm btn-primary', type='submit') update grade

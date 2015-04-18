@@ -99,12 +99,15 @@ module.exports = (passport)->
   router.post '/class/:classname/:homeworkName/submit', is-authenticated, (req, res)!->
     (error, class_) <- Class.find-one {className: req.params.classname}
     (error, homework_) <- Homework.find-one {className: req.params.classname, homeworkName: req.params.homeworkName}
-    homework_.submits.pop {student: req.user.username}
+
+    [submit.offdate = 'true' for submit in homework_.submits when submit.student == req.user.username]
+
     homework_.submits.push {
       student: req.user.username
       content: req.param 'content'
-      date: Date.now()
-      grade: ''
+      date: new Date().toLocaleString()
+      grade: 'yet not graded'
+      offdate: 'false'
     }
     class_.homeworks.pop {homeworkName: req.params.homeworkName}
     class_.homeworks.push homework_
@@ -114,6 +117,20 @@ module.exports = (passport)->
     res.redirect '/class/' + class_.className + '/allHomeworks'
 
   router.get '/class/:classname/:homeworkName/allSubmissions', is-authenticated, (req, res)!->
+    (error, class_) <- Class.find-one {className: req.params.classname}
+    var homework_
+    for homework in class_.homeworks
+      if homework.homeworkName == req.params.homeworkName
+        homework_ = homework
+    res.render 'allSubmissions', user: req.user, homework_: homework_
+
+  router.post '/class/:classname/:homeworkName/:studentName/updateGrade', is-authenticated, (req, res)!->
+    (error, class_) <- Class.find-one {className: req.params.classname}
     (error, homework_) <- Homework.find-one {className: req.params.classname, homeworkName: req.params.homeworkName}
-    console.log homework_.submits
-    res.render 'allSubmissions', user: req.user, submissions: homework_.submits
+
+    [submit.grade = req.param 'score' for submit in homework_.submits when submit.offdate == 'false' and submit.student == req.param 'studentName']
+
+    class_.save()
+    homework_.save()
+
+    res.redirect '/class/' + class_.className + '/allHomeworks'
