@@ -5,5 +5,7 @@ module.exports = mongoose.model 'Homework', {
 	student: String,
 	title: String,
 	answer: String,
-	grade: String
+	grade: String,
+	code: String,
+	ddl: String
 }

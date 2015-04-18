@@ -11,4 +11,7 @@ block content
 					h1.text-center.login-title  Pay Attention !!
 						div.signup-wall
 							span This mission's DDL is #{requirement.ddl}, your action is illegal .
-						a(href='/home', class='text-center new-account') Back to homepage
+						if error == 'r'
+							a(href='/viewrequirement', class='text-center new-account') Back
+						if error == 'h'
+							a(href='/viewhomework', class='text-center new-account') Back
