@@ -1,0 +1,105 @@
+extends layout
+
+block content
+
+	.header Welcom to my homework site!
+	a(href='/signout', id="signout",class='text-center new-account') Sign Out
+	span.username #{user.username} (#{user.identi})
+	ul(class ="nav nav-tabs" )
+		li(id="nav1" class='active' )
+			a 首页
+		li(id = "nav2")
+			a作业
+	div(class='container' id='part1')
+		-if( user.identi  == 'teacher')
+			button(class='btn btn-primary' id="add") Add
+		.editHW
+			form( action='/home/savehw', method='POST')
+				input(type='text', name='hwname', class='form-control', placeholder='New Assignment',required, autofocus) 
+				textarea(name='content',required)
+				input(type="date" id="dp2",name='ddl')
+				button(class='btn btn-blg btn-primary' type='submit' ,required) 发布
+		-if(hws)
+			-each hw in hws
+				.model
+					myid.display-none #{hw._id}
+					-if( user.identi  == 'teacher')
+						button(class='edit') Edit
+					div(class="panel panel-default homework_demand")
+						.panel-heading 
+							span.hwN #{hw.title}
+							-if( user.identi  == 'teacher')
+								input(type='text', name='hwname', class='form-control short', placeholder='New Assignment',required, autofocus) 
+						.panel-body 
+							-if( user.identi  == 'teacher')
+								textarea 
+							p.myp #{hw.content}
+							span.deadline #{hw.ddl}
+							span.remain
+							-if( user.identi  == 'teacher')
+								button(class='modify' type='submit') 发布
+							-if( user.identi  == 'student')
+								button(class='btn btn-primary right submithw',type='button')提交
+				
+				div(class='model display-none')
+					-if( user.identi  == 'teacher')
+						button(class='edit') Edit
+					div(class="panel panel-default homework_demand")
+						.panel-heading 
+							span.hwN 
+							-if( user.identi  == 'teacher')
+								input(type='text', name='hwname', class='form-control short', placeholder='New Assignment',required, autofocus) 
+						.panel-body 
+							-if( user.identi  == 'teacher')
+								textarea 
+							p.myp
+							-if( user.identi  == 'teacher')
+								button(class='modify' type='submit') 发布
+							-if( user.identi  == 'student')
+								button(class='btn btn-primary right submithw',type='button')提交
+			-else
+				div(class='alert alert-danger') There is no any homework !
+				
+
+	div(class='container' id='part2')
+		-if( user.identi  == 'student')
+			div(class="panel panel-default homework_demand hwd display-none")
+				.panel-heading 
+					span.hwN
+				.panel-body 
+					p.myp
+					span(class='deadline ddl')
+			form(class='form-textarea display-none',action='/submithw' method='POST')
+				textarea(class='my-text', name='essay' required)
+				button(class='btn btn-primary my-btn', type='submit') 提交
+			-if(mysubs)
+				-each sub in mysubs
+					div(class='well small-lg') #{sub.subname}
+					li.list-group-item #{sub.submits.essay}
+					-if(sub.submits.mark)
+						span.badeg #{sub.submits.mark}
+					-else
+						div(class='alert alert-danger') not grad yet
+			-else
+				div(class='alert alert-danger') There is no any homework submitted yet!
+		-if( user.identi  == 'teacher')
+			-if(hws)
+				-each hw in hws
+					-var curr = new Date()
+					-if(hw.ddl < curr)
+					a(class='list-group-item active') #{hw.title}
+						-each sub in hw.submmits
+							a.list-group-item #{sub.essay}
+							div(class='badge ') student:#{sub.student}
+							form(class='form-mark',action="/mark/#{sub.student}/#{hw._id}/" method='POST')
+								input(type='text', class='mark', name='mark', class='form-control', placeholder='评分',required, autofocus)
+								button(class='btn btn-lg btn-primary' type='submit') 完成
+			-else
+				div(class='alert alert-danger') There is no any homework submitted 
+	script(src='scripts/index.js')
+	-if( user.identi  == 'teacher')
+		script(src='scripts/teacher.js')
+	-if( user.identi  == 'student')
+		script(src='scripts/student.js')
+
+						
