@@ -64,44 +64,53 @@ block content
 					.panel-heading.addlinehei 你提交的作业
 						strong#moremessage
 						a#thebutton1.btn.btn-default.navbar-right(href="/uploadhomework?id=#{assignment._id}", role="button") Upload
-					table.table
-						thead
-							tr
-								th #
-								th File Name
-								th score
-						if homeworks
-							tbody
+					if homeworks
+						table.table
+							thead
 								tr
-									th(scope="row") 1
-									td
-										a(href="/article?id=#{homeworks._id}") #{homeworks.title}
-									if homeworks.score
-										td #{homeworks.score}
-									else
-										td none
+									th #
+									th File Name
+									th score
+							if homeworks
+								tbody
+									tr
+										th(scope="row") 1
+										td
+											a(href="/article?id=#{homeworks._id}") #{homeworks.title}
+										if homeworks.score
+											td #{homeworks.score}
+										else
+											td none
+					else
+						.alert.alert-info.resetmargin(role="alert")
+							|你还没有提交过作业
 
 				if user.identity == 'teacher' && homeworks
 					.panel-heading 已提交的作业
-					table.table
-						thead
-							tr
-								th #
-								th File Name
-								th Author
-								th score
-						tbody
-							-	for(var i = 0; i < homeworks.length; i++) {
+					if homeworks.length
+						table.table
+							thead
 								tr
-									th(scope="row") #{i+1}
-									td 
-										a(href="/article?id=#{homeworks[i]._id}") #{homeworks[i].title}
-									td #{homeworks[i].author}
-									if homeworks[i].score
-										td #{homeworks[i].score}
-									else
-										td none
-							-	}
+									th #
+									th File Name
+									th Author
+									th score
+							tbody
+								-	for(var i = 0; i < homeworks.length; i++) {
+									tr
+										th(scope="row") #{i+1}
+										td 
+											a(href="/article?id=#{homeworks[i]._id}") #{homeworks[i].title}
+										td #{homeworks[i].author}
+										if homeworks[i].score
+											td #{homeworks[i].score}
+										else
+											td none
+								-	}
+					else
+						.alert.alert-info.resetmargin(role="alert")
+							|还没有人提交作业
+  
 
 	.modal.fade.bs-example-modal-sm(tabindex="-1", role="dialog", aria-labelledby="mySmallModalLabel", aria-hidden="true")
 		.modal-dialog.modal-sm
