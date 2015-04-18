@@ -26,7 +26,8 @@
     "morgan": "~1.0.0",
     "debug": "~0.7.4",
     "source-map": "^0.1.34",
-    "moment": "^2.10.2"
+    "moment": "^2.10.2",
+    "ueditor": "^1.0.0"
   },
   "devDependencies": {
     "grunt": "^0.4.5",
@@ -46,6 +47,7 @@
     "load-grunt-tasks": "^0.6.0",
     "node-bourbon": "^1.2.3",
     "source-map": "^0.1.34",
-    "moment": "^2.10.2"
+    "moment": "^2.10.2",
+    "ueditor": "^1.0.0"
   }
 }

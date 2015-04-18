@@ -8,14 +8,21 @@ block content
                 div.panel-heading
                     h1.text-center.panel-title #{assignment.username} 的 #{assignment.title} 作业
                 h3.account-wall
-                    i.icon-magic 作业详情：#{assignment.content}
+                    i.icon-magic 作业详情：!{assignment.content}
                 if user.identity == 'teacher'
-                    form(class="input-group text-center col-sm-2 col-sm-offset-5" method='POST')
-                        if assignment.status != '已提交'
-                            input(type='text' class="form-control" name='score' value="#{assignment.status}" size="3")
-                        else
-                            input(type='text' class="form-control" name='score' size="3")
-                        div.input-group-addon 分
-                        span.input-group-btn
-                            button(class="btn btn-default" type="submit") 评分
+                    if time > assignment.deadline
+                        form(class="input-group text-center col-sm-2 col-sm-offset-5" method='POST')
+                            if assignment.status != '已提交'
+                                input(type='text' class="form-control" name='score' value="#{assignment.status}" size="3")
+                            else
+                                input(type='text' class="form-control" name='score' size="3")
+                            div.input-group-addon 分
+                            span.input-group-btn
+                                button(class="btn btn-default" type="submit") 评分
+                    else
+                        h2.text-center 尚未达到截止日期，暂时不能评分
+                else
+                    if time < assignment.deadline
+                        a(href='/assignment/submit/#{assignment.assignmentid}?maid=#{assignment._id}', class='oper-btn btn btn-lg btn-primary' role="button")
+                                i.icon-pencil 修改
                 br
