@@ -1,0 +1,23 @@
+extends layout
+
+block content
+	div.container
+		div.row
+			div.col-sm-6.col-md-4.col-md-offset-4
+				h1.text-center.login-title Welcome #{user.firstName}. Remark homework here:
+			table.table.table-hover
+				thead
+					tr
+						th Student
+						th Answer
+						th Score
+						th Operation
+				tbody
+					each item in handin
+						tr
+							th #{item.student}
+							th #{item.answer}
+							th #{item.score}
+							th
+								a(href='/remark/#{item.hwname}/#{item.student}') Remark
+		a(href='/home', class='text-center new-account') Homepage
