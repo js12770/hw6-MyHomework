@@ -1,0 +1,44 @@
+extends layout
+
+block content
+	div.container
+		div.row
+			div.col-sm-6.col-md-4.col-md-offset-4
+			#user
+				h1.text-center.login-title Welcome #{user.firstName}. Check your details below:
+				div.signup-wall
+					ul.user-details
+						li Username ---> #{user.username}
+						li Email    ---> #{user.email}
+						li First Name ---> #{user.firstName} 
+						li Last Name ---> #{user.lastName}
+						li Identity ---> #{user.identity}
+						li Lesson ---> #{user.lesson}
+				a(href='/signout', class='text-center new-account') Sign Out
+	.container
+		.row
+			form.form-horizontal(class='form-signin', action='/add/new', method='POST')
+				input(type="hidden", name="newhomework[_id]", value="#{newhomework._id}")
+				.form-group
+					label Lesson(SE-385 or SE-386)
+					.col-sm-20
+						input(type='text', name='newhomework[lesson]', class='form-control', value=newhomework.lesson, required, autofocus)
+				.form-group
+					label Name
+					.col-sm-20
+						input(type='text', name='newhomework[name]', class='form-control', value=newhomework.name, required, autofocus)
+				.form-group
+					label Teacher(TeacherUserName)
+					.col-sm-20
+						input(type='text', name='newhomework[teacher]', class='form-control', value=newhomework.teacher, required, autofocus)
+				.form-group
+					label Requirement
+					.col-sm-20
+						textarea(type='text', name='newhomework[requirement]', class='form-control', value=newhomework.requirement, required, autofocus)
+				.form-group
+					label Deadline(yyyy-mm-dd)
+					.col-sm-20
+						input(type='text', name='newhomework[deadline]', class='form-control', value=newhomework.deadline, required, autofocus)
+				.form-group
+					.col-sm-offset-2.col-sm-10
+					button.btn.btn-default(type="submit") Submit

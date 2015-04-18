@@ -1,0 +1,43 @@
+extends layout
+
+block content
+  div.container
+    div.row
+      div.col-sm-6.col-md-4.col-md-offset-4
+        #user
+          h1.text-center.login-title Welcome #{user.firstName}. Check your details below:
+            div.signup-wall
+              ul.user-details
+                li Username ---> #{user.username}
+                li Email    ---> #{user.email}
+                li First Name ---> #{user.firstName} 
+                li Last Name ---> #{user.lastName}
+                li Identity ---> #{user.identity}
+                li Lesson ---> #{user.lesson}
+            a(href='/signout', class='text-center new-account') Sign Out
+  .container
+    .row
+      h1 Homework
+      table.table.table-hover.table-bordered
+        thead
+          tr
+            th Lesson
+            th H_Name
+            th Teacher
+            th Requirement
+            th Deadline
+            th View
+            th Modify
+        tbody
+          each item in homework
+            tr
+              td #{item.lesson}
+              td #{item.name}
+              td #{item.teacher}
+              td #{item.requirement}
+              td #{item.deadline}
+              td: a(href="#") ViewAll
+              td: a(href="/add/modify/#{item._id}") Modify
+          tr
+            td: a(href="/add") Add+
+
