@@ -34,10 +34,23 @@ module.exports = (passport)->
     res.redirect '/home'
   router.get '/home', is-authenticated, (req, res)!-> res.render 'home', user: req.user
 
+  router.get '/score/:student/:title', is-authenticated, (req,res)!->
+    Homework.find-one {student: req.param 'student', title: req.param 'title'},(err, collection) ->
+      res.render 'score', user:req.user, homework : collection
+
+  router.post '/score/:student/:title' (req, res) !->
+    if req.user.identity == 'T'
+      Homework.update {student: req.param 'student', title: req.param 'title'},{$set: {score: req.param 'score_'}},(err, num, raw)->
+        if err
+            throw err
+        else
+            res.redirect '/homeworks'
 
   router.get '/submit/:title', is-authenticated, (req, res)!->
+    now = new Date()
+    date = now.getYear()+"-"+((now.getMonth()+1)<10?"0":"")+(now.getMonth()+1)+"-"+(now.getDate()<10?"0":"")+now.getDate()
     Problem.find-one {title : req.param 'title'},(err, collection) ->
-      res.render 'submit', user: req.user, problem : collection
+      res.render 'submit', user: req.user, problem : collection, date_: date
 
   router.post '/submit/:title' (req, res) !->
     if req.user.identity == 'S'
@@ -45,12 +58,19 @@ module.exports = (passport)->
         student  : req.user.username
         title  : req.param 'title'
         content : req.param 'content'
+        score : 'NULL'
+        commit : 'NULL'
       }
-      new-homework.save (error)->
-        if error
-          console.log "Error in saving homework: ", error
+      Homework.remove {student: req.user.username, title:req.param 'title'},(err)->
+        if err
+          throw err
         else
-          console.log "Homework submit success"
+          console.log "delete"
+        new-homework.save (error)->
+          if error
+            console.log "Error in saving homework: ", error
+          else
+            console.log "Homework submit success"
     else
         Problem.update {title: req.param 'title'},{$set: {content: req.param 'content'}},(err, num, raw)->
           if err

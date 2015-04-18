@@ -4,6 +4,6 @@ block content
 	h1.text-center.login-title Welcome #{user.firstName}. Publish New Homework:
 	form(class='form-signin', action='/publish', method='POST')
 		input(type='text', name='title', class='form-control', placeholder='Homework title',required)
-		input(type='text', name='ddl', class='form-control nomargin', placeholder='yyyy-mm-dd-hh:min:sec', required)
+		input(type='date', name='ddl', class='form-control nomargin', required)
 		textarea(rows = "10", cols = "35", name = "content",required)
 		button(class='btn btn-lg btn-primary btn-block', type='submit') Publish
