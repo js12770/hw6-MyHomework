@@ -1,0 +1,26 @@
+div.btn.btn-default.right
+	form.form-inline(method='POST', action='/assignment',enctype="multipart/form-data", role="form", id='assignmentForm')
+		h4 Post Assignment
+		div.form-group
+			input.form-control(type='text', name='title', placeholder='title')
+		br
+		br
+		div.form-group
+			textarea.form-control(rows='5', cols='70', name='description')
+		br
+		br
+		div.input-group.date(data-date-format="yyyy/mm/dd")
+			input.form-control(type='text', name='date')
+			span.input-group-addon
+				i.glyphicon.glyphicon-th
+		br
+		br
+		button.btn.btn-default(type='submit') submit
+
+table.table.table.table-striped.homeworks.rr
+	thead
+		th homeworks
+		th grade
+	tbody(id='homeworksTable')
+
+	

@@ -1,0 +1,20 @@
+table.table.table-striped.ass
+	thead
+		tr 
+			th title
+			th decription
+			th deadline
+			th operation
+	tbody(id = 'assignmentsTable')
+		if docs != null
+			for doc, index in docs
+				tr
+					td(name="#{doc._id}", contenteditable) #{doc.title}
+					td.description(contenteditable) #{doc.description}
+					td(contenteditable) #{doc.date}
+					td
+						button.btn.btn-default.check(type='button') check
+						| &nbsp;
+						button.btn.btn-default.modify(type='button') modify
+						| &nbsp;
+						button.btn.btn-default.delete(type='button') delete
